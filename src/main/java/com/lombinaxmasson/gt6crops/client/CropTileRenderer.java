@@ -10,17 +10,15 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 
-/** Renders the species-specific crop cross from the tile's card id. */
+/** Renders the planted crop as four full-height sheets in a hash. */
 public final class CropTileRenderer implements BlockEntityRenderer<CropTile> {
     private static final ResourceLocation WEED_TEXTURE =
             ResourceLocation.withDefaultNamespace("block/dead_bush");
@@ -44,23 +42,13 @@ public final class CropTileRenderer implements BlockEntityRenderer<CropTile> {
                 .getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
                 .apply(texture);
         VertexConsumer consumer = buffer.getBuffer(RenderType.cutout());
-        Matrix4f matrix;
-
-        poseStack.pushPose();
-        poseStack.translate(0.5, 0.0, 0.5);
-        float height = card.isWeed() ? 0.45f : 0.25f + tile.size() * 0.16f;
-        matrix = poseStack.last().pose();
-        drawCross(
-                matrix,
-                consumer,
-                sprite,
-                -0.38f,
-                0.38f,
-                0.06f,
-                height,
-                packedLight,
-                packedOverlay);
-        poseStack.popPose();
+        Matrix4f matrix = poseStack.last().pose();
+        float y0 = -1.0f / 16.0f;
+        float y1 = 1.0f;
+        sheetX(matrix, consumer, sprite, 4.0f / 16.0f, y0, y1, packedLight, packedOverlay);
+        sheetX(matrix, consumer, sprite, 12.0f / 16.0f, y0, y1, packedLight, packedOverlay);
+        sheetZ(matrix, consumer, sprite, 4.0f / 16.0f, y0, y1, packedLight, packedOverlay);
+        sheetZ(matrix, consumer, sprite, 12.0f / 16.0f, y0, y1, packedLight, packedOverlay);
     }
 
     @Override
@@ -68,18 +56,32 @@ public final class CropTileRenderer implements BlockEntityRenderer<CropTile> {
         return true;
     }
 
-    private static void drawCross(
+    /** A plant sheet at constant x, spanning the block on z. Both sides are drawn. */
+    private static void sheetX(
             Matrix4f matrix,
             VertexConsumer consumer,
             TextureAtlasSprite sprite,
-            float x0,
-            float x1,
-            float z0,
-            float height,
+            float x,
+            float y0,
+            float y1,
             int light,
             int overlay) {
-        quad(matrix, consumer, sprite, x0, 0, z0, x1, height, z0, light, overlay);
-        quad(matrix, consumer, sprite, z0, 0, x0, z0, height, x1, light, overlay);
+        quad(matrix, consumer, sprite, x, y0, 0, x, y0, 1, x, y1, 1, x, y1, 0, light, overlay);
+        quad(matrix, consumer, sprite, x, y0, 0, x, y1, 0, x, y1, 1, x, y0, 1, light, overlay);
+    }
+
+    /** A plant sheet at constant z, spanning the block on x. Both sides are drawn. */
+    private static void sheetZ(
+            Matrix4f matrix,
+            VertexConsumer consumer,
+            TextureAtlasSprite sprite,
+            float z,
+            float y0,
+            float y1,
+            int light,
+            int overlay) {
+        quad(matrix, consumer, sprite, 0, y0, z, 1, y0, z, 1, y1, z, 0, y1, z, light, overlay);
+        quad(matrix, consumer, sprite, 0, y0, z, 0, y1, z, 1, y1, z, 1, y0, z, light, overlay);
     }
 
     private static void quad(
@@ -92,20 +94,36 @@ public final class CropTileRenderer implements BlockEntityRenderer<CropTile> {
             float x1,
             float y1,
             float z1,
+            float x2,
+            float y2,
+            float z2,
+            float x3,
+            float y3,
+            float z3,
             int light,
             int overlay) {
         float u0 = sprite.getU0();
         float u1 = sprite.getU1();
         float v0 = sprite.getV0();
         float v1 = sprite.getV1();
-        consumer.addVertex(matrix, x1, y0, z1).setColor(255, 255, 255, 255)
-                .setUv(u1, v0).setOverlay(overlay).setLight(light).setNormal(0, 1, 0);
-        consumer.addVertex(matrix, x0, y0, z0).setColor(255, 255, 255, 255)
-                .setUv(u0, v0).setOverlay(overlay).setLight(light).setNormal(0, 1, 0);
-        consumer.addVertex(matrix, x0, y1, z0).setColor(255, 255, 255, 255)
-                .setUv(u0, v1).setOverlay(overlay).setLight(light).setNormal(0, 1, 0);
-        consumer.addVertex(matrix, x1, y1, z1).setColor(255, 255, 255, 255)
-                .setUv(u1, v1).setOverlay(overlay).setLight(light).setNormal(0, 1, 0);
+        vertex(matrix, consumer, x0, y0, z0, u0, v1, light, overlay);
+        vertex(matrix, consumer, x1, y1, z1, u1, v1, light, overlay);
+        vertex(matrix, consumer, x2, y2, z2, u1, v0, light, overlay);
+        vertex(matrix, consumer, x3, y3, z3, u0, v0, light, overlay);
+    }
+
+    private static void vertex(
+            Matrix4f matrix,
+            VertexConsumer consumer,
+            float x,
+            float y,
+            float z,
+            float u,
+            float v,
+            int light,
+            int overlay) {
+        consumer.addVertex(matrix, x, y, z).setColor(255, 255, 255, 255)
+                .setUv(u, v).setOverlay(overlay).setLight(light).setNormal(0, 1, 0);
     }
 
     private static ResourceLocation texture(CropCard card, int size) {

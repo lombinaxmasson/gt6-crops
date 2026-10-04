@@ -43,7 +43,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 /** A single crop-stick host, with a crossbreed variant for empty centers. */
 public final class CropStickBlock extends Block implements EntityBlock {
     public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 7);
-    private static final VoxelShape SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 12.0, 14.0);
+    private static final VoxelShape SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 14.0, 14.0);
 
     private final boolean crossTile;
 

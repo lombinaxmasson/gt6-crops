@@ -1,7 +1,88 @@
 {
-  "parent": "minecraft:block/cross",
+  "ambientocclusion": false,
   "render_type": "minecraft:cutout",
   "textures": {
-    "cross": "gt6crops:block/cross_crop_stick"
-  }
+    "particle": "gt6crops:block/crop_stick",
+    "stick": "gt6crops:block/crop_stick"
+  },
+  "elements": [
+    {
+      "name": "stick_nw",
+      "from": [2, -2, 2],
+      "to": [3, 14, 3],
+      "faces": {
+        "north": {"uv": [0, 0, 1, 16], "texture": "#stick"},
+        "east": {"uv": [1, 0, 2, 16], "texture": "#stick"},
+        "south": {"uv": [2, 0, 3, 16], "texture": "#stick"},
+        "west": {"uv": [3, 0, 4, 16], "texture": "#stick"},
+        "up": {"uv": [0, 0, 1, 1], "texture": "#stick"},
+        "down": {"uv": [0, 15, 1, 16], "texture": "#stick"}
+      }
+    },
+    {
+      "name": "stick_ne",
+      "from": [13, -2, 2],
+      "to": [14, 14, 3],
+      "faces": {
+        "north": {"uv": [0, 0, 1, 16], "texture": "#stick"},
+        "east": {"uv": [1, 0, 2, 16], "texture": "#stick"},
+        "south": {"uv": [2, 0, 3, 16], "texture": "#stick"},
+        "west": {"uv": [3, 0, 4, 16], "texture": "#stick"},
+        "up": {"uv": [0, 0, 1, 1], "texture": "#stick"},
+        "down": {"uv": [0, 15, 1, 16], "texture": "#stick"}
+      }
+    },
+    {
+      "name": "stick_sw",
+      "from": [2, -2, 13],
+      "to": [3, 14, 14],
+      "faces": {
+        "north": {"uv": [0, 0, 1, 16], "texture": "#stick"},
+        "east": {"uv": [1, 0, 2, 16], "texture": "#stick"},
+        "south": {"uv": [2, 0, 3, 16], "texture": "#stick"},
+        "west": {"uv": [3, 0, 4, 16], "texture": "#stick"},
+        "up": {"uv": [0, 0, 1, 1], "texture": "#stick"},
+        "down": {"uv": [0, 15, 1, 16], "texture": "#stick"}
+      }
+    },
+    {
+      "name": "stick_se",
+      "from": [13, -2, 13],
+      "to": [14, 14, 14],
+      "faces": {
+        "north": {"uv": [0, 0, 1, 16], "texture": "#stick"},
+        "east": {"uv": [1, 0, 2, 16], "texture": "#stick"},
+        "south": {"uv": [2, 0, 3, 16], "texture": "#stick"},
+        "west": {"uv": [3, 0, 4, 16], "texture": "#stick"},
+        "up": {"uv": [0, 0, 1, 1], "texture": "#stick"},
+        "down": {"uv": [0, 15, 1, 16], "texture": "#stick"}
+      }
+    },
+    {
+      "name": "crossbar_x",
+      "from": [3, 9, 7],
+      "to": [13, 11, 9],
+      "faces": {
+        "north": {"uv": [0, 0, 10, 2], "texture": "#stick"},
+        "east": {"uv": [0, 0, 2, 2], "texture": "#stick"},
+        "south": {"uv": [0, 0, 10, 2], "texture": "#stick"},
+        "west": {"uv": [0, 0, 2, 2], "texture": "#stick"},
+        "up": {"uv": [0, 0, 10, 2], "texture": "#stick"},
+        "down": {"uv": [0, 0, 10, 2], "texture": "#stick"}
+      }
+    },
+    {
+      "name": "crossbar_z",
+      "from": [7, 9, 3],
+      "to": [9, 11, 13],
+      "faces": {
+        "north": {"uv": [0, 0, 2, 2], "texture": "#stick"},
+        "east": {"uv": [0, 0, 10, 2], "texture": "#stick"},
+        "south": {"uv": [0, 0, 2, 2], "texture": "#stick"},
+        "west": {"uv": [0, 0, 10, 2], "texture": "#stick"},
+        "up": {"uv": [0, 0, 2, 10], "texture": "#stick"},
+        "down": {"uv": [0, 0, 2, 10], "texture": "#stick"}
+      }
+    }
+  ]
 }

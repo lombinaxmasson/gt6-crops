@@ -24,11 +24,14 @@ integration contract is in
 
 ## Asset provenance
 
-The GT6 crop-stage textures under `assets/gt6crops/textures/block/crop/` were
-copied from the referencable GT6 port asset catalog. That catalog marks its
-default assets as CC0-1.0; the source notices and license files remain in the
-reference project. The crop-stick and item icons are temporary placeholders
-from the same crop texture set.
+The crop-stage textures under `assets/gt6crops/textures/block/crop/` were
+copied from the referencable GT6 port asset catalog. That catalog dedicates
+its default assets to the public domain under CC0-1.0; the source notices
+remain in the reference project.
+
+The crop-stick model, its wood texture, and the seed-bag, Weed-EX, and
+crop-stick item icons are original to this addon. Weeds reuse the vanilla
+dead-bush sprite by resource reference.
 
 ## Development
 
