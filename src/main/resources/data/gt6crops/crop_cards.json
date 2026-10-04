@@ -1,0 +1,3240 @@
+{
+    "schema_version":  1,
+    "source":  "GT6CE/CrucibleCraft crop ledger plus vanilla cards",
+    "crop_count":  83,
+    "crops":  [
+                  {
+                      "id":  "indigo",
+                      "name":  "Indigo",
+                      "discovered_by":  "Eloraam",
+                      "tier":  2,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    1,
+                                    1,
+                                    0,
+                                    4,
+                                    0
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Color",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtBlossom",
+                                   "material":  "indigo",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_form",
+                                        "prefix":  "plantGtBlossom",
+                                        "material":  "indigo",
+                                        "count":  4
+                                    },
+                      "texture":  "indigo"
+                  },
+                  {
+                      "id":  "flax",
+                      "name":  "Flax",
+                      "discovered_by":  "Eloraam",
+                      "tier":  2,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    1,
+                                    1,
+                                    2,
+                                    0,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Vine",
+                                         "Silk",
+                                         "Addictive"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:string",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "flax"
+                  },
+                  {
+                      "id":  "oil_berries",
+                      "name":  "Oil Berries",
+                      "discovered_by":  "Spacetoad",
+                      "tier":  9,
+                      "max_size":  4,
+                      "growth_speed":  27000,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    6,
+                                    1,
+                                    2,
+                                    1,
+                                    12
+                                ],
+                      "attributes":  [
+                                         "Reed",
+                                         "Fire",
+                                         "Dark",
+                                         "Rotten",
+                                         "Coal",
+                                         "Oil",
+                                         "Berry"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtBerry",
+                                   "material":  "oil",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "oilberries"
+                  },
+                  {
+                      "id":  "bobsyeruncle_ranks",
+                      "name":  "Bobsyeruncle Ranks",
+                      "discovered_by":  "GenerikB",
+                      "tier":  11,
+                      "max_size":  4,
+                      "growth_speed":  16500,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    4,
+                                    0,
+                                    8,
+                                    2,
+                                    9
+                                ],
+                      "attributes":  [
+                                         "Vine",
+                                         "Shiny",
+                                         "Emerald",
+                                         "Berylium",
+                                         "Crystal"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtBerry",
+                                   "material":  "emerald",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "bobsyeruncleranks"
+                  },
+                  {
+                      "id":  "diareed",
+                      "name":  "Diareed",
+                      "discovered_by":  "Direwolf20",
+                      "tier":  12,
+                      "max_size":  4,
+                      "growth_speed":  36000,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    5,
+                                    0,
+                                    10,
+                                    2,
+                                    10
+                                ],
+                      "attributes":  [
+                                         "Reed",
+                                         "Fire",
+                                         "Shiny",
+                                         "Coal",
+                                         "Diamond",
+                                         "Crystal"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "dustTiny",
+                                   "material":  "diamond",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "diareed"
+                  },
+                  {
+                      "id":  "withereed",
+                      "name":  "Withereed",
+                      "discovered_by":  "CovertJaguar",
+                      "tier":  8,
+                      "max_size":  4,
+                      "growth_speed":  24000,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    0,
+                                    4,
+                                    1,
+                                    6
+                                ],
+                      "attributes":  [
+                                         "Reed",
+                                         "Fire",
+                                         "Undead",
+                                         "Coal",
+                                         "Rotten",
+                                         "Wither"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "dust",
+                                   "material":  "coal",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:coal",
+                                                "count":  1
+                                            },
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:coal",
+                                                "count":  1
+                                            }
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "withereed"
+                  },
+                  {
+                      "id":  "blaze_reed",
+                      "name":  "Blaze Reed",
+                      "discovered_by":  "Mr. Brain",
+                      "tier":  10,
+                      "max_size":  4,
+                      "growth_speed":  9000,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    4,
+                                    0,
+                                    8,
+                                    2,
+                                    10
+                                ],
+                      "attributes":  [
+                                         "Reed",
+                                         "Fire",
+                                         "Blaze",
+                                         "Sulfur"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:blaze_powder",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:blaze_rod",
+                                                "count":  1
+                                            }
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "blazereed"
+                  },
+                  {
+                      "id":  "eggplant",
+                      "name":  "Eggplant",
+                      "discovered_by":  "Link",
+                      "tier":  6,
+                      "max_size":  3,
+                      "growth_speed":  900,
+                      "after_harvest_size":  2,
+                      "harvest_size":  3,
+                      "stats":  [
+                                    0,
+                                    4,
+                                    1,
+                                    0,
+                                    0
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Food",
+                                         "Chicken",
+                                         "Egg",
+                                         "Feather",
+                                         "Addictive"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:egg",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:chicken",
+                                                "count":  1
+                                            },
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:feather",
+                                                "count":  1
+                                            },
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:feather",
+                                                "count":  1
+                                            },
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:feather",
+                                                "count":  1
+                                            }
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "eggplant"
+                  },
+                  {
+                      "id":  "corium",
+                      "name":  "Corium",
+                      "discovered_by":  "Gregorius Techneticies",
+                      "tier":  6,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    0,
+                                    2,
+                                    3,
+                                    1,
+                                    0
+                                ],
+                      "attributes":  [
+                                         "Vine",
+                                         "Cow",
+                                         "Silk"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:leather",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "corium"
+                  },
+                  {
+                      "id":  "corpse_plant",
+                      "name":  "Corpse Plant",
+                      "discovered_by":  "Mr. Kenny",
+                      "tier":  5,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    0,
+                                    2,
+                                    1,
+                                    0,
+                                    3
+                                ],
+                      "attributes":  [
+                                         "Vine",
+                                         "Food",
+                                         "Toxic",
+                                         "Undead",
+                                         "Rotten"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:rotten_flesh",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:bone_meal",
+                                                "count":  1
+                                            },
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:bone_meal",
+                                                "count":  1
+                                            },
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:bone",
+                                                "count":  1
+                                            }
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "corpseplant"
+                  },
+                  {
+                      "id":  "creeper_weed",
+                      "name":  "Creeper Weed",
+                      "discovered_by":  "General Spaz",
+                      "tier":  7,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    3,
+                                    0,
+                                    5,
+                                    1,
+                                    3
+                                ],
+                      "attributes":  [
+                                         "Vine",
+                                         "Creeper",
+                                         "Explosive",
+                                         "Fire",
+                                         "Sulfur",
+                                         "Saltpeter",
+                                         "Coal"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "dust",
+                                   "material":  "gunpowder",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "creeperweed"
+                  },
+                  {
+                      "id":  "ender_bloom",
+                      "name":  "Ender Bloom",
+                      "discovered_by":  "RichardG",
+                      "tier":  10,
+                      "max_size":  4,
+                      "growth_speed":  15000,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    5,
+                                    0,
+                                    2,
+                                    1,
+                                    6
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Shiny",
+                                         "Ender"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "dust",
+                                   "material":  "ender_pearl",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:ender_pearl",
+                                                "count":  1
+                                            },
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:ender_pearl",
+                                                "count":  1
+                                            },
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:ender_eye",
+                                                "count":  1
+                                            }
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "enderbloom"
+                  },
+                  {
+                      "id":  "meat_rose",
+                      "name":  "Meat Rose",
+                      "discovered_by":  "VintageBeef",
+                      "tier":  7,
+                      "max_size":  4,
+                      "growth_speed":  1500,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    0,
+                                    4,
+                                    1,
+                                    3,
+                                    0
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Food",
+                                         "Cow",
+                                         "Fish",
+                                         "Chicken",
+                                         "Pig"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:pink_dye",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:beef",
+                                                "count":  1
+                                            },
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:porkchop",
+                                                "count":  1
+                                            },
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:chicken",
+                                                "count":  1
+                                            },
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:fish",
+                                                "count":  1
+                                            }
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "meatrose"
+                  },
+                  {
+                      "id":  "milkwart",
+                      "name":  "Milkwart",
+                      "discovered_by":  "Mr. Brain",
+                      "tier":  6,
+                      "max_size":  3,
+                      "growth_speed":  900,
+                      "after_harvest_size":  1,
+                      "harvest_size":  3,
+                      "stats":  [
+                                    0,
+                                    3,
+                                    0,
+                                    1,
+                                    0
+                                ],
+                      "attributes":  [
+                                         "Wart",
+                                         "Food",
+                                         "Milk",
+                                         "Cow",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtWart",
+                                   "material":  "milk",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_form",
+                                        "prefix":  "plantGtWart",
+                                        "material":  "milk",
+                                        "count":  1
+                                    },
+                      "texture":  "milkwart"
+                  },
+                  {
+                      "id":  "glowshrooms",
+                      "name":  "Glowshrooms",
+                      "discovered_by":  "Speiger",
+                      "tier":  6,
+                      "max_size":  3,
+                      "growth_speed":  2400,
+                      "after_harvest_size":  1,
+                      "harvest_size":  3,
+                      "stats":  [
+                                    5,
+                                    0,
+                                    0,
+                                    2,
+                                    0
+                                ],
+                      "attributes":  [
+                                         "Wart",
+                                         "Shiny",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtWart",
+                                   "material":  "glowstone",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_form",
+                                        "prefix":  "plantGtWart",
+                                        "material":  "glowstone",
+                                        "count":  1
+                                    },
+                      "texture":  "glowshrooms"
+                  },
+                  {
+                      "id":  "slime_plant",
+                      "name":  "Slime Plant",
+                      "discovered_by":  "Neowulf",
+                      "tier":  6,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  3,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    3,
+                                    0,
+                                    0,
+                                    0,
+                                    2
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Slime",
+                                         "Bouncy",
+                                         "Sticky"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:slime_ball",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "slimeplant"
+                  },
+                  {
+                      "id":  "spidernip",
+                      "name":  "Spidernip",
+                      "discovered_by":  "Ms. Muffet",
+                      "tier":  4,
+                      "max_size":  4,
+                      "growth_speed":  600,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    1,
+                                    4,
+                                    1,
+                                    3
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Toxic",
+                                         "Silk",
+                                         "Spider",
+                                         "Ingredient",
+                                         "Addictive"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:string",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:spider_eye",
+                                                "count":  1
+                                            },
+                                            {
+                                                "kind":  "vanilla",
+                                                "item":  "minecraft:cobweb",
+                                                "count":  1
+                                            }
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "spidernip"
+                  },
+                  {
+                      "id":  "tear_stalks",
+                      "name":  "Tear Stalks",
+                      "discovered_by":  "Neowulf",
+                      "tier":  8,
+                      "max_size":  4,
+                      "growth_speed":  2400,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    1,
+                                    2,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                      "attributes":  [
+                                         "Reed",
+                                         "Healing",
+                                         "Nether",
+                                         "Ingredient",
+                                         "Ghast"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:ghast_tear",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "tearstalks"
+                  },
+                  {
+                      "id":  "tine",
+                      "name":  "Tine",
+                      "discovered_by":  "Gregorius Techneticies",
+                      "tier":  5,
+                      "max_size":  3,
+                      "growth_speed":  15000,
+                      "after_harvest_size":  2,
+                      "harvest_size":  3,
+                      "stats":  [
+                                    2,
+                                    0,
+                                    3,
+                                    0,
+                                    0
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Shiny",
+                                         "Metal",
+                                         "Pine",
+                                         "Tin"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtTwig",
+                                   "material":  "tin",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "tine"
+                  },
+                  {
+                      "id":  "coppon",
+                      "name":  "Coppon",
+                      "discovered_by":  "Mr. Brain",
+                      "tier":  6,
+                      "max_size":  3,
+                      "growth_speed":  18000,
+                      "after_harvest_size":  2,
+                      "harvest_size":  3,
+                      "stats":  [
+                                    2,
+                                    0,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Shiny",
+                                         "Metal",
+                                         "Cotton",
+                                         "Copper"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtFiber",
+                                   "material":  "copper",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "coppon"
+                  },
+                  {
+                      "id":  "argentia",
+                      "name":  "Argentia",
+                      "discovered_by":  "Eloraam",
+                      "tier":  7,
+                      "max_size":  4,
+                      "growth_speed":  21000,
+                      "after_harvest_size":  3,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    0,
+                                    1,
+                                    0,
+                                    0
+                                ],
+                      "attributes":  [
+                                         "Reed",
+                                         "Shiny",
+                                         "Metal",
+                                         "Silver"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtBlossom",
+                                   "material":  "silver",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "argentia"
+                  },
+                  {
+                      "id":  "plumbilia",
+                      "name":  "Plumbilia",
+                      "discovered_by":  "KingLemming",
+                      "tier":  6,
+                      "max_size":  4,
+                      "growth_speed":  18000,
+                      "after_harvest_size":  3,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    0,
+                                    3,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Reed",
+                                         "Heavy",
+                                         "Metal",
+                                         "Lead"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtBlossom",
+                                   "material":  "lead",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "plumbilia"
+                  },
+                  {
+                      "id":  "steeleaf_ranks",
+                      "name":  "Steeleaf Ranks",
+                      "discovered_by":  "Benimatic",
+                      "tier":  10,
+                      "max_size":  4,
+                      "growth_speed":  30000,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    3,
+                                    0,
+                                    7,
+                                    2,
+                                    8
+                                ],
+                      "attributes":  [
+                                         "Vine",
+                                         "Metal",
+                                         "Iron"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "nugget",
+                                   "material":  "steeleaf",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+                                            {
+                                                "kind":  "gt_form",
+                                                "prefix":  "ingot",
+                                                "material":  "steeleaf",
+                                                "count":  1
+                                            }
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "steeleafranks"
+                  },
+                  {
+                      "id":  "liveroots",
+                      "name":  "Liveroots",
+                      "discovered_by":  "Benimatic",
+                      "tier":  8,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    0,
+                                    5,
+                                    2,
+                                    6
+                                ],
+                      "attributes":  [
+                                         "Vine",
+                                         "Wood"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "dust",
+                                   "material":  "live_root",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+                                            {
+                                                "kind":  "none",
+                                                "count":  1
+                                            }
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "liveroots"
+                  },
+                  {
+                      "id":  "rye",
+                      "name":  "Rye",
+                      "discovered_by":  "Binnie",
+                      "tier":  1,
+                      "max_size":  7,
+                      "growth_speed":  0,
+                      "after_harvest_size":  2,
+                      "harvest_size":  7,
+                      "stats":  [
+                                    0,
+                                    4,
+                                    0,
+                                    0,
+                                    2
+                                ],
+                      "attributes":  [
+                                         "Wheat",
+                                         "Food",
+                                         "Grain"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:rye",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:rye",
+                                        "count":  1
+                                    },
+                      "texture":  "rye"
+                  },
+                  {
+                      "id":  "barley",
+                      "name":  "Barley",
+                      "discovered_by":  "Glitchfiend",
+                      "tier":  1,
+                      "max_size":  7,
+                      "growth_speed":  0,
+                      "after_harvest_size":  2,
+                      "harvest_size":  7,
+                      "stats":  [
+                                    0,
+                                    4,
+                                    0,
+                                    0,
+                                    2
+                                ],
+                      "attributes":  [
+                                         "Wheat",
+                                         "Food",
+                                         "Grain"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:barley",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:barley",
+                                        "count":  1
+                                    },
+                      "texture":  "barley"
+                  },
+                  {
+                      "id":  "oats",
+                      "name":  "Oats",
+                      "discovered_by":  "Pam",
+                      "tier":  1,
+                      "max_size":  7,
+                      "growth_speed":  0,
+                      "after_harvest_size":  2,
+                      "harvest_size":  7,
+                      "stats":  [
+                                    0,
+                                    4,
+                                    0,
+                                    0,
+                                    2
+                                ],
+                      "attributes":  [
+                                         "Wheat",
+                                         "Food",
+                                         "Grain"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:oats",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:oats",
+                                        "count":  1
+                                    },
+                      "texture":  "oats"
+                  },
+                  {
+                      "id":  "rice",
+                      "name":  "Rice",
+                      "discovered_by":  "Ellpeck",
+                      "tier":  1,
+                      "max_size":  7,
+                      "growth_speed":  0,
+                      "after_harvest_size":  2,
+                      "harvest_size":  7,
+                      "stats":  [
+                                    0,
+                                    4,
+                                    0,
+                                    0,
+                                    2
+                                ],
+                      "attributes":  [
+                                         "Wheat",
+                                         "Food",
+                                         "Grain"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:rice",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:rice",
+                                        "count":  1
+                                    },
+                      "texture":  "rice"
+                  },
+                  {
+                      "id":  "tea",
+                      "name":  "Tea",
+                      "discovered_by":  "Pam",
+                      "tier":  2,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    4,
+                                    2,
+                                    0,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Leaves",
+                                         "Food",
+                                         "Addictive"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtBlossom",
+                                   "material":  "tea",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_form",
+                                        "prefix":  "plantGtBlossom",
+                                        "material":  "tea",
+                                        "count":  4
+                                    },
+                      "texture":  "tea"
+                  },
+                  {
+                      "id":  "mint",
+                      "name":  "Mint",
+                      "discovered_by":  "Gregorius Techneticies",
+                      "tier":  2,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    3,
+                                    5,
+                                    0,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Leaves",
+                                         "Food",
+                                         "Fresh"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtBlossom",
+                                   "material":  "mint",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_form",
+                                        "prefix":  "plantGtBlossom",
+                                        "material":  "mint",
+                                        "count":  4
+                                    },
+                      "texture":  "mint"
+                  },
+                  {
+                      "id":  "lemon_plant",
+                      "name":  "Lemon Plant",
+                      "discovered_by":  "Cave Johnson",
+                      "tier":  3,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  3,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    3,
+                                    4,
+                                    3,
+                                    1,
+                                    2
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Food",
+                                         "Fruit",
+                                         "Explosive"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:lemon",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:lemon",
+                                        "count":  4
+                                    },
+                      "texture":  "lemonplant"
+                  },
+                  {
+                      "id":  "green_apple_tree",
+                      "name":  "Green Apple Tree",
+                      "discovered_by":  "The Guy",
+                      "tier":  3,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  3,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    3,
+                                    3,
+                                    5,
+                                    1,
+                                    2
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Food",
+                                         "Fruit",
+                                         "Apple"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:green_apple",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:green_apple",
+                                        "count":  4
+                                    },
+                      "texture":  "greenappletree"
+                  },
+                  {
+                      "id":  "yellow_apple_tree",
+                      "name":  "Yellow Apple Tree",
+                      "discovered_by":  "The Guy",
+                      "tier":  3,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  3,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    4,
+                                    4,
+                                    1,
+                                    2
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Food",
+                                         "Fruit",
+                                         "Apple"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:yellow_apple",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:yellow_apple",
+                                        "count":  4
+                                    },
+                      "texture":  "yellowappletree"
+                  },
+                  {
+                      "id":  "red_apple_tree",
+                      "name":  "Red Apple Tree",
+                      "discovered_by":  "The Guy",
+                      "tier":  3,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  3,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    4,
+                                    3,
+                                    1,
+                                    2
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Food",
+                                         "Fruit",
+                                         "Apple"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "minecraft:apple",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "minecraft:apple",
+                                        "count":  4
+                                    },
+                      "texture":  "redappletree"
+                  },
+                  {
+                      "id":  "dark_red_apple_tree",
+                      "name":  "Dark Red Apple Tree",
+                      "discovered_by":  "The Guy",
+                      "tier":  3,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  3,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    5,
+                                    2,
+                                    2,
+                                    3
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Food",
+                                         "Fruit",
+                                         "Apple"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:darkred_apple",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:darkred_apple",
+                                        "count":  4
+                                    },
+                      "texture":  "darkredappletree"
+                  },
+                  {
+                      "id":  "chili",
+                      "name":  "Chili",
+                      "discovered_by":  "Gregorius Techneticies",
+                      "tier":  3,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  3,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    4,
+                                    4,
+                                    6,
+                                    2,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Vine",
+                                         "Food",
+                                         "Fruit",
+                                         "Fire"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:chili_pepper",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:chili_pepper",
+                                        "count":  4
+                                    },
+                      "texture":  "chili"
+                  },
+                  {
+                      "id":  "tomato_plant",
+                      "name":  "Tomato Plant",
+                      "discovered_by":  "Kirby",
+                      "tier":  2,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  3,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    4,
+                                    2,
+                                    1,
+                                    3
+                                ],
+                      "attributes":  [
+                                         "Vine",
+                                         "Food",
+                                         "Fruit",
+                                         "Vegetable"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:tomato",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:tomato",
+                                        "count":  4
+                                    },
+                      "texture":  "tomatoplant"
+                  },
+                  {
+                      "id":  "red_grapes",
+                      "name":  "Red Grapes",
+                      "discovered_by":  "Pam",
+                      "tier":  3,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  3,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    1,
+                                    4,
+                                    0,
+                                    2,
+                                    3
+                                ],
+                      "attributes":  [
+                                         "Vine",
+                                         "Food",
+                                         "Fruit"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:red_grapes",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:red_grapes",
+                                        "count":  4
+                                    },
+                      "texture":  "redgrapes"
+                  },
+                  {
+                      "id":  "white_grapes",
+                      "name":  "White Grapes",
+                      "discovered_by":  "Binnie",
+                      "tier":  3,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  3,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    1,
+                                    4,
+                                    0,
+                                    0,
+                                    3
+                                ],
+                      "attributes":  [
+                                         "Vine",
+                                         "Food",
+                                         "Fruit"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:white_grapes",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:white_grapes",
+                                        "count":  4
+                                    },
+                      "texture":  "whitegrapes"
+                  },
+                  {
+                      "id":  "green_grapes",
+                      "name":  "Green Grapes",
+                      "discovered_by":  "Gwafu",
+                      "tier":  3,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  3,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    1,
+                                    4,
+                                    0,
+                                    1,
+                                    3
+                                ],
+                      "attributes":  [
+                                         "Vine",
+                                         "Food",
+                                         "Fruit"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:green_grapes",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:green_grapes",
+                                        "count":  4
+                                    },
+                      "texture":  "greengrapes"
+                  },
+                  {
+                      "id":  "purple_grapes",
+                      "name":  "Purple Grapes",
+                      "discovered_by":  "Gregorius Techneticies",
+                      "tier":  3,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  3,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    1,
+                                    4,
+                                    0,
+                                    2,
+                                    3
+                                ],
+                      "attributes":  [
+                                         "Vine",
+                                         "Food",
+                                         "Fruit",
+                                         "Member?"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:purple_grapes",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+                                            {
+                                                "kind":  "gt_item",
+                                                "item":  "gregtech:purple_grapes",
+                                                "count":  1
+                                            }
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:purple_grapes",
+                                        "count":  4
+                                    },
+                      "texture":  "purplegrapes"
+                  },
+                  {
+                      "id":  "blueberry_bush",
+                      "name":  "Blueberry Bush",
+                      "discovered_by":  "Pam",
+                      "tier":  3,
+                      "max_size":  5,
+                      "growth_speed":  0,
+                      "after_harvest_size":  4,
+                      "harvest_size":  5,
+                      "stats":  [
+                                    1,
+                                    4,
+                                    1,
+                                    4,
+                                    2
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Food",
+                                         "Fruit",
+                                         "Berry",
+                                         "Color"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:blueberry",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:blueberry",
+                                        "count":  4
+                                    },
+                      "texture":  "blueberrybush"
+                  },
+                  {
+                      "id":  "gooseberry_bush",
+                      "name":  "Gooseberry Bush",
+                      "discovered_by":  "Pam",
+                      "tier":  3,
+                      "max_size":  5,
+                      "growth_speed":  0,
+                      "after_harvest_size":  4,
+                      "harvest_size":  5,
+                      "stats":  [
+                                    1,
+                                    4,
+                                    1,
+                                    1,
+                                    2
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Food",
+                                         "Fruit",
+                                         "Berry"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:gooseberry",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:gooseberry",
+                                        "count":  4
+                                    },
+                      "texture":  "gooseberrybush"
+                  },
+                  {
+                      "id":  "candleberry_bush",
+                      "name":  "Candleberry Bush",
+                      "discovered_by":  "Pam",
+                      "tier":  3,
+                      "max_size":  5,
+                      "growth_speed":  0,
+                      "after_harvest_size":  4,
+                      "harvest_size":  5,
+                      "stats":  [
+                                    3,
+                                    3,
+                                    1,
+                                    0,
+                                    2
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Food",
+                                         "Fruit",
+                                         "Berry",
+                                         "Wax"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:candleberry",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:candleberry",
+                                        "count":  4
+                                    },
+                      "texture":  "candleberrybush"
+                  },
+                  {
+                      "id":  "cranberries",
+                      "name":  "Cranberries",
+                      "discovered_by":  "Pam",
+                      "tier":  3,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  3,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    1,
+                                    4,
+                                    0,
+                                    2,
+                                    3
+                                ],
+                      "attributes":  [
+                                         "Vine",
+                                         "Food",
+                                         "Fruit",
+                                         "Berry"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:cranberry",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:cranberry",
+                                        "count":  4
+                                    },
+                      "texture":  "cranberries"
+                  },
+                  {
+                      "id":  "black_currants",
+                      "name":  "Black Currants",
+                      "discovered_by":  "Gregorius Techneticies",
+                      "tier":  3,
+                      "max_size":  5,
+                      "growth_speed":  0,
+                      "after_harvest_size":  4,
+                      "harvest_size":  5,
+                      "stats":  [
+                                    1,
+                                    4,
+                                    1,
+                                    1,
+                                    2
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Food",
+                                         "Fruit",
+                                         "Berry"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:black_currants",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:black_currants",
+                                        "count":  4
+                                    },
+                      "texture":  "blackcurrants"
+                  },
+                  {
+                      "id":  "white_currants",
+                      "name":  "White Currants",
+                      "discovered_by":  "Gregorius Techneticies",
+                      "tier":  3,
+                      "max_size":  5,
+                      "growth_speed":  0,
+                      "after_harvest_size":  4,
+                      "harvest_size":  5,
+                      "stats":  [
+                                    1,
+                                    4,
+                                    1,
+                                    0,
+                                    2
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Food",
+                                         "Fruit",
+                                         "Berry"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:white_currants",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:white_currants",
+                                        "count":  4
+                                    },
+                      "texture":  "whitecurrants"
+                  },
+                  {
+                      "id":  "red_currants",
+                      "name":  "Red Currants",
+                      "discovered_by":  "Gregorius Techneticies",
+                      "tier":  3,
+                      "max_size":  5,
+                      "growth_speed":  0,
+                      "after_harvest_size":  4,
+                      "harvest_size":  5,
+                      "stats":  [
+                                    1,
+                                    4,
+                                    1,
+                                    2,
+                                    2
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Food",
+                                         "Fruit",
+                                         "Berry"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:red_currants",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:red_currants",
+                                        "count":  4
+                                    },
+                      "texture":  "redcurrants"
+                  },
+                  {
+                      "id":  "blackberries",
+                      "name":  "Blackberries",
+                      "discovered_by":  "Pam",
+                      "tier":  3,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  3,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    1,
+                                    4,
+                                    4,
+                                    2,
+                                    3
+                                ],
+                      "attributes":  [
+                                         "Vine",
+                                         "Food",
+                                         "Fruit",
+                                         "Berry"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:blackberry",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:blackberry",
+                                        "count":  4
+                                    },
+                      "texture":  "blackberries"
+                  },
+                  {
+                      "id":  "raspberries",
+                      "name":  "Raspberries",
+                      "discovered_by":  "Pam",
+                      "tier":  3,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  3,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    1,
+                                    4,
+                                    1,
+                                    2,
+                                    3
+                                ],
+                      "attributes":  [
+                                         "Vine",
+                                         "Food",
+                                         "Fruit",
+                                         "Berry"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:raspberry",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:raspberry",
+                                        "count":  4
+                                    },
+                      "texture":  "raspberries"
+                  },
+                  {
+                      "id":  "strawberries",
+                      "name":  "Strawberries",
+                      "discovered_by":  "Pam",
+                      "tier":  3,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    1,
+                                    4,
+                                    0,
+                                    2,
+                                    4
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Food",
+                                         "Fruit",
+                                         "Berry"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:strawberry",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:strawberry",
+                                        "count":  4
+                                    },
+                      "texture":  "strawberries"
+                  },
+                  {
+                      "id":  "onion",
+                      "name":  "Onion",
+                      "discovered_by":  "Onion San",
+                      "tier":  2,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    3,
+                                    3,
+                                    3,
+                                    0,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Vegetable",
+                                         "Food",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:onion",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:onion",
+                                        "count":  4
+                                    },
+                      "texture":  "onion"
+                  },
+                  {
+                      "id":  "cucumber",
+                      "name":  "Cucumber",
+                      "discovered_by":  "Pam",
+                      "tier":  2,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    1,
+                                    5,
+                                    0,
+                                    0,
+                                    2
+                                ],
+                      "attributes":  [
+                                         "Vegetable",
+                                         "Food",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:cucumber",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:cucumber",
+                                        "count":  4
+                                    },
+                      "texture":  "cucumber"
+                  },
+                  {
+                      "id":  "peanuts",
+                      "name":  "Peanuts",
+                      "discovered_by":  "Snoopy",
+                      "tier":  3,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    1,
+                                    4,
+                                    0,
+                                    2,
+                                    4
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Food",
+                                         "Nut"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:peanut",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:peanut",
+                                        "count":  4
+                                    },
+                      "texture":  "peanuts"
+                  },
+                  {
+                      "id":  "ananas",
+                      "name":  "Ananas",
+                      "discovered_by":  "Spongebob",
+                      "tier":  4,
+                      "max_size":  3,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  3,
+                      "stats":  [
+                                    3,
+                                    3,
+                                    5,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Food",
+                                         "Fruit",
+                                         "Pine",
+                                         "Apple"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_item",
+                                   "item":  "gregtech:ananas",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "gt_item",
+                                        "item":  "gregtech:ananas",
+                                        "count":  4
+                                    },
+                      "texture":  "ananas"
+                  },
+                  {
+                      "id":  "desert_nova",
+                      "name":  "Desert Nova",
+                      "discovered_by":  "Mithion",
+                      "tier":  6,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    5,
+                                    1,
+                                    7,
+                                    4,
+                                    10
+                                ],
+                      "attributes":  [
+                                         "Cactus",
+                                         "Magic",
+                                         "Fire",
+                                         "Explosive"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "none",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "desertnova",
+                      "blocked_without":  "arsmagica"
+                  },
+                  {
+                      "id":  "cerublossom",
+                      "name":  "Cerublossom",
+                      "discovered_by":  "Mithion",
+                      "tier":  6,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    1,
+                                    1,
+                                    2,
+                                    4,
+                                    10
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Magic",
+                                         "Shiny"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "none",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "cerublossom",
+                      "blocked_without":  "arsmagica"
+                  },
+                  {
+                      "id":  "shimmerleaf",
+                      "name":  "Shimmerleaf",
+                      "discovered_by":  "Azanor",
+                      "tier":  11,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    5,
+                                    1,
+                                    4,
+                                    1,
+                                    8
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Magic",
+                                         "Shiny",
+                                         "Metal",
+                                         "Mercury"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "chunkGt",
+                                   "material":  "mercury",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "shimmerleaf",
+                      "blocked_without":  "thaumcraft"
+                  },
+                  {
+                      "id":  "cinderpearl",
+                      "name":  "Cinderpearl",
+                      "discovered_by":  "Azanor",
+                      "tier":  8,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    3,
+                                    1,
+                                    8,
+                                    2,
+                                    8
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Magic",
+                                         "Fire",
+                                         "Blaze",
+                                         "Sulfur",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:blaze_powder",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "cinderpearl",
+                      "blocked_without":  "thaumcraft"
+                  },
+                  {
+                      "id":  "ferru",
+                      "name":  "Ferru",
+                      "discovered_by":  "IC2",
+                      "tier":  6,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Metal",
+                                         "Iron"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtBlossom",
+                                   "material":  "iron",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "indigo"
+                  },
+                  {
+                      "id":  "aurelia",
+                      "name":  "Aurelia",
+                      "discovered_by":  "IC2",
+                      "tier":  8,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Metal",
+                                         "Gold"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtBlossom",
+                                   "material":  "gold",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "argentia"
+                  },
+                  {
+                      "id":  "weed",
+                      "name":  "Weeds",
+                      "discovered_by":  "IC2",
+                      "tier":  1,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  0,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    31
+                                ],
+                      "attributes":  [
+                                         "Weed"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "none",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "weed"
+                  },
+                  {
+                      "id":  "wheat",
+                      "name":  "Wheat",
+                      "discovered_by":  "gt6crops",
+                      "tier":  1,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Crop",
+                                         "Grain",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:wheat",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:wheat_seeds",
+                                        "count":  1
+                                    },
+                      "texture":  "wheat"
+                  },
+                  {
+                      "id":  "carrot",
+                      "name":  "Carrot",
+                      "discovered_by":  "gt6crops",
+                      "tier":  1,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Crop",
+                                         "Root",
+                                         "Food"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:carrot",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:carrot",
+                                        "count":  1
+                                    },
+                      "texture":  "carrot"
+                  },
+                  {
+                      "id":  "potato",
+                      "name":  "Potato",
+                      "discovered_by":  "gt6crops",
+                      "tier":  1,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Crop",
+                                         "Root",
+                                         "Food"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:potato",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:potato",
+                                        "count":  1
+                                    },
+                      "texture":  "potato"
+                  },
+                  {
+                      "id":  "beetroot",
+                      "name":  "Beetroot",
+                      "discovered_by":  "gt6crops",
+                      "tier":  1,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Crop",
+                                         "Root",
+                                         "Food"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:beetroot",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:beetroot_seeds",
+                                        "count":  1
+                                    },
+                      "texture":  "beetroot"
+                  },
+                  {
+                      "id":  "pumpkin",
+                      "name":  "Pumpkin",
+                      "discovered_by":  "gt6crops",
+                      "tier":  2,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Crop",
+                                         "Fruit",
+                                         "Food"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:pumpkin",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:pumpkin_seeds",
+                                        "count":  1
+                                    },
+                      "texture":  "pumpkin"
+                  },
+                  {
+                      "id":  "melon",
+                      "name":  "Melon",
+                      "discovered_by":  "gt6crops",
+                      "tier":  2,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Crop",
+                                         "Fruit",
+                                         "Food"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:melon",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:melon_seeds",
+                                        "count":  1
+                                    },
+                      "texture":  "melon"
+                  },
+                  {
+                      "id":  "sugar_cane",
+                      "name":  "Sugar Cane",
+                      "discovered_by":  "gt6crops",
+                      "tier":  2,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Crop",
+                                         "Reed",
+                                         "Sugar"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:sugar_cane",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:sugar_cane",
+                                        "count":  1
+                                    },
+                      "texture":  "sugar_cane"
+                  },
+                  {
+                      "id":  "nether_wart",
+                      "name":  "Nether Wart",
+                      "discovered_by":  "gt6crops",
+                      "tier":  2,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Nether",
+                                         "Wart",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:nether_wart",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:nether_wart",
+                                        "count":  1
+                                    },
+                      "texture":  "nether_wart"
+                  },
+                  {
+                      "id":  "cocoa",
+                      "name":  "Cocoa",
+                      "discovered_by":  "gt6crops",
+                      "tier":  2,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Crop",
+                                         "Fruit",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:cocoa_beans",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:cocoa_beans",
+                                        "count":  1
+                                    },
+                      "texture":  "cocoa"
+                  },
+                  {
+                      "id":  "dandelion",
+                      "name":  "Dandelion",
+                      "discovered_by":  "gt6crops",
+                      "tier":  1,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Color",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:dandelion",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:dandelion",
+                                        "count":  1
+                                    },
+                      "texture":  "dandelion"
+                  },
+                  {
+                      "id":  "poppy",
+                      "name":  "Poppy",
+                      "discovered_by":  "gt6crops",
+                      "tier":  1,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Color",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:poppy",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:poppy",
+                                        "count":  1
+                                    },
+                      "texture":  "poppy"
+                  },
+                  {
+                      "id":  "blue_orchid",
+                      "name":  "Blue Orchid",
+                      "discovered_by":  "gt6crops",
+                      "tier":  1,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Color",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:blue_orchid",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:blue_orchid",
+                                        "count":  1
+                                    },
+                      "texture":  "blue_orchid"
+                  },
+                  {
+                      "id":  "allium",
+                      "name":  "Allium",
+                      "discovered_by":  "gt6crops",
+                      "tier":  1,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Color",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:allium",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:allium",
+                                        "count":  1
+                                    },
+                      "texture":  "allium"
+                  },
+                  {
+                      "id":  "azure_bluet",
+                      "name":  "Azure Bluet",
+                      "discovered_by":  "gt6crops",
+                      "tier":  1,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Color",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:azure_bluet",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:azure_bluet",
+                                        "count":  1
+                                    },
+                      "texture":  "azure_bluet"
+                  },
+                  {
+                      "id":  "red_tulip",
+                      "name":  "Red Tulip",
+                      "discovered_by":  "gt6crops",
+                      "tier":  1,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Color",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:red_tulip",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:red_tulip",
+                                        "count":  1
+                                    },
+                      "texture":  "red_tulip"
+                  },
+                  {
+                      "id":  "orange_tulip",
+                      "name":  "Orange Tulip",
+                      "discovered_by":  "gt6crops",
+                      "tier":  1,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Color",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:orange_tulip",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:orange_tulip",
+                                        "count":  1
+                                    },
+                      "texture":  "orange_tulip"
+                  },
+                  {
+                      "id":  "white_tulip",
+                      "name":  "White Tulip",
+                      "discovered_by":  "gt6crops",
+                      "tier":  1,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Color",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:white_tulip",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:white_tulip",
+                                        "count":  1
+                                    },
+                      "texture":  "white_tulip"
+                  },
+                  {
+                      "id":  "pink_tulip",
+                      "name":  "Pink Tulip",
+                      "discovered_by":  "gt6crops",
+                      "tier":  1,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Color",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:pink_tulip",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:pink_tulip",
+                                        "count":  1
+                                    },
+                      "texture":  "pink_tulip"
+                  },
+                  {
+                      "id":  "oxeye_daisy",
+                      "name":  "Oxeye Daisy",
+                      "discovered_by":  "gt6crops",
+                      "tier":  1,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Color",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:oxeye_daisy",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:oxeye_daisy",
+                                        "count":  1
+                                    },
+                      "texture":  "oxeye_daisy"
+                  },
+                  {
+                      "id":  "cornflower",
+                      "name":  "Cornflower",
+                      "discovered_by":  "gt6crops",
+                      "tier":  1,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Color",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:cornflower",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:cornflower",
+                                        "count":  1
+                                    },
+                      "texture":  "cornflower"
+                  },
+                  {
+                      "id":  "lily_of_the_valley",
+                      "name":  "Lily of the Valley",
+                      "discovered_by":  "gt6crops",
+                      "tier":  1,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    2,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                      "attributes":  [
+                                         "Flower",
+                                         "Color",
+                                         "Ingredient"
+                                     ],
+                      "crossbreed_only":  false,
+                      "drop":  {
+                                   "kind":  "vanilla",
+                                   "item":  "minecraft:lily_of_the_valley",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "vanilla",
+                                        "item":  "minecraft:lily_of_the_valley",
+                                        "count":  1
+                                    },
+                      "texture":  "lily_of_the_valley"
+                  }
+              ]
+}

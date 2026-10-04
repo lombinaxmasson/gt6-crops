@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "age=0": { "model": "gt6crops:block/cross_crop_stick" },
+    "age=1": { "model": "gt6crops:block/cross_crop_stick" },
+    "age=2": { "model": "gt6crops:block/cross_crop_stick" },
+    "age=3": { "model": "gt6crops:block/cross_crop_stick" },
+    "age=4": { "model": "gt6crops:block/cross_crop_stick" },
+    "age=5": { "model": "gt6crops:block/cross_crop_stick" },
+    "age=6": { "model": "gt6crops:block/cross_crop_stick" },
+    "age=7": { "model": "gt6crops:block/cross_crop_stick" }
+  }
+}

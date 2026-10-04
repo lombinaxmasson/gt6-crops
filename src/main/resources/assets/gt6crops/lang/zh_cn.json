@@ -1,0 +1,11 @@
+{
+  "itemGroup.gt6crops": "GT6 作物",
+  "block.gt6crops.crop_stick": "作物架",
+  "block.gt6crops.cross_crop_stick": "杂交作物架",
+  "item.gt6crops.seed_bag": "作物种子袋",
+  "item.gt6crops.seed_bag.crop": "作物：%s",
+  "item.gt6crops.seed_bag.stats": "生长 %s  产量 %s  抗性 %s",
+  "item.gt6crops.weed_ex": "除草剂",
+  "item.gt6crops.weed_ex.tooltip": "抑制作物架上的杂草",
+  "container.gt6crops.crop": "%s"
+}

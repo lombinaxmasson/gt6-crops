@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GS",
+    " S"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:glass_bottle"
+    },
+    "S": {
+      "item": "minecraft:bone_meal"
+    }
+  },
+  "result": {
+    "id": "gt6crops:weed_ex",
+    "count": 1
+  }
+}
