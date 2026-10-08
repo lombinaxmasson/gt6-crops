@@ -190,4 +190,6 @@ the CropsNH wheat-seed body and highlight masks, tinted per crop.
 
 Set `JAVA_HOME` to the project JDK 21 before using Gradle. Do not commit the
 GT6CE jar; `libs/gt6ce/*.jar` is ignored. `build-commit.txt` and the checksum
-record the GT6CE build used locally.
+record the GT6CE build used locally. CI builds GT6CE from the commit in
+`build-commit.txt` and caches the jar by that commit, so updating GT6CE locally
+and committing the new `build-commit.txt` moves CI with it.

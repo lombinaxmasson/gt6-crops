@@ -5,6 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -12,14 +13,88 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
 
+      # The GT6CE jar is not in git, so CI builds it from the commit we pin.
+      - name: Read pinned GT6CE commit
+        run: echo "GT6CE_COMMIT=$(tr -d '[:space:]' < libs/gt6ce/build-commit.txt)" >> "$GITHUB_ENV"
+
+      - name: Restore GT6CE jar
+        id: gt6ce-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: libs/gt6ce/gregtech6-1.21.1-neoforge.jar
+          key: gt6ce-neoforge-1.21.1-${{ env.GT6CE_COMMIT }}
+
+      - name: Checkout GT6CE
+        if: steps.gt6ce-cache.outputs.cache-hit != 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: SaltNya/GregTech6
+          ref: ${{ env.GT6CE_COMMIT }}
+          path: gt6ce-src
+
+      - name: Setup JDK 17 for GT6CE
+        if: steps.gt6ce-cache.outputs.cache-hit != 'true'
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Record JDK 17
+        if: steps.gt6ce-cache.outputs.cache-hit != 'true'
+        run: echo "JAVA17_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
+
       - name: Setup JDK 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Record JDK 21
+        run: echo "JAVA21_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
+
+      # GT6CE runs Gradle on JDK 17 and needs JDK 21 as a toolchain for NeoForge.
+      - name: Build GT6CE
+        if: steps.gt6ce-cache.outputs.cache-hit != 'true'
+        working-directory: gt6ce-src
+        env:
+          JAVA_HOME: ${{ env.JAVA17_HOME }}
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon --stacktrace \
+            -Dorg.gradle.java.home="$JAVA17_HOME" \
+            -Dorg.gradle.java.installations.fromEnv=JAVA17_HOME,JAVA21_HOME \
+            -Dorg.gradle.java.installations.auto-download=false \
+            :neoforge:jar
+          shopt -s nullglob
+          jars=()
+          for jar in neoforge/build/libs/*.jar; do
+            case "$jar" in
+              *-sources.jar|*-javadoc.jar|*-dev.jar) ;;
+              *) jars+=("$jar") ;;
+            esac
+          done
+          if [ "${#jars[@]}" -ne 1 ]; then
+            echo "Expected one GT6CE NeoForge jar, found: ${jars[*]}"
+            exit 1
+          fi
+          cp "${jars[0]}" ../libs/gt6ce/gregtech6-1.21.1-neoforge.jar
+
+      - name: Cache GT6CE jar
+        if: steps.gt6ce-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: libs/gt6ce/gregtech6-1.21.1-neoforge.jar
+          key: gt6ce-neoforge-1.21.1-${{ env.GT6CE_COMMIT }}
+
+      - name: Compare GT6CE jar with the recorded checksum
+        working-directory: libs/gt6ce
+        run: |
+          if ! sha256sum --check --status gregtech6-1.21.1-neoforge.jar.sha256; then
+            echo "::warning::GT6CE jar built from $GT6CE_COMMIT differs from the recorded checksum."
+          fi
 
       - name: Build with Gradle
         run: ./gradlew build
