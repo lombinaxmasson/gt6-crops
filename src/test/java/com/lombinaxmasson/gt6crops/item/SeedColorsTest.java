@@ -4,29 +4,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.Test;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-
 class SeedColorsTest {
+    private static final Pattern CROP_ID = Pattern.compile("\"id\"\\s*:\\s*\"([^\"]+)\"");
+
     @Test
     void everyCropUsesAWheatSeedTint() throws Exception {
         List<String> missing = new ArrayList<>();
         try (var stream = SeedColorsTest.class.getResourceAsStream("/data/gt6crops/crop_cards.json")) {
             assertNotNull(stream);
-            JsonElement root = JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
-            for (JsonElement crop : root.getAsJsonObject().getAsJsonArray("crops")) {
-                String id = crop.getAsJsonObject().get("id").getAsString();
+            String ledger = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+            Matcher ids = CROP_ID.matcher(ledger);
+            assertTrue(ids.find());
+            do {
+                String id = ids.group(1);
                 if (!SeedColors.has(id)) {
                     missing.add(id);
                 }
-            }
+            } while (ids.find());
         }
         assertTrue(missing.isEmpty(), () -> "crops without seed colors: " + missing);
     }
