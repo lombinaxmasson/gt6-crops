@@ -1,12 +1,20 @@
 {
   "variants": {
-    "age=0": { "model": "gt6crops:block/crop_stick" },
-    "age=1": { "model": "gt6crops:block/crop_stick" },
-    "age=2": { "model": "gt6crops:block/crop_stick" },
-    "age=3": { "model": "gt6crops:block/crop_stick" },
-    "age=4": { "model": "gt6crops:block/crop_stick" },
-    "age=5": { "model": "gt6crops:block/crop_stick" },
-    "age=6": { "model": "gt6crops:block/crop_stick" },
-    "age=7": { "model": "gt6crops:block/crop_stick" }
+    "age=0,cross=false": { "model": "gt6crops:block/crop_stick" },
+    "age=1,cross=false": { "model": "gt6crops:block/crop_stick" },
+    "age=2,cross=false": { "model": "gt6crops:block/crop_stick" },
+    "age=3,cross=false": { "model": "gt6crops:block/crop_stick" },
+    "age=4,cross=false": { "model": "gt6crops:block/crop_stick" },
+    "age=5,cross=false": { "model": "gt6crops:block/crop_stick" },
+    "age=6,cross=false": { "model": "gt6crops:block/crop_stick" },
+    "age=7,cross=false": { "model": "gt6crops:block/crop_stick" },
+    "age=0,cross=true": { "model": "gt6crops:block/cross_crop_stick" },
+    "age=1,cross=true": { "model": "gt6crops:block/cross_crop_stick" },
+    "age=2,cross=true": { "model": "gt6crops:block/cross_crop_stick" },
+    "age=3,cross=true": { "model": "gt6crops:block/cross_crop_stick" },
+    "age=4,cross=true": { "model": "gt6crops:block/cross_crop_stick" },
+    "age=5,cross=true": { "model": "gt6crops:block/cross_crop_stick" },
+    "age=6,cross=true": { "model": "gt6crops:block/cross_crop_stick" },
+    "age=7,cross=true": { "model": "gt6crops:block/cross_crop_stick" }
   }
 }

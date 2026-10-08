@@ -27,10 +27,12 @@ corresponding GT6CE item is registered:
 
 The four apple cards are deliberately handled separately:
 
-- `red_apple_tree` uses `minecraft:apple`.
-- `green_apple_tree`, `yellow_apple_tree`, and `dark_red_apple_tree` point at
-  their historical GT6 names and are skipped if GT6CE does not provide those
-  items.
+- `red_apple_tree` uses `minecraft:apple`, matching GT6's alias for the red apple.
+- `green_apple_tree`, `yellow_apple_tree`, and `dark_red_apple_tree` use
+  `gregtech:apple`. GT6CE did not port the three colored apple items.
+
+GT material names in the ledger are matched without case or underscores, so
+`live_root` resolves to `LiveRoot` and `ender_pearl` resolves to `EnderPearl`.
 
 The authoritative result for a particular GT6CE jar is printed during startup
 as `loaded ... crop cards; skipped ...`, with one warning per skipped card.

@@ -2,18 +2,20 @@ package com.lombinaxmasson.gt6crops.block;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Random;
 
 import com.lombinaxmasson.gt6crops.Gt6Crops;
 import com.lombinaxmasson.gt6crops.Gt6CropsTags;
 import com.lombinaxmasson.gt6crops.card.CropCard;
 import com.lombinaxmasson.gt6crops.card.CropCards;
-import com.lombinaxmasson.gt6crops.item.SeedBagItem;
+import com.lombinaxmasson.gt6crops.item.CropSeedItem;
 import com.lombinaxmasson.gt6crops.item.WeedExItem;
 import com.lombinaxmasson.gt6crops.rules.CropRules;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.BlockTags;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -33,55 +35,62 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.sounds.SoundSource;
 
-/** A single crop-stick host, with a crossbreed variant for empty centers. */
+/** One crop-stick block. An empty stick accepts a second stick and becomes a cross. */
 public final class CropStickBlock extends Block implements EntityBlock {
     public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 7);
-    private static final VoxelShape SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 14.0, 14.0);
+    public static final BooleanProperty CROSS = BooleanProperty.create("cross");
+    private static final VoxelShape STICKS = Block.box(2.0, 0.0, 2.0, 14.0, 13.0, 14.0);
+    private static final VoxelShape CROSS_STICKS = Block.box(0.0, 0.0, 0.0, 16.0, 13.0, 16.0);
 
-    private final boolean crossTile;
-
-    public CropStickBlock(boolean crossTile) {
+    public CropStickBlock() {
         super(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.PLANT)
                 .instabreak()
-                .sound(SoundType.BAMBOO)
+                .sound(SoundType.WOOD)
                 .noOcclusion()
+                .noCollission()
                 .pushReaction(PushReaction.DESTROY));
-        this.crossTile = crossTile;
-        registerDefaultState(stateDefinition.any().setValue(AGE, 0));
-    }
-
-    public boolean crossTile() {
-        return crossTile;
+        registerDefaultState(stateDefinition.any().setValue(AGE, 0).setValue(CROSS, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(AGE);
+        builder.add(AGE, CROSS);
     }
 
     @Override
     protected VoxelShape getShape(
             BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        return state.getValue(CROSS) ? CROSS_STICKS : STICKS;
+    }
+
+    @Override
+    protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
+        List<ItemStack> drops = super.getDrops(state, params);
+        if (state.getValue(CROSS)) {
+            drops.add(new ItemStack(this));
+        }
+        return drops;
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(AGE, 0);
+        return defaultBlockState();
     }
 
     @Override
     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        return level.getBlockState(pos.below()).is(BlockTags.DIRT)
-                || level.getBlockState(pos.below()).is(Blocks.FARMLAND);
+        return level.getBlockState(pos.below()).is(Blocks.FARMLAND);
     }
 
     @Override
@@ -126,6 +135,21 @@ public final class CropStickBlock extends Block implements EntityBlock {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
+        if (stack.is(Gt6Crops.CROP_STICK_ITEM.get()) && crop.canUpgrade()) {
+            if (!level.isClientSide) {
+                crop.upgradeToCross();
+                consumeOne(stack, player);
+                level.playSound(
+                        null,
+                        pos,
+                        SoundType.WOOD.getPlaceSound(),
+                        SoundSource.BLOCKS,
+                        0.5F,
+                        0.8F);
+            }
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        }
+
         if (stack.getItem() instanceof WeedExItem) {
             if (!level.isClientSide && crop.applyWeedEx()) {
                 consumeOne(stack, player);
@@ -133,15 +157,9 @@ public final class CropStickBlock extends Block implements EntityBlock {
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
 
-        if (crop.isEmpty()) {
-            SeedBagItem.data(stack).ifPresentOrElse(
-                    data -> plantFromBag(level, crop, data, stack, player),
-                    () -> plantFromBaseSeed(level, crop, stack, player));
-            if (SeedBagItem.data(stack).isPresent()
-                    || CropCards.byBaseSeed(stack).isPresent()) {
-                return ItemInteractionResult.sidedSuccess(level.isClientSide);
-            }
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        ItemInteractionResult planted = offerSeed(level, crop, stack, player);
+        if (planted.consumesAction()) {
+            return planted;
         }
 
         if (stack.is(Gt6CropsTags.FERTILIZER)) {
@@ -171,37 +189,73 @@ public final class CropStickBlock extends Block implements EntityBlock {
             BlockPos pos,
             Player player,
             BlockHitResult hit) {
-        if (level.getBlockEntity(pos) instanceof CropTile crop && crop.harvest(player)) {
+        if (!(level.getBlockEntity(pos) instanceof CropTile crop)) {
+            return InteractionResult.PASS;
+        }
+        if (crop.isEmpty() && crop.isCrossTile()) {
+            if (!level.isClientSide) {
+                crop.removeCross(player);
+                level.playSound(
+                        null,
+                        pos,
+                        SoundType.WOOD.getPlaceSound(),
+                        SoundSource.BLOCKS,
+                        0.5F,
+                        0.8F);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (crop.harvest(player)) {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         return InteractionResult.PASS;
     }
 
-    private static void plantFromBag(
-            Level level,
-            CropTile crop,
-            SeedBagItem.SeedData data,
-            ItemStack stack,
-            Player player) {
-        CropCard card = CropCards.find(data.cardId()).orElse(null);
+    /**
+     * Plants a crop seed or a matching base seed on an empty stick.
+     * A cross refuses the seed and tells the player why.
+     */
+    static ItemInteractionResult offerSeed(
+            Level level, CropTile crop, ItemStack stack, Player player) {
+        CropCard card = seedCard(stack);
         if (card == null) {
-            return;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+        if (!crop.isEmpty()) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+        if (crop.isCrossTile()) {
+            if (!level.isClientSide) {
+                player.displayClientMessage(
+                        Component.translatable("message.gt6crops.no_plant_on_cross"),
+                        true);
+            }
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         if (!level.isClientSide) {
-            crop.plant(card, data.stats());
+            CropRules.Stats stats = CropSeedItem.data(stack)
+                    .map(CropSeedItem.SeedData::stats)
+                    .orElseGet(() -> CropRules.initialStats(
+                            card, new Random(level.random.nextLong())));
+            crop.plant(card, stats);
             consumeOne(stack, player);
+            level.playSound(
+                    null,
+                    crop.getBlockPos(),
+                    SoundEvents.CROP_PLANTED,
+                    SoundSource.BLOCKS,
+                    1.0F,
+                    1.0F);
         }
+        return ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    private static void plantFromBaseSeed(
-            Level level, CropTile crop, ItemStack stack, Player player) {
-        CropCards.byBaseSeed(stack).ifPresent(card -> {
-            if (!level.isClientSide) {
-                crop.plant(card, CropRules.initialStats(
-                        card, new Random(level.random.nextLong())));
-                consumeOne(stack, player);
-            }
-        });
+    private static CropCard seedCard(ItemStack stack) {
+        CropCard fromSeed = CropSeedItem.card(stack).orElse(null);
+        if (fromSeed != null && !fromSeed.isWeed()) {
+            return fromSeed;
+        }
+        return CropCards.byBaseSeed(stack).orElse(null);
     }
 
     private static void consumeOne(ItemStack stack, Player player) {

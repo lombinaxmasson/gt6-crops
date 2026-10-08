@@ -8,13 +8,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Random;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.lombinaxmasson.gt6crops.Gt6Crops;
-import com.lombinaxmasson.gt6crops.rules.CropRules;
 
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.ModList;
@@ -48,6 +46,7 @@ public final class CropCards {
             }
         }
         initialized = true;
+        CropMutations.bind(List.copyOf(CARDS.keySet()));
         Gt6Crops.LOGGER.info("gt6crops: loaded {} crop cards; skipped {}",
                 CARDS.size(), SKIPPED.size());
     }
@@ -78,16 +77,6 @@ public final class CropCards {
 
     public static Optional<CropCard> weed() {
         return find("weed");
-    }
-
-    public static CropRules.Child crossbreed(
-            CropCard first,
-            CropRules.Stats firstStats,
-            CropCard second,
-            CropRules.Stats secondStats,
-            Random random) {
-        CropCard child = CropRules.chooseChild(first, second, cards(), random);
-        return new CropRules.Child(child, CropRules.inherit(firstStats, secondStats, random));
     }
 
     public static List<String> skipped() {

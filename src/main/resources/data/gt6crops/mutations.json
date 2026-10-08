@@ -1,0 +1,663 @@
+{
+    "mutations":  [
+                      {
+                          "child":  "flax",
+                          "parents":  [
+                                          "wheat",
+                                          "azure_bluet"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "raspberries",
+                          "parents":  [
+                                          "red_tulip",
+                                          "oxeye_daisy"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "blackberries",
+                          "parents":  [
+                                          "strawberries",
+                                          "blueberry_bush"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "cucumber",
+                          "parents":  [
+                                          "melon",
+                                          "carrot"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "purple_grapes",
+                          "parents":  [
+                                          "blueberry_bush",
+                                          "blackberries"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "onion",
+                          "parents":  [
+                                          "allium",
+                                          "carrot"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "strawberries",
+                          "parents":  [
+                                          "wheat",
+                                          "raspberries"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "tomato_plant",
+                          "parents":  [
+                                          "onion",
+                                          "red_tulip"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "argentia",
+                          "parents":  [
+                                          "plumbilia",
+                                          "tine"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "aurelia",
+                          "parents":  [
+                                          "plumbilia",
+                                          "coppon"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "milkwart",
+                          "parents":  [
+                                          "corium",
+                                          "nether_wart"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "plumbilia",
+                          "parents":  [
+                                          "coppon",
+                                          "withereed"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "blaze_reed",
+                          "parents":  [
+                                          "sugar_cane",
+                                          "cinderpearl"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "corium",
+                          "parents":  [
+                                          "wheat",
+                                          "cocoa"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "eggplant",
+                          "parents":  [
+                                          "corium",
+                                          "oxeye_daisy"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "pumpkin",
+                          "parents":  [
+                                          "carrot",
+                                          "sugar_cane"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "azure_bluet",
+                          "parents":  [
+                                          "poppy",
+                                          "potato"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "red_tulip",
+                          "parents":  [
+                                          "poppy",
+                                          "white_tulip"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "orange_tulip",
+                          "parents":  [
+                                          "red_tulip",
+                                          "dandelion"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "pink_tulip",
+                          "parents":  [
+                                          "red_tulip",
+                                          "white_tulip"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "white_tulip",
+                          "parents":  [
+                                          "pink_tulip",
+                                          "oxeye_daisy"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "oxeye_daisy",
+                          "parents":  [
+                                          "azure_bluet",
+                                          "dandelion"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "sugar_cane",
+                          "parents":  [
+                                          "carrot",
+                                          "potato"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "oil_berries",
+                          "parents":  [
+                                          "withereed",
+                                          "nether_wart"
+                                      ],
+                          "machine_only":  false,
+                          "stand_in":  true
+                      }
+                  ],
+    "pools":  [
+                  {
+                      "id":  "addictive",
+                      "crops":  [
+                                    "cocoa",
+                                    "corpse_plant",
+                                    "eggplant",
+                                    "flax",
+                                    "spidernip"
+                                ]
+                  },
+                  {
+                      "id":  "berry",
+                      "crops":  [
+                                    "blackberries",
+                                    "blueberry_bush",
+                                    "bobsyeruncle_ranks",
+                                    "raspberries",
+                                    "strawberries"
+                                ]
+                  },
+                  {
+                      "id":  "black",
+                      "crops":  [
+                                    "blackberries",
+                                    "ender_bloom",
+                                    "withereed"
+                                ]
+                  },
+                  {
+                      "id":  "blaze",
+                      "crops":  [
+                                    "blaze_reed",
+                                    "cinderpearl"
+                                ]
+                  },
+                  {
+                      "id":  "blue",
+                      "crops":  [
+                                    "blue_orchid",
+                                    "blueberry_bush",
+                                    "diareed",
+                                    "flax",
+                                    "indigo"
+                                ]
+                  },
+                  {
+                      "id":  "brown",
+                      "crops":  [
+                                    "cocoa",
+                                    "corium",
+                                    "corpse_plant",
+                                    "liveroots",
+                                    "onion"
+                                ]
+                  },
+                  {
+                      "id":  "bush",
+                      "crops":  [
+                                    "blackberries",
+                                    "blueberry_bush",
+                                    "coppon",
+                                    "corpse_plant",
+                                    "raspberries",
+                                    "strawberries"
+                                ]
+                  },
+                  {
+                      "id":  "chicken",
+                      "crops":  [
+                                    "eggplant",
+                                    "meat_rose"
+                                ]
+                  },
+                  {
+                      "id":  "coal",
+                      "crops":  [
+                                    "creeper_weed",
+                                    "diareed",
+                                    "withereed"
+                                ]
+                  },
+                  {
+                      "id":  "cow",
+                      "crops":  [
+                                    "corium",
+                                    "meat_rose",
+                                    "milkwart"
+                                ]
+                  },
+                  {
+                      "id":  "crystalline",
+                      "crops":  [
+                                    "bobsyeruncle_ranks",
+                                    "diareed"
+                                ]
+                  },
+                  {
+                      "id":  "dense",
+                      "crops":  [
+                                    "aurelia",
+                                    "plumbilia"
+                                ]
+                  },
+                  {
+                      "id":  "edible",
+                      "crops":  [
+                                    "barley",
+                                    "blackberries",
+                                    "blueberry_bush",
+                                    "carrot",
+                                    "chili",
+                                    "cocoa",
+                                    "corpse_plant",
+                                    "cucumber",
+                                    "eggplant",
+                                    "lemon_plant",
+                                    "meat_rose",
+                                    "melon",
+                                    "milkwart",
+                                    "onion",
+                                    "potato",
+                                    "pumpkin",
+                                    "purple_grapes",
+                                    "raspberries",
+                                    "spidernip",
+                                    "strawberries",
+                                    "sugar_cane",
+                                    "tea",
+                                    "tomato_plant",
+                                    "wheat"
+                                ]
+                  },
+                  {
+                      "id":  "emissive",
+                      "crops":  [
+                                    "glowshrooms",
+                                    "shimmerleaf"
+                                ]
+                  },
+                  {
+                      "id":  "evil",
+                      "crops":  [
+                                    "blaze_reed",
+                                    "corpse_plant",
+                                    "creeper_weed",
+                                    "slime_plant",
+                                    "spidernip",
+                                    "tear_stalks"
+                                ]
+                  },
+                  {
+                      "id":  "fiery",
+                      "crops":  [
+                                    "blaze_reed",
+                                    "chili",
+                                    "creeper_weed",
+                                    "diareed",
+                                    "withereed"
+                                ]
+                  },
+                  {
+                      "id":  "flower",
+                      "crops":  [
+                                    "allium",
+                                    "azure_bluet",
+                                    "blue_orchid",
+                                    "dandelion",
+                                    "ender_bloom",
+                                    "indigo",
+                                    "meat_rose",
+                                    "orange_tulip",
+                                    "oxeye_daisy",
+                                    "pink_tulip",
+                                    "poppy",
+                                    "red_tulip",
+                                    "white_tulip"
+                                ]
+                  },
+                  {
+                      "id":  "gray",
+                      "crops":  [
+                                    "ferru",
+                                    "shimmerleaf",
+                                    "tine"
+                                ]
+                  },
+                  {
+                      "id":  "green",
+                      "crops":  [
+                                    "barley",
+                                    "bobsyeruncle_ranks",
+                                    "creeper_weed",
+                                    "cucumber",
+                                    "glowshrooms",
+                                    "melon",
+                                    "slime_plant",
+                                    "steeleaf_ranks",
+                                    "sugar_cane",
+                                    "tea"
+                                ]
+                  },
+                  {
+                      "id":  "healing",
+                      "crops":  [
+                                    "melon",
+                                    "milkwart",
+                                    "tear_stalks"
+                                ]
+                  },
+                  {
+                      "id":  "iron",
+                      "crops":  [
+                                    "ferru",
+                                    "steeleaf_ranks"
+                                ]
+                  },
+                  {
+                      "id":  "leafy",
+                      "crops":  [
+                                    "cocoa",
+                                    "lemon_plant",
+                                    "purple_grapes",
+                                    "slime_plant",
+                                    "tea",
+                                    "tomato_plant"
+                                ]
+                  },
+                  {
+                      "id":  "magical",
+                      "crops":  [
+                                    "cinderpearl",
+                                    "ender_bloom",
+                                    "shimmerleaf"
+                                ]
+                  },
+                  {
+                      "id":  "metallic",
+                      "crops":  [
+                                    "argentia",
+                                    "aurelia",
+                                    "coppon",
+                                    "ferru",
+                                    "plumbilia",
+                                    "steeleaf_ranks",
+                                    "tine"
+                                ]
+                  },
+                  {
+                      "id":  "mushroom",
+                      "crops":  [
+                                    "corium",
+                                    "eggplant",
+                                    "glowshrooms"
+                                ]
+                  },
+                  {
+                      "id":  "nether",
+                      "crops":  [
+                                    "blaze_reed",
+                                    "glowshrooms",
+                                    "nether_wart",
+                                    "tear_stalks"
+                                ]
+                  },
+                  {
+                      "id":  "orange",
+                      "crops":  [
+                                    "blaze_reed",
+                                    "carrot",
+                                    "cinderpearl",
+                                    "coppon",
+                                    "orange_tulip",
+                                    "pumpkin"
+                                ]
+                  },
+                  {
+                      "id":  "poisonous",
+                      "crops":  [
+                                    "corpse_plant",
+                                    "shimmerleaf",
+                                    "spidernip"
+                                ]
+                  },
+                  {
+                      "id":  "potion_ingredient",
+                      "crops":  [
+                                    "blaze_reed",
+                                    "carrot",
+                                    "creeper_weed",
+                                    "glowshrooms",
+                                    "melon",
+                                    "nether_wart",
+                                    "slime_plant",
+                                    "spidernip",
+                                    "tear_stalks"
+                                ]
+                  },
+                  {
+                      "id":  "purple",
+                      "crops":  [
+                                    "allium",
+                                    "plumbilia",
+                                    "purple_grapes"
+                                ]
+                  },
+                  {
+                      "id":  "red",
+                      "crops":  [
+                                    "chili",
+                                    "meat_rose",
+                                    "nether_wart",
+                                    "pink_tulip",
+                                    "poppy",
+                                    "raspberries",
+                                    "red_tulip",
+                                    "strawberries",
+                                    "tomato_plant"
+                                ]
+                  },
+                  {
+                      "id":  "reed",
+                      "crops":  [
+                                    "blaze_reed",
+                                    "diareed",
+                                    "sugar_cane",
+                                    "withereed"
+                                ]
+                  },
+                  {
+                      "id":  "root",
+                      "crops":  [
+                                    "allium",
+                                    "carrot",
+                                    "liveroots",
+                                    "onion",
+                                    "potato"
+                                ]
+                  },
+                  {
+                      "id":  "shiny",
+                      "crops":  [
+                                    "argentia",
+                                    "bobsyeruncle_ranks",
+                                    "coppon",
+                                    "diareed",
+                                    "tine"
+                                ]
+                  },
+                  {
+                      "id":  "silk",
+                      "crops":  [
+                                    "flax",
+                                    "spidernip"
+                                ]
+                  },
+                  {
+                      "id":  "silver",
+                      "crops":  [
+                                    "argentia",
+                                    "shimmerleaf"
+                                ]
+                  },
+                  {
+                      "id":  "stem",
+                      "crops":  [
+                                    "melon",
+                                    "pumpkin",
+                                    "tear_stalks",
+                                    "tine"
+                                ]
+                  },
+                  {
+                      "id":  "sulfur",
+                      "crops":  [
+                                    "blaze_reed",
+                                    "creeper_weed",
+                                    "withereed"
+                                ]
+                  },
+                  {
+                      "id":  "tendrilly",
+                      "crops":  [
+                                    "argentia",
+                                    "aurelia",
+                                    "bobsyeruncle_ranks",
+                                    "creeper_weed",
+                                    "cucumber",
+                                    "ferru",
+                                    "liveroots",
+                                    "plumbilia",
+                                    "purple_grapes",
+                                    "steeleaf_ranks",
+                                    "tomato_plant"
+                                ]
+                  },
+                  {
+                      "id":  "tree",
+                      "crops":  [
+                                    "cocoa",
+                                    "lemon_plant",
+                                    "slime_plant"
+                                ]
+                  },
+                  {
+                      "id":  "tulip",
+                      "crops":  [
+                                    "orange_tulip",
+                                    "pink_tulip",
+                                    "red_tulip",
+                                    "white_tulip"
+                                ]
+                  },
+                  {
+                      "id":  "twilight_forest",
+                      "crops":  [
+                                    "liveroots",
+                                    "steeleaf_ranks"
+                                ]
+                  },
+                  {
+                      "id":  "undead",
+                      "crops":  [
+                                    "corpse_plant",
+                                    "withereed"
+                                ]
+                  },
+                  {
+                      "id":  "wheat",
+                      "crops":  [
+                                    "barley",
+                                    "flax",
+                                    "wheat"
+                                ]
+                  },
+                  {
+                      "id":  "white",
+                      "crops":  [
+                                    "argentia",
+                                    "azure_bluet",
+                                    "eggplant",
+                                    "milkwart",
+                                    "oxeye_daisy",
+                                    "spidernip",
+                                    "tear_stalks",
+                                    "white_tulip"
+                                ]
+                  },
+                  {
+                      "id":  "wooden",
+                      "crops":  [
+                                    "liveroots",
+                                    "tine"
+                                ]
+                  },
+                  {
+                      "id":  "yellow",
+                      "crops":  [
+                                    "aurelia",
+                                    "dandelion",
+                                    "lemon_plant",
+                                    "potato",
+                                    "wheat"
+                                ]
+                  }
+              ]
+}

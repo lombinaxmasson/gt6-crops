@@ -72,8 +72,13 @@ public record CropCard(
         return size >= harvestSize;
     }
 
+    /** CropsNH default: a crop can cross or breed once it reaches 80% of its max size. */
     public boolean canCross(int size) {
-        return size + 2 > maxSize;
+        return size * 5 >= maxSize * 4;
+    }
+
+    public boolean canBreed(int size) {
+        return canCross(size);
     }
 
     public boolean isWeed() {

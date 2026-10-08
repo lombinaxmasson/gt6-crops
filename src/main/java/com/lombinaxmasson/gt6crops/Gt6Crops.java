@@ -8,8 +8,10 @@ import com.mojang.logging.LogUtils;
 import com.lombinaxmasson.gt6crops.block.CropStickBlock;
 import com.lombinaxmasson.gt6crops.block.CropTile;
 import com.lombinaxmasson.gt6crops.card.CropCards;
-import com.lombinaxmasson.gt6crops.item.SeedBagItem;
+import com.lombinaxmasson.gt6crops.card.CropCard;
+import com.lombinaxmasson.gt6crops.item.CropSeedItem;
 import com.lombinaxmasson.gt6crops.item.WeedExItem;
+import com.lombinaxmasson.gt6crops.rules.CropRules;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -17,6 +19,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -46,36 +49,38 @@ public final class Gt6Crops {
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     public static final DeferredBlock<Block> CROP_STICK =
-            BLOCKS.register("crop_stick", () -> new CropStickBlock(false));
-    public static final DeferredBlock<Block> CROSS_CROP_STICK =
-            BLOCKS.register("cross_crop_stick", () -> new CropStickBlock(true));
+            BLOCKS.register("crop_stick", CropStickBlock::new);
 
     public static final DeferredItem<BlockItem> CROP_STICK_ITEM =
             ITEMS.register("crop_stick", () -> new BlockItem(
                     CROP_STICK.get(), new Item.Properties()));
-    public static final DeferredItem<BlockItem> CROSS_CROP_STICK_ITEM =
-            ITEMS.register("cross_crop_stick", () -> new BlockItem(
-                    CROSS_CROP_STICK.get(), new Item.Properties()));
-    public static final DeferredItem<SeedBagItem> SEED_BAG =
-            ITEMS.register("seed_bag", () -> new SeedBagItem(new Item.Properties().stacksTo(16)));
+    public static final DeferredItem<CropSeedItem> CROP_SEED =
+            ITEMS.register("crop_seed", () -> new CropSeedItem(new Item.Properties().stacksTo(64)));
     public static final DeferredItem<WeedExItem> WEED_EX =
             ITEMS.register("weed_ex", () -> new WeedExItem(new Item.Properties().stacksTo(16)));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CropTile>> CROP_TILE =
             BLOCK_ENTITIES.register("crop_tile", () -> BlockEntityType.Builder
-                    .of(CropTile::new, CROP_STICK.get(), CROSS_CROP_STICK.get())
+                    .of(CropTile::new, CROP_STICK.get())
                     .build(null));
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> CREATIVE_TAB =
             CREATIVE_MODE_TABS.register("main", () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.gt6crops"))
                     .withTabsBefore(CreativeModeTabs.FUNCTIONAL_BLOCKS)
-                    .icon(() -> SEED_BAG.get().getDefaultInstance())
+                    .icon(() -> seedIcon())
                     .displayItems((parameters, output) -> {
                         output.accept(CROP_STICK_ITEM.get());
-                        output.accept(CROSS_CROP_STICK_ITEM.get());
-                        output.accept(SEED_BAG.get());
                         output.accept(WEED_EX.get());
+                        if (!CropCards.initialized()) {
+                            return;
+                        }
+                        CropRules.Stats creative = new CropRules.Stats(1, 1, 1);
+                        for (CropCard card : CropCards.cards()) {
+                            if (!card.isWeed()) {
+                                output.accept(CropSeedItem.create(card, creative));
+                            }
+                        }
                     })
                     .build());
 
@@ -99,5 +104,14 @@ public final class Gt6Crops {
                         CropCards.cards().size(), context.platform(), context.minecraftVersion());
             }
         });
+    }
+
+    private static ItemStack seedIcon() {
+        if (!CropCards.initialized()) {
+            return new ItemStack(CROP_STICK_ITEM.get());
+        }
+        return CropCards.find("wheat")
+                .map(card -> CropSeedItem.create(card, new CropRules.Stats(1, 1, 1)))
+                .orElseGet(() -> new ItemStack(CROP_STICK_ITEM.get()));
     }
 }

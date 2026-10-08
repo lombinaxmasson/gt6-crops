@@ -64,7 +64,7 @@ public record ItemRef(
                 return Optional.empty();
             }
             MaterialPrefix resolvedPrefix = prefix(prefix);
-            GTMaterial resolvedMaterial = GTMaterialRegistry.get(material);
+            GTMaterial resolvedMaterial = material(material);
             if (resolvedPrefix == null || !resolvedMaterial.isValid()) {
                 return Optional.empty();
             }
@@ -81,6 +81,29 @@ public record ItemRef(
         ResourceLocation location = ResourceLocation.parse(id);
         return BuiltInRegistries.ITEM.getOptional(location)
                 .map(itemValue -> new ItemStack(itemValue, count));
+    }
+
+    /**
+     * GT material names keep their original capitals. Ledger names are folded
+     * so {@code live_root} resolves to {@code LiveRoot}.
+     */
+    private static GTMaterial material(String raw) {
+        GTMaterial direct = GTMaterialRegistry.get(raw);
+        if (direct.isValid()) {
+            return direct;
+        }
+        String folded = fold(raw);
+        for (GTMaterial candidate : GTMaterialRegistry.allMaterials()) {
+            if (candidate.isValid() && fold(candidate.getName()).equals(folded)) {
+                return candidate;
+            }
+        }
+        return direct;
+    }
+
+    private static String fold(String value) {
+        return value.replace("_", "").replace("-", "").replace(" ", "")
+                .toLowerCase(Locale.ROOT);
     }
 
     private static MaterialPrefix prefix(String raw) {

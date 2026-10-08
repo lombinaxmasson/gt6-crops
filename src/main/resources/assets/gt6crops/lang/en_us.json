@@ -1,10 +1,10 @@
 {
   "itemGroup.gt6crops": "GT6 Crops",
   "block.gt6crops.crop_stick": "Crop Stick",
-  "block.gt6crops.cross_crop_stick": "Cross Crop Stick",
-  "item.gt6crops.seed_bag": "Crop Seed Bag",
-  "item.gt6crops.seed_bag.crop": "Crop: %s",
-  "item.gt6crops.seed_bag.stats": "Growth %s  Gain %s  Resistance %s",
+  "item.gt6crops.crop_seed": "Unknown Seed",
+  "item.gt6crops.crop_seed.named": "%s Seed",
+  "item.gt6crops.crop_seed.stats": "Growth %s  Gain %s  Resistance %s",
+  "message.gt6crops.no_plant_on_cross": "Seeds cannot be planted on a cross. Right-click it with an empty hand to remove the top stick.",
   "item.gt6crops.weed_ex": "Weed-EX",
   "item.gt6crops.weed_ex.tooltip": "Suppresses weeds on a crop stick",
   "container.gt6crops.crop": "%s"

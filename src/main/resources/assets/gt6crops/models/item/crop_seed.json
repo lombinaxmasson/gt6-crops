@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gt6crops:item/crop_seed_base",
+    "layer1": "gt6crops:item/crop_seed_overlay"
+  }
+}

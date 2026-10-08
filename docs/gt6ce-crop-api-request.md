@@ -1,8 +1,14 @@
 # GT6CE crop integration request
 
-This is a draft issue for SaltNya. `gt6-crops` intentionally does not put
+Filed: https://github.com/SaltNya/GregTech6/issues/13
+
+`gt6-crops` intentionally does not put
 classes in the `ic2` namespace and does not use reflection or mixins to make
 its crop block look like an IC2 tile.
+
+The local GT6CE tree still has no public crop-tile contract an addon can
+implement. Scanning, Plantalyzer input, and the watering tools stay on GT's
+side of that API. This addon does not invent an `ic2` package to pretend.
 
 ## Problem
 
