@@ -12,6 +12,7 @@ import java.util.Optional;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.lombinaxmasson.gt6crops.DataFiles;
 import com.lombinaxmasson.gt6crops.Gt6Crops;
 
 import net.minecraft.world.item.ItemStack;
@@ -109,11 +110,7 @@ public final class CropCards {
     }
 
     private static JsonObject readLedger() {
-        try (var stream = CropCards.class.getResourceAsStream(
-                "/data/gt6crops/crop_cards.json")) {
-            if (stream == null) {
-                throw new IllegalStateException("Missing gt6crops crop-card ledger");
-            }
+        try (var stream = DataFiles.open("crop_cards.json")) {
             return GSON.fromJson(
                     new InputStreamReader(stream, StandardCharsets.UTF_8),
                     JsonObject.class);

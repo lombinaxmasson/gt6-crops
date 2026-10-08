@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.lombinaxmasson.gt6crops.DataFiles;
 
 /**
  * CropsNH wheat-seed tints. The seed item is two white masks: the body takes
@@ -72,11 +73,7 @@ public final class SeedColors {
     }
 
     private static Map<String, int[]> load() {
-        try (InputStream stream = SeedColors.class.getResourceAsStream(
-                "/data/gt6crops/seed_colors.json")) {
-            if (stream == null) {
-                throw new IllegalStateException("Missing gt6crops seed colors");
-            }
+        try (InputStream stream = DataFiles.open("seed_colors.json")) {
             JsonObject root = GSON.fromJson(
                     new InputStreamReader(stream, StandardCharsets.UTF_8),
                     JsonObject.class);

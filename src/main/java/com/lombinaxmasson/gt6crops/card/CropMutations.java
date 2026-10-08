@@ -3,10 +3,11 @@ package com.lombinaxmasson.gt6crops.card;
 import java.io.InputStream;
 import java.util.List;
 
+import com.lombinaxmasson.gt6crops.DataFiles;
 import com.lombinaxmasson.gt6crops.rules.CropBreeding;
 
 /**
- * The breeding book built from {@code data/gt6crops/mutations.json} after the
+ * The breeding book built from {@code mutations.json} after the
  * crop ledger has decided which cards actually loaded.
  */
 public final class CropMutations {
@@ -15,11 +16,7 @@ public final class CropMutations {
     private CropMutations() {}
 
     public static void bind(List<String> loadedIds) {
-        try (InputStream stream = CropMutations.class.getResourceAsStream(
-                "/data/gt6crops/mutations.json")) {
-            if (stream == null) {
-                throw new IllegalStateException("Missing gt6crops mutation book");
-            }
+        try (InputStream stream = DataFiles.open("mutations.json")) {
             book = CropBreeding.Book.load(stream, loadedIds);
         } catch (RuntimeException exception) {
             throw exception;

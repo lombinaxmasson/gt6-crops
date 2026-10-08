@@ -31,6 +31,29 @@ The four apple cards are deliberately handled separately:
 - `green_apple_tree`, `yellow_apple_tree`, and `dark_red_apple_tree` use
   `gregtech:apple`. GT6CE did not port the three colored apple items.
 
+## Metal cards from CropsNH
+
+`galvania` (zinc), `nickelback` (nickel), `bauxia` (aluminium),
+`pyrolusium` (manganese), `titania` (titanium), and `scheelinium` (tungsten)
+follow the CropsNH cards of the same name: tier, seed colors, parents, and
+mutation-pool membership. They drop the metal's `plantGtBlossom`, which is
+the form GT6 already names "Leaf" for Ferru, Aurelia, Argentia, and
+Plumbilia. CropsNH has no chromium crop; `chromia` is this addon's own card,
+bred from Titania and Ferru.
+
+CropsNH limits Bauxia, Titania, and Scheelinium to its crop breeder. Here
+they breed in the world instead, marked `stand_in` in `mutations.json`:
+
+- Bauxia keeps the CropsNH parents, Galvania and Nickelback.
+- Titania replaces Red Straw with that crop's own parents: Bauxia, nether
+  wart, and wheat.
+- Scheelinium replaces the End Stone Lily with Ender Bloom: Titania,
+  Pyrolusium, and Ender Bloom.
+
+The breeder-only cards and Chromia belong to no mutation pool, so only their
+listed parents produce them. The seven cards reuse the CC0 Argentia,
+Plumbilia, and Indigo stage textures until they get art of their own.
+
 GT material names in the ledger are matched without case or underscores, so
 `live_root` resolves to `LiveRoot` and `ender_pearl` resolves to `EnderPearl`.
 

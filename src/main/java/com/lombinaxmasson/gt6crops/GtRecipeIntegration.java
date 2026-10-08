@@ -9,7 +9,6 @@ import com.gregtech.gregtech.api.recipe.RecipeMap;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
 import com.gregtech.gregtech.registry.GTItems;
-import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.lombinaxmasson.gt6crops.card.CropCard;
 import com.lombinaxmasson.gt6crops.card.CropCards;
 
@@ -33,7 +32,7 @@ public final class GtRecipeIntegration {
                 continue;
             }
             ItemStack input = card.drop().resolve().orElse(ItemStack.EMPTY);
-            var material = GTMaterialRegistry.get(card.drop().material());
+            var material = card.drop().gtMaterial();
             ItemStack output = material.isValid()
                     ? GTItems.getStack(MaterialPrefix.dustTiny, material)
                     : ItemStack.EMPTY;

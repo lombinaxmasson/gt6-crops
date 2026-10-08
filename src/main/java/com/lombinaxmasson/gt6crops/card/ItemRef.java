@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
+import com.gregtech.gregtech.api.material.MaterialSentinels;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.registry.GTItems;
 import com.google.gson.JsonObject;
@@ -64,7 +65,7 @@ public record ItemRef(
                 return Optional.empty();
             }
             MaterialPrefix resolvedPrefix = prefix(prefix);
-            GTMaterial resolvedMaterial = material(material);
+            GTMaterial resolvedMaterial = gtMaterial();
             if (resolvedPrefix == null || !resolvedMaterial.isValid()) {
                 return Optional.empty();
             }
@@ -72,6 +73,11 @@ public record ItemRef(
             return stack.isEmpty() ? Optional.empty() : Optional.of(stack);
         }
         return Optional.empty();
+    }
+
+    /** The named GT material, or {@code MaterialSentinels.Invalid}. */
+    public GTMaterial gtMaterial() {
+        return material == null ? MaterialSentinels.Invalid : material(material);
     }
 
     private Optional<ItemStack> resolveItem(String id) {

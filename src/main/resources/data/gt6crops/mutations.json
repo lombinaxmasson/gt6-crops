@@ -192,6 +192,67 @@
                                       ],
                           "machine_only":  false,
                           "stand_in":  true
+                      },
+                      {
+                          "child":  "galvania",
+                          "parents":  [
+                                          "tine",
+                                          "ferru"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "nickelback",
+                          "parents":  [
+                                          "ferru",
+                                          "coppon"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "bauxia",
+                          "parents":  [
+                                          "galvania",
+                                          "nickelback"
+                                      ],
+                          "machine_only":  false,
+                          "stand_in":  true
+                      },
+                      {
+                          "child":  "pyrolusium",
+                          "parents":  [
+                                          "nickelback",
+                                          "bauxia"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "titania",
+                          "parents":  [
+                                          "bauxia",
+                                          "nether_wart",
+                                          "wheat"
+                                      ],
+                          "machine_only":  false,
+                          "stand_in":  true
+                      },
+                      {
+                          "child":  "chromia",
+                          "parents":  [
+                                          "titania",
+                                          "ferru"
+                                      ],
+                          "machine_only":  false
+                      },
+                      {
+                          "child":  "scheelinium",
+                          "parents":  [
+                                          "titania",
+                                          "pyrolusium",
+                                          "ender_bloom"
+                                      ],
+                          "machine_only":  false,
+                          "stand_in":  true
                       }
                   ],
     "pools":  [
@@ -257,6 +318,8 @@
                                     "blueberry_bush",
                                     "coppon",
                                     "corpse_plant",
+                                    "galvania",
+                                    "pyrolusium",
                                     "raspberries",
                                     "strawberries"
                                 ]
@@ -352,6 +415,7 @@
                                     "chili",
                                     "creeper_weed",
                                     "diareed",
+                                    "nickelback",
                                     "withereed"
                                 ]
                   },
@@ -377,6 +441,7 @@
                       "id":  "gray",
                       "crops":  [
                                     "ferru",
+                                    "nickelback",
                                     "shimmerleaf",
                                     "tine"
                                 ]
@@ -437,7 +502,10 @@
                                     "aurelia",
                                     "coppon",
                                     "ferru",
+                                    "galvania",
+                                    "nickelback",
                                     "plumbilia",
+                                    "pyrolusium",
                                     "steeleaf_ranks",
                                     "tine"
                                 ]
@@ -508,6 +576,7 @@
                                     "nether_wart",
                                     "pink_tulip",
                                     "poppy",
+                                    "pyrolusium",
                                     "raspberries",
                                     "red_tulip",
                                     "strawberries",
@@ -635,6 +704,7 @@
                                     "argentia",
                                     "azure_bluet",
                                     "eggplant",
+                                    "galvania",
                                     "milkwart",
                                     "oxeye_daisy",
                                     "spidernip",

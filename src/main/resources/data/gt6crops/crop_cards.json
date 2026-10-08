@@ -2427,6 +2427,267 @@
                       "texture":  "argentia"
                   },
                   {
+                      "id":  "galvania",
+                      "name":  "Galvania",
+                      "discovered_by":  "CropsNH",
+                      "tier":  6,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Metal",
+                                         "Zinc"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtBlossom",
+                                   "material":  "zinc",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "argentia"
+                  },
+                  {
+                      "id":  "nickelback",
+                      "name":  "Nickelback",
+                      "discovered_by":  "CropsNH",
+                      "tier":  5,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                      "attributes":  [
+                                         "Metal",
+                                         "Fire",
+                                         "Nickel"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtBlossom",
+                                   "material":  "nickel",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "plumbilia"
+                  },
+                  {
+                      "id":  "bauxia",
+                      "name":  "Bauxia",
+                      "discovered_by":  "CropsNH",
+                      "tier":  6,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                      "attributes":  [
+                                         "Reed",
+                                         "Metal",
+                                         "Aluminium"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtBlossom",
+                                   "material":  "aluminium",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "indigo"
+                  },
+                  {
+                      "id":  "pyrolusium",
+                      "name":  "Pyrolusium",
+                      "discovered_by":  "CropsNH",
+                      "tier":  12,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                      "attributes":  [
+                                         "Bush",
+                                         "Metal",
+                                         "Manganese"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtBlossom",
+                                   "material":  "manganese",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "plumbilia"
+                  },
+                  {
+                      "id":  "titania",
+                      "name":  "Titania",
+                      "discovered_by":  "CropsNH",
+                      "tier":  9,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                      "attributes":  [
+                                         "Reed",
+                                         "Metal",
+                                         "Titanium"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtBlossom",
+                                   "material":  "titanium",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "argentia"
+                  },
+                  {
+                      "id":  "chromia",
+                      "name":  "Chromia",
+                      "discovered_by":  "gt6crops",
+                      "tier":  10,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                      "attributes":  [
+                                         "Reed",
+                                         "Shiny",
+                                         "Metal",
+                                         "Chrome"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtBlossom",
+                                   "material":  "chromium",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "indigo"
+                  },
+                  {
+                      "id":  "scheelinium",
+                      "name":  "Scheelinium",
+                      "discovered_by":  "CropsNH",
+                      "tier":  12,
+                      "max_size":  4,
+                      "growth_speed":  0,
+                      "after_harvest_size":  1,
+                      "harvest_size":  4,
+                      "stats":  [
+                                    2,
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                      "attributes":  [
+                                         "Reed",
+                                         "Heavy",
+                                         "Metal",
+                                         "Tungsten"
+                                     ],
+                      "crossbreed_only":  true,
+                      "drop":  {
+                                   "kind":  "gt_form",
+                                   "prefix":  "plantGtBlossom",
+                                   "material":  "tungsten",
+                                   "count":  1
+                               },
+                      "special_drops":  [
+
+                                        ],
+                      "base_seed":  {
+                                        "kind":  "none",
+                                        "count":  1
+                                    },
+                      "texture":  "plumbilia"
+                  },
+                  {
                       "id":  "weed",
                       "name":  "Weeds",
                       "discovered_by":  "IC2",
