@@ -5,6 +5,12 @@
   "item.gt6crops.crop_seed.named": "%s Seed",
   "item.gt6crops.crop_seed.stats": "Growth %s  Gain %s  Resistance %s",
   "message.gt6crops.no_plant_on_cross": "Seeds cannot be planted on a cross. Right-click it with an empty hand to remove the top stick.",
+  "message.gt6crops.inspect.crop": "%s  Size %s / %s",
+  "message.gt6crops.inspect.empty": "Nothing planted",
+  "message.gt6crops.inspect.cross": "Cross, waiting for a crossbreed",
+  "message.gt6crops.inspect.stats": "Growth %s  Gain %s  Resistance %s",
+  "message.gt6crops.inspect.storage": "Fertilizer %1$s/%4$s  Water %2$s/%4$s  Weed-EX %3$s/%4$s",
+  "message.gt6crops.inspect.environment": "Nutrients %1$s/%4$s  Humidity %2$s/%4$s  Air quality %3$s/%4$s",
   "item.gt6crops.weed_ex": "Weed-EX",
   "item.gt6crops.weed_ex.tooltip": "Suppresses weeds on a crop stick",
   "container.gt6crops.crop": "%s"

@@ -17,6 +17,9 @@ it is not bundled into the addon jar.
   Oil berries, Bauxia, Titania, and Scheelinium use in-world stand-ins
   because CropsNH gates them behind the crop breeder;
 - weeds, nutrient/humidity/air-quality effects, water, fertilizer, and Weed-EX;
+- GT's crop scanner reads planted crops through GT6CE's `CropScanSource`, and
+  right-clicking a crop stick with a GT magnifying glass prints the crop's
+  stats, storage, and environment in chat;
 - GT plant-form mortar and shredder integration where GT6CE has no conflicting
   input row.
 

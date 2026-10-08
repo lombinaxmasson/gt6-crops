@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Random;
 
+import com.gregtech.gregtech.api.tool.GTToolHelper;
 import com.lombinaxmasson.gt6crops.Gt6Crops;
 import com.lombinaxmasson.gt6crops.Gt6CropsTags;
 import com.lombinaxmasson.gt6crops.card.CropCard;
@@ -133,6 +134,13 @@ public final class CropStickBlock extends Block implements EntityBlock {
             BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof CropTile crop)) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+
+        if (GTToolHelper.isMagnifyingGlass(stack)) {
+            if (!level.isClientSide) {
+                crop.inspect().forEach(line -> player.displayClientMessage(line, false));
+            }
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
 
         if (stack.is(Gt6Crops.CROP_STICK_ITEM.get()) && crop.canUpgrade()) {

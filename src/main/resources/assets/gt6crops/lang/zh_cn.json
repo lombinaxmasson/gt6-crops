@@ -5,6 +5,12 @@
   "item.gt6crops.crop_seed.named": "%s种子",
   "item.gt6crops.crop_seed.stats": "生长 %s  产量 %s  抗性 %s",
   "message.gt6crops.no_plant_on_cross": "杂交架上不能播种，空手右键可以拆掉上面那根",
+  "message.gt6crops.inspect.crop": "%s  生长阶段 %s / %s",
+  "message.gt6crops.inspect.empty": "未种植",
+  "message.gt6crops.inspect.cross": "杂交架，等待杂交",
+  "message.gt6crops.inspect.stats": "生长 %s  产量 %s  抗性 %s",
+  "message.gt6crops.inspect.storage": "肥料 %1$s/%4$s  水分 %2$s/%4$s  除草剂 %3$s/%4$s",
+  "message.gt6crops.inspect.environment": "养分 %1$s/%4$s  湿度 %2$s/%4$s  空气质量 %3$s/%4$s",
   "item.gt6crops.weed_ex": "除草剂",
   "item.gt6crops.weed_ex.tooltip": "抑制作物架上的杂草",
   "container.gt6crops.crop": "%s"

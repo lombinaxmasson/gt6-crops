@@ -6,9 +6,10 @@ Filed: https://github.com/SaltNya/GregTech6/issues/13
 classes in the `ic2` namespace and does not use reflection or mixins to make
 its crop block look like an IC2 tile.
 
-The local GT6CE tree still has no public crop-tile contract an addon can
-implement. Scanning, Plantalyzer input, and the watering tools stay on GT's
-side of that API. This addon does not invent an `ic2` package to pretend.
+GT6CE `81b663a1` added `com.gregtech.gregtech.api.crop.CropScanSource`, and
+`CropTile` implements it, so GT's crop scanner reads these crops. Plantalyzer
+input and the watering, Weed-EX, and harvesting tools still have no addon
+contract. This addon does not invent an `ic2` package to pretend.
 
 ## Problem
 
@@ -50,7 +51,8 @@ an adapter or capability without claiming `ic2.api.crops.ICropTile`.
 GT6CE could then:
 
 1. let `OriginalCropScan` query a public adapter and print the same six
-   categories it already prints for IC2 crops;
+   categories it already prints for IC2 crops (done in `81b663a1` as
+   `CropScanSource`);
 2. let Plantalyzer accept a capability-backed crop input;
 3. let watering, Weed-EX, and crop tools call the adapter;
 4. keep the existing IC2 reflection path as a compatibility fallback.

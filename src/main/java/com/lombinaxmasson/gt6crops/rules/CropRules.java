@@ -13,6 +13,7 @@ import com.lombinaxmasson.gt6crops.card.CropCard;
  */
 public final class CropRules {
     public static final int MAX_STAT = 31;
+    public static final int MAX_ENVIRONMENT = 10;
 
     private CropRules() {}
 
@@ -92,6 +93,6 @@ public final class CropRules {
     }
 
     private static int clampEnvironment(int value) {
-        return Math.max(0, Math.min(10, value));
+        return Math.max(0, Math.min(MAX_ENVIRONMENT, value));
     }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import com.gregtech.gregtech.api.crop.CropScanSource;
 import com.lombinaxmasson.gt6crops.Gt6Crops;
 import com.lombinaxmasson.gt6crops.card.CropCard;
 import com.lombinaxmasson.gt6crops.card.CropCards;
@@ -17,6 +18,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.player.Player;
@@ -35,10 +37,11 @@ import net.neoforged.neoforge.client.model.data.ModelProperty;
  * Server-owned crop state. The block state stores only a small visual age;
  * species, genetics and environment storage are persisted here.
  */
-public final class CropTile extends BlockEntity {
+public final class CropTile extends BlockEntity implements CropScanSource {
     public static final ModelProperty<String> CROP = new ModelProperty<>();
     public static final ModelProperty<Integer> SIZE = new ModelProperty<>();
     private static final int MAX_STORAGE = 32;
+    private static final int FULLY_SCANNED = 4;
 
     private String cardId = "";
     private int size;
@@ -178,6 +181,63 @@ public final class CropTile extends BlockEntity {
         return true;
     }
 
+    /** Chat lines shown by the GT magnifying glass. */
+    public List<Component> inspect() {
+        refreshEnvironmentNow();
+        List<Component> lines = new ArrayList<>();
+        CropCard crop = card().orElse(null);
+        if (crop == null) {
+            lines.add(Component.translatable(isCrossTile()
+                    ? "message.gt6crops.inspect.cross"
+                    : "message.gt6crops.inspect.empty"));
+        } else {
+            lines.add(Component.translatable(
+                    "message.gt6crops.inspect.crop", crop.name(), size, crop.maxSize()));
+            if (!crop.isWeed()) {
+                lines.add(Component.translatable(
+                        "message.gt6crops.inspect.stats",
+                        stats.growth(), stats.gain(), stats.resistance()));
+            }
+        }
+        lines.add(Component.translatable(
+                "message.gt6crops.inspect.storage",
+                nutrientStorage, hydrationStorage, weedExStorage, MAX_STORAGE));
+        lines.add(Component.translatable(
+                "message.gt6crops.inspect.environment",
+                environment.nutrients(),
+                environment.humidity(),
+                environment.airQuality(),
+                CropRules.MAX_ENVIRONMENT));
+        return lines;
+    }
+
+    @Override
+    public CropScanData cropScanData() {
+        CropCard crop = card().orElse(null);
+        if (crop == null) {
+            return null;
+        }
+        refreshEnvironmentNow();
+        return new CropScanData(
+                crop.name(),
+                crop.attributes(),
+                crop.discoveredBy(),
+                stats.growth(),
+                stats.gain(),
+                stats.resistance(),
+                nutrientStorage,
+                hydrationStorage,
+                weedExStorage,
+                environment.nutrients(),
+                environment.humidity(),
+                environment.airQuality(),
+                FULLY_SCANNED);
+    }
+
+    /** Seed stats are always visible, so there is no scan level to raise. */
+    @Override
+    public void setCropScanLevel(int scanLevel) {}
+
     public static void serverTick(
             Level level, BlockPos pos, BlockState state, CropTile crop) {
         long cycle = Math.floorMod(level.getGameTime() + pos.asLong(), 256L);
@@ -275,6 +335,12 @@ public final class CropTile extends BlockEntity {
                 target.plant(weed, new CropRules.Stats(0, 0, 0));
                 return;
             }
+        }
+    }
+
+    private void refreshEnvironmentNow() {
+        if (level != null && !level.isClientSide) {
+            refreshEnvironment(level, worldPosition);
         }
     }
 
