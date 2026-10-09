@@ -1,6 +1,7 @@
 package com.lombinaxmasson.gt6crops.rules;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -94,6 +95,20 @@ class CropRulesTest {
 
         assertTrue(capped > none);
         assertEquals(capped, beyondCap);
+    }
+
+    @Test
+    void resistanceDecidesWhetherARemovedCropKeepsItsSeed() {
+        Random random = new Random(5);
+        int kept = 0;
+        for (int attempt = 0; attempt < 200; attempt++) {
+            assertTrue(CropRules.keepsSeedOnRemoval(CropRules.MAX_STAT, random));
+            assertFalse(CropRules.keepsSeedOnRemoval(0, random));
+            if (CropRules.keepsSeedOnRemoval(15, random)) {
+                kept++;
+            }
+        }
+        assertTrue(kept > 0 && kept < 200);
     }
 
     @Test

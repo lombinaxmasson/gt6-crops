@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.gregtech.gregtech.api.tool.GTToolHelper;
+import com.gregtech.gregtech.api.tool.GTToolType;
 import com.lombinaxmasson.gt6crops.Gt6Crops;
 import com.lombinaxmasson.gt6crops.Gt6CropsTags;
 import com.lombinaxmasson.gt6crops.card.CropCard;
@@ -19,6 +20,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -40,6 +42,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -79,6 +82,9 @@ public final class CropStickBlock extends Block implements EntityBlock {
         List<ItemStack> drops = super.getDrops(state, params);
         if (state.getValue(CROSS)) {
             drops.add(new ItemStack(this));
+        }
+        if (params.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof CropTile crop) {
+            drops.addAll(crop.removalDrops(params.getLevel().random));
         }
         return drops;
     }
@@ -138,6 +144,14 @@ public final class CropStickBlock extends Block implements EntityBlock {
         if (GTToolHelper.isMagnifyingGlass(stack)) {
             if (!level.isClientSide) {
                 crop.inspect().forEach(line -> player.displayClientMessage(line, false));
+            }
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        if (isSpade(stack) && !crop.isEmpty()) {
+            if (!level.isClientSide && crop.uproot(player)) {
+                GTToolHelper.damageForUse(stack, 1, player, LivingEntity.getSlotForHand(hand));
+                level.playSound(null, pos, SoundEvents.CROP_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
             }
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -274,6 +288,11 @@ public final class CropStickBlock extends Block implements EntityBlock {
             return fromSeed;
         }
         return CropCards.byBaseSeed(stack).orElse(null);
+    }
+
+    private static boolean isSpade(ItemStack stack) {
+        return GTToolHelper.matchesTool(stack, GTToolType.SPADE)
+                || GTToolHelper.matchesTool(stack, GTToolType.UNIVERSAL_SPADE);
     }
 
     private static void consumeOne(ItemStack stack, Player player) {

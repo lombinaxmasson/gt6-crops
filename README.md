@@ -19,6 +19,13 @@ it is not bundled into the addon jar.
 - weeds, nutrient/humidity/air-quality effects, water, fertilizer, and Weed-EX.
   Fertilizer is anything in the `gt6crops:fertilizer` item tag, which holds
   bone meal by default;
+- CropsNH-style seed returns: a harvest gives only the produce. Right-clicking
+  with a GT spade or universal spade digs a crop up at any size and returns
+  its seed with the same stats, plus the harvest if it is ripe. It also clears
+  weeds of any size, and a fully grown weed drops a tuft of short grass. Each
+  use costs one point of durability. Breaking a planted stick drops the
+  harvest if it is ripe, but keeps the seed only when the crop's resistance
+  beats a roll from 0 to 30;
 - CropsNH-style growth conditions: each crop needs its own soil, some need a
   particular block under the soil or a minimum light level, and liked biomes
   speed growth up;

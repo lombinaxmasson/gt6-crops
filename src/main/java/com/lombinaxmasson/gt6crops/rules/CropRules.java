@@ -87,6 +87,11 @@ public final class CropRules {
         return 1 + bonus + (random.nextInt(32) < stats.gain() ? 1 : 0);
     }
 
+    /** CropsNH: a crop removed without a spade keeps its seed only if resistance beats a 0-30 roll. */
+    public static boolean keepsSeedOnRemoval(int resistance, Random random) {
+        return resistance > random.nextInt(MAX_STAT);
+    }
+
     public static boolean isEnvironmentHealthy(Environment environment) {
         return environment.nutrients() >= 5
                 && environment.humidity() >= 5

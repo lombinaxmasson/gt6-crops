@@ -22,6 +22,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -154,23 +155,7 @@ public final class CropTile extends BlockEntity implements CropScanSource {
             return false;
         }
 
-        int amount = crop.isWeed()
-                ? 0
-                : CropRules.harvestCount(stats, new Random(level.random.nextLong()));
-        crop.harvestDrop().ifPresent(drop -> {
-            ItemStack harvested = drop.copy();
-            harvested.setCount(Math.min(
-                    harvested.getMaxStackSize(),
-                    harvested.getCount() * amount));
-            give(player, harvested);
-        });
-        for (ItemStack extra : crop.extraDrops(level.random)) {
-            give(player, extra);
-        }
-        if (!crop.isWeed()) {
-            give(player, CropSeedItem.create(crop, stats));
-        }
-
+        harvestDrops(crop, level.random).forEach(stack -> give(player, stack));
         if (crop.afterHarvestSize() <= 0) {
             clearCrop();
         } else {
@@ -180,6 +165,59 @@ public final class CropTile extends BlockEntity implements CropScanSource {
             setChanged();
         }
         return true;
+    }
+
+    /**
+     * A spade clears weeds, with a grass tuft from fully grown ones, and digs any
+     * other crop up with its seed and, if ripe, its harvest.
+     */
+    public boolean uproot(Player player) {
+        if (level == null || level.isClientSide || cardId.isEmpty()) {
+            return false;
+        }
+        CropCard crop = card().orElse(null);
+        if (crop != null && crop.isWeed()) {
+            if (size >= crop.maxSize()) {
+                give(player, new ItemStack(Items.SHORT_GRASS));
+            }
+        } else if (crop != null) {
+            if (crop.canHarvest(size)) {
+                harvestDrops(crop, level.random).forEach(stack -> give(player, stack));
+            }
+            give(player, CropSeedItem.create(crop, stats));
+        }
+        clearCrop();
+        return true;
+    }
+
+    /** What the crop adds to a broken stick's drops. Does not change the crop. */
+    public List<ItemStack> removalDrops(RandomSource random) {
+        CropCard crop = card().orElse(null);
+        if (crop == null || crop.isWeed()) {
+            return List.of();
+        }
+        List<ItemStack> drops = crop.canHarvest(size) ? harvestDrops(crop, random) : new ArrayList<>();
+        if (CropRules.keepsSeedOnRemoval(stats.resistance(), new Random(random.nextLong()))) {
+            drops.add(CropSeedItem.create(crop, stats));
+        }
+        return drops;
+    }
+
+    private List<ItemStack> harvestDrops(CropCard crop, RandomSource random) {
+        List<ItemStack> drops = new ArrayList<>();
+        int amount = crop.isWeed()
+                ? 0
+                : CropRules.harvestCount(stats, new Random(random.nextLong()));
+        crop.harvestDrop().ifPresent(drop -> {
+            ItemStack harvested = drop.copy();
+            harvested.setCount(Math.min(
+                    harvested.getMaxStackSize(),
+                    harvested.getCount() * amount));
+            drops.add(harvested);
+        });
+        drops.addAll(crop.extraDrops(random));
+        drops.removeIf(ItemStack::isEmpty);
+        return drops;
     }
 
     /** Chat lines shown by the GT magnifying glass. */
