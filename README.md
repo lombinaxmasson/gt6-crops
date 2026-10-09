@@ -26,6 +26,20 @@ it is not bundled into the addon jar.
   use costs one point of durability. Breaking a planted stick drops the
   harvest if it is ripe, but keeps the seed only when the crop's resistance
   beats a roll from 0 to 30;
+- rain waters crops under open sky in biomes where it rains, adding 4 of 32
+  water every growth cycle (256 ticks);
+- CropsNH-style disease. Each cycle a growing crop gets a CropsNH nutrient
+  score: 5, up to 10 each from stored water and fertilizer, 2 under open sky,
+  and 14 per liked biome (at most two) or up to 14 in a humid biome, whichever
+  is more. A crop whose score is far below what its tier needs starves: it does
+  not grow, and falls sick unless it passes the resistance roll. Under open
+  sky in a dry biome, tier 6 and up starve with empty storage, and tier 9 and
+  up starve even with the starting 8 water and 8 fertilizer; without sky each
+  limit is one tier lower. A sick crop does not grow, and each cycle
+  exposes one random neighbouring crop, which escapes on a resistance roll or
+  by spending 2 stored Weed-EX. Plant Cure (100 uses) heals a sick crop and
+  tops its fertilizer up to 8. Digging, breaking, or replanting a crop also
+  ends the disease;
 - CropsNH-style growth conditions: each crop needs its own soil, some need a
   particular block under the soil or a minimum light level, and liked biomes
   speed growth up;
@@ -244,7 +258,8 @@ every stage, as IC2 did; those pixels were erased because this addon draws
 the sticks as a model.
 
 The crop-stick model, its wood texture, the Weed-EX and crop-stick item
-icons, and the four weed stages are original to this addon.
+icons, and the four weed stages are original to this addon. The Plant Cure
+icon is the Weed-EX icon with its greens recoloured.
 
 The crop-seed body and highlight masks (CropsNH's `genericSeed/vanilla1` and
 `vanilla2`, tinted per crop), the cocoa, pumpkin, and melon stages, and the

@@ -17,6 +17,15 @@ public final class CropRules {
     public static final int MAX_LIKED_BIOMES = 2;
     private static final double LIKED_BIOME_BONUS = 0.25;
 
+    private static final int NUTRIENT_BASE = 5;
+    private static final int NUTRIENT_SKY_BONUS = 2;
+    private static final int NUTRIENT_BIOME_BONUS = 14;
+    private static final float LOW_DOWNFALL = 0.5F;
+    private static final float HIGH_DOWNFALL = 0.8F;
+    private static final int NUTRIENT_SCALE = 5;
+    private static final int NUTRIENTS_PER_TIER = 10;
+    private static final int BASE_GROWTH_SPEED = 6;
+
     private CropRules() {}
 
     public record Stats(int growth, int gain, int resistance) {
@@ -87,9 +96,62 @@ public final class CropRules {
         return 1 + bonus + (random.nextInt(32) < stats.gain() ? 1 : 0);
     }
 
-    /** CropsNH: a crop removed without a spade keeps its seed only if resistance beats a 0-30 roll. */
-    public static boolean keepsSeedOnRemoval(int resistance, Random random) {
+    /**
+     * CropsNH's resistance check, passed when resistance beats a roll from 0 to 30.
+     * It decides whether a crop removed without a spade keeps its seed, and whether
+     * a starving or exposed crop escapes disease.
+     */
+    public static boolean resists(int resistance, Random random) {
         return resistance > random.nextInt(MAX_STAT);
+    }
+
+    /**
+     * CropsNH's nutrient score: 5, up to 10 each from stored water and fertilizer,
+     * 2 under open sky, and 14 per liked biome (at most two) or up to 14 in a humid
+     * biome, whichever is more.
+     */
+    public static int nutrientScore(
+            int water,
+            int fertilizer,
+            int maxStorage,
+            boolean seesSky,
+            int likedBiomes,
+            float downfall) {
+        int score = NUTRIENT_BASE
+                + storageBonus(water, maxStorage)
+                + storageBonus(fertilizer, maxStorage)
+                + (seesSky ? NUTRIENT_SKY_BONUS : 0);
+        float humidity = Math.max(0.0F, Math.min(1.0F,
+                (downfall - LOW_DOWNFALL) / (HIGH_DOWNFALL - LOW_DOWNFALL)));
+        int liked = Math.min(MAX_LIKED_BIOMES, Math.max(0, likedBiomes));
+        return score + Math.max((int) (humidity * NUTRIENT_BIOME_BONUS), liked * NUTRIENT_BIOME_BONUS);
+    }
+
+    /**
+     * CropsNH: a crop starves when its nutrient score is so far below what its
+     * tier needs that its growth rate reaches zero. A starving crop does not grow.
+     */
+    public static boolean isStarving(int tier, int growth, int nutrientScore) {
+        int points = nutrientScore * NUTRIENT_SCALE;
+        int need = tier * NUTRIENTS_PER_TIER;
+        if (points >= need) {
+            return false;
+        }
+        return (BASE_GROWTH_SPEED + growth) * (100 - (need - points) * 4) / 100 <= 0;
+    }
+
+    /** The lowest nutrient score at which a crop of this tier and growth stat does not starve. */
+    public static int nutrientsNeeded(int tier, int growth) {
+        int score = 0;
+        while (isStarving(tier, growth, score)) {
+            score++;
+        }
+        return score;
+    }
+
+    private static int storageBonus(int storage, int maxStorage) {
+        int percent = Math.max(0, Math.min(maxStorage, storage)) * 100 / maxStorage;
+        return (percent + 9) / 10;
     }
 
     public static boolean isEnvironmentHealthy(Environment environment) {

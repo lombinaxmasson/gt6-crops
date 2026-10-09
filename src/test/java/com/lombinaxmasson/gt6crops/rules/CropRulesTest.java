@@ -98,17 +98,37 @@ class CropRulesTest {
     }
 
     @Test
-    void resistanceDecidesWhetherARemovedCropKeepsItsSeed() {
+    void resistanceCheckAlwaysPassesAtMaxAndNeverAtZero() {
         Random random = new Random(5);
-        int kept = 0;
+        int passed = 0;
         for (int attempt = 0; attempt < 200; attempt++) {
-            assertTrue(CropRules.keepsSeedOnRemoval(CropRules.MAX_STAT, random));
-            assertFalse(CropRules.keepsSeedOnRemoval(0, random));
-            if (CropRules.keepsSeedOnRemoval(15, random)) {
-                kept++;
+            assertTrue(CropRules.resists(CropRules.MAX_STAT, random));
+            assertFalse(CropRules.resists(0, random));
+            if (CropRules.resists(15, random)) {
+                passed++;
             }
         }
-        assertTrue(kept > 0 && kept < 200);
+        assertTrue(passed > 0 && passed < 200);
+    }
+
+    @Test
+    void nutrientScoreFollowsCropsNh() {
+        assertEquals(5, CropRules.nutrientScore(0, 0, 32, false, 0, 0.0F));
+        assertEquals(27, CropRules.nutrientScore(32, 32, 32, true, 0, 0.0F));
+        assertEquals(3 + 3 + 5, CropRules.nutrientScore(8, 8, 32, false, 0, 0.0F));
+        assertEquals(5 + 28, CropRules.nutrientScore(0, 0, 32, false, 5, 0.0F));
+        assertEquals(5 + 14, CropRules.nutrientScore(0, 0, 32, false, 0, 0.9F));
+    }
+
+    @Test
+    void highTierCropsStarveWithoutCare() {
+        int bare = CropRules.nutrientScore(0, 0, 32, true, 0, 0.4F);
+        int tended = CropRules.nutrientScore(32, 32, 32, true, 0, 0.4F);
+
+        assertFalse(CropRules.isStarving(5, 0, bare));
+        assertTrue(CropRules.isStarving(6, 0, bare));
+        assertFalse(CropRules.isStarving(12, 0, tended));
+        assertEquals(CropRules.nutrientsNeeded(6, 0), bare + 1);
     }
 
     @Test

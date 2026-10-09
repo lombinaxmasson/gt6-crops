@@ -10,6 +10,7 @@ import com.lombinaxmasson.gt6crops.block.CropTile;
 import com.lombinaxmasson.gt6crops.card.CropCards;
 import com.lombinaxmasson.gt6crops.card.CropCard;
 import com.lombinaxmasson.gt6crops.item.CropSeedItem;
+import com.lombinaxmasson.gt6crops.item.PlantCureItem;
 import com.lombinaxmasson.gt6crops.item.WeedExItem;
 import com.lombinaxmasson.gt6crops.rules.CropRules;
 
@@ -58,6 +59,8 @@ public final class Gt6Crops {
             ITEMS.register("crop_seed", () -> new CropSeedItem(new Item.Properties().stacksTo(64)));
     public static final DeferredItem<WeedExItem> WEED_EX =
             ITEMS.register("weed_ex", () -> new WeedExItem(new Item.Properties().stacksTo(16)));
+    public static final DeferredItem<PlantCureItem> PLANT_CURE =
+            ITEMS.register("plant_cure", () -> new PlantCureItem(new Item.Properties().durability(100)));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CropTile>> CROP_TILE =
             BLOCK_ENTITIES.register("crop_tile", () -> BlockEntityType.Builder
@@ -72,6 +75,7 @@ public final class Gt6Crops {
                     .displayItems((parameters, output) -> {
                         output.accept(CROP_STICK_ITEM.get());
                         output.accept(WEED_EX.get());
+                        output.accept(PLANT_CURE.get());
                         if (!CropCards.initialized()) {
                             return;
                         }

@@ -12,6 +12,7 @@ import com.lombinaxmasson.gt6crops.Gt6CropsTags;
 import com.lombinaxmasson.gt6crops.card.CropCard;
 import com.lombinaxmasson.gt6crops.card.CropCards;
 import com.lombinaxmasson.gt6crops.item.CropSeedItem;
+import com.lombinaxmasson.gt6crops.item.PlantCureItem;
 import com.lombinaxmasson.gt6crops.item.WeedExItem;
 import com.lombinaxmasson.gt6crops.rules.CropRules;
 
@@ -174,6 +175,13 @@ public final class CropStickBlock extends Block implements EntityBlock {
         if (stack.getItem() instanceof WeedExItem) {
             if (!level.isClientSide && crop.applyWeedEx()) {
                 consumeOne(stack, player);
+            }
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        if (stack.getItem() instanceof PlantCureItem) {
+            if (!level.isClientSide && crop.cure()) {
+                stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
             }
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }

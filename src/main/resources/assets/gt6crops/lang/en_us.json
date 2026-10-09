@@ -16,6 +16,8 @@
   "message.gt6crops.inspect.too_dark": "Too dark: light %s, needs at least %s",
   "message.gt6crops.inspect.too_bright": "Too bright: light %s, at most %s",
   "message.gt6crops.inspect.liked_biomes": "Likes %s (%s match here)",
+  "message.gt6crops.inspect.sick": "Sick: does not grow, and can infect the crops next to it. Spray it with Plant Cure.",
+  "message.gt6crops.inspect.starving": "Starving: nutrient score %s, needs %s to grow. Water, fertilizer, open sky, and a liked or humid biome add to it.",
   "message.gt6crops.wrong_soil": "%s can't be planted here. It needs: %s",
   "message.gt6crops.or": " or ",
   "tag.block.gt6crops.soil.farmland": "Farmland",
@@ -73,6 +75,8 @@
   "tag.worldgen.biome.c.is_wasteland": "Wasteland",
   "tag.worldgen.biome.c.is_wet": "Wet",
   "item.gt6crops.weed_ex": "Weed-EX",
-  "item.gt6crops.weed_ex.tooltip": "Suppresses weeds on a crop stick",
+  "item.gt6crops.weed_ex.tooltip": "Suppresses weeds and blocks disease on a crop stick",
+  "item.gt6crops.plant_cure": "Plant Cure",
+  "item.gt6crops.plant_cure.tooltip": "Heals a sick crop",
   "container.gt6crops.crop": "%s"
 }

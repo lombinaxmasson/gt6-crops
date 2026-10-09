@@ -16,6 +16,8 @@
   "message.gt6crops.inspect.too_dark": "太暗：光照 %s，至少需要 %s",
   "message.gt6crops.inspect.too_bright": "太亮：光照 %s，最多 %s",
   "message.gt6crops.inspect.liked_biomes": "喜欢的群系：%s（这里符合 %s 个）",
+  "message.gt6crops.inspect.sick": "生病：不再生长，还会传染旁边的作物。用植物治疗剂喷一下",
+  "message.gt6crops.inspect.starving": "营养不足：营养点数 %s，至少要 %s 才能生长。水分、肥料、露天、喜欢的或潮湿的群系都能增加点数",
   "message.gt6crops.wrong_soil": "%s不能种在这里，需要：%s",
   "message.gt6crops.or": "或",
   "tag.block.gt6crops.soil.farmland": "耕地",
@@ -73,6 +75,8 @@
   "tag.worldgen.biome.c.is_wasteland": "荒原",
   "tag.worldgen.biome.c.is_wet": "潮湿",
   "item.gt6crops.weed_ex": "除草剂",
-  "item.gt6crops.weed_ex.tooltip": "抑制作物架上的杂草",
+  "item.gt6crops.weed_ex.tooltip": "抑制作物架上的杂草，也能挡住病害",
+  "item.gt6crops.plant_cure": "植物治疗剂",
+  "item.gt6crops.plant_cure.tooltip": "治好生病的作物",
   "container.gt6crops.crop": "%s"
 }

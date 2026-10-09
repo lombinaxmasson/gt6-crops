@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "item": "minecraft:glistering_melon_slice"
+    },
+    {
+      "tag": "gt6crops:fertilizer"
+    },
+    {
+      "tag": "gt6crops:fertilizer"
+    }
+  ],
+  "result": {
+    "id": "gt6crops:plant_cure",
+    "count": 1
+  }
+}
