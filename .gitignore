@@ -40,3 +40,6 @@ run/
 repo/
 !**/src/**/repo/
 libs/gt6ce/*.jar
+
+### Local reference code ###
+cropsnh_code/
