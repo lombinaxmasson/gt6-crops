@@ -16,7 +16,9 @@ it is not bundled into the addon jar.
   averaging. Fertilizer on every parent keeps the new stats from dropping.
   Oil berries, Bauxia, Titania, and Scheelinium use in-world stand-ins
   because CropsNH gates them behind the crop breeder;
-- weeds, nutrient/humidity/air-quality effects, water, fertilizer, and Weed-EX;
+- weeds, nutrient/humidity/air-quality effects, water, fertilizer, and Weed-EX.
+  Fertilizer is anything in the `gt6crops:fertilizer` item tag, which holds
+  bone meal by default;
 - CropsNH-style growth conditions: each crop needs its own soil, some need a
   particular block under the soil or a minimum light level, and liked biomes
   speed growth up;
