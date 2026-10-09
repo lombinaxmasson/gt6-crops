@@ -14,6 +14,8 @@ import com.lombinaxmasson.gt6crops.card.CropCard;
 public final class CropRules {
     public static final int MAX_STAT = 31;
     public static final int MAX_ENVIRONMENT = 10;
+    public static final int MAX_LIKED_BIOMES = 2;
+    private static final double LIKED_BIOME_BONUS = 0.25;
 
     private CropRules() {}
 
@@ -56,11 +58,14 @@ public final class CropRules {
             Stats stats,
             Environment environment,
             boolean hasNutrients,
-            boolean hasWater) {
+            boolean hasWater,
+            int likedBiomes) {
         double resources = hasNutrients && hasWater ? 1.0 : 0.35;
+        double biome = 1.0 + Math.min(MAX_LIKED_BIOMES, Math.max(0, likedBiomes)) * LIKED_BIOME_BONUS;
         double points = (1.0 + stats.growth() / 4.0)
                 * environment.growthFactor()
                 * resources
+                * biome
                 * (1.0 + Math.max(0, card.maxSize() - 3) * 0.05);
         return Math.max(1, (int) Math.round(points));
     }

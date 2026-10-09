@@ -5,47 +5,38 @@ import com.lombinaxmasson.gt6crops.card.CropCard;
 
 import net.minecraft.resources.ResourceLocation;
 
-/** Sprite paths for a planted crop. Stage art lives on the block atlas. */
+/**
+ * Sprite paths for a planted crop. Stage art lives on the block atlas, under
+ * {@code block/crop/<texture>/<stage>}, either shipped or drawn by {@link CropStageSprites}.
+ */
 public final class CropTextures {
+    /** A stage sprite, and whether vanilla tints it with the biome's grass color. */
+    public record PlantSprite(ResourceLocation texture, boolean grassTint) {}
+
     private CropTextures() {}
 
-    public static ResourceLocation of(CropCard card, int size) {
-        if (card.isWeed()) {
-            int stage = Math.max(1, Math.min(4, size));
-            return ResourceLocation.fromNamespaceAndPath(
-                    Gt6Crops.MODID, "block/crop/weed/" + stage);
-        }
-        if (isVanilla(card.id())) {
-            return vanilla(card.id(), size);
-        }
-        int stage = Math.max(1, Math.min(card.maxSize(), size));
-        return ResourceLocation.fromNamespaceAndPath(
-                Gt6Crops.MODID, "block/crop/" + card.texture() + "/" + stage);
+    public static PlantSprite of(CropCard card, int size) {
+        ResourceLocation texture = switch (card.id()) {
+            case "wheat" -> vanilla("block/wheat_stage" + stage(card, size, 7));
+            case "carrot" -> vanilla("block/carrots_stage" + stage(card, size, 3));
+            case "potato" -> vanilla("block/potatoes_stage" + stage(card, size, 3));
+            case "beetroot" -> vanilla("block/beetroots_stage" + stage(card, size, 3));
+            case "nether_wart" -> vanilla("block/nether_wart_stage" + stage(card, size, 2));
+            default -> ResourceLocation.fromNamespaceAndPath(Gt6Crops.MODID,
+                    "block/crop/" + card.texture() + "/" + Math.max(1, Math.min(card.maxSize(), size)));
+        };
+        return new PlantSprite(texture, "sugar_cane".equals(card.id()));
     }
 
-    private static ResourceLocation vanilla(String id, int size) {
-        return switch (id) {
-            case "wheat" -> ResourceLocation.withDefaultNamespace(
-                    "block/wheat_stage" + Math.min(7, size + 1));
-            case "carrot", "potato", "beetroot" -> ResourceLocation.withDefaultNamespace(
-                    "block/" + id + "_stage" + Math.min(3, Math.max(0, size - 1)));
-            case "pumpkin", "melon" -> ResourceLocation.withDefaultNamespace(
-                    "block/" + id + "_stem_stage" + Math.min(7, size + 1));
-            case "sugar_cane", "nether_wart" -> ResourceLocation.withDefaultNamespace(
-                    "block/" + id);
-            case "cocoa" -> ResourceLocation.withDefaultNamespace("block/cocoa_stage2");
-            default -> ResourceLocation.withDefaultNamespace("block/" + id);
-        };
+    /** Spreads sizes 1..maxSize over vanilla stages 0..ripe, so a mature crop looks ripe. */
+    private static int stage(CropCard card, int size, int ripe) {
+        if (size >= card.maxSize()) {
+            return ripe;
+        }
+        return Math.max(0, (size - 1) * ripe / (card.maxSize() - 1));
     }
 
-    private static boolean isVanilla(String id) {
-        return switch (id) {
-            case "wheat", "carrot", "potato", "beetroot", "pumpkin", "melon",
-                    "sugar_cane", "nether_wart", "cocoa", "dandelion", "poppy",
-                    "blue_orchid", "allium", "azure_bluet", "red_tulip",
-                    "orange_tulip", "white_tulip", "pink_tulip", "oxeye_daisy",
-                    "cornflower", "lily_of_the_valley" -> true;
-            default -> false;
-        };
+    private static ResourceLocation vanilla(String path) {
+        return ResourceLocation.withDefaultNamespace(path);
     }
 }

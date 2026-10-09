@@ -1,0 +1,101 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:ores/iron",
+      "required": false
+    },
+    {
+      "id": "#c:ores/iron",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/iron",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/iron",
+      "required": false
+    },
+    {
+      "id": "#forge:ores/magnetite",
+      "required": false
+    },
+    {
+      "id": "#c:ores/magnetite",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/magnetite",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/magnetite",
+      "required": false
+    },
+    {
+      "id": "#forge:ores/hematite",
+      "required": false
+    },
+    {
+      "id": "#c:ores/hematite",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/hematite",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/hematite",
+      "required": false
+    },
+    {
+      "id": "#forge:ores/brown_limonite",
+      "required": false
+    },
+    {
+      "id": "#c:ores/brown_limonite",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/brown_limonite",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/brown_limonite",
+      "required": false
+    },
+    {
+      "id": "#forge:ores/yellow_limonite",
+      "required": false
+    },
+    {
+      "id": "#c:ores/yellow_limonite",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/yellow_limonite",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/yellow_limonite",
+      "required": false
+    },
+    {
+      "id": "#forge:ores/pyrite",
+      "required": false
+    },
+    {
+      "id": "#c:ores/pyrite",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/pyrite",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/pyrite",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:ores/blaze",
+      "required": false
+    },
+    {
+      "id": "#c:ores/blaze",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/blaze",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/blaze",
+      "required": false
+    }
+  ]
+}

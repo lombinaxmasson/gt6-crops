@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:ores/silver",
+      "required": false
+    },
+    {
+      "id": "#c:ores/silver",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/silver",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/silver",
+      "required": false
+    }
+  ]
+}

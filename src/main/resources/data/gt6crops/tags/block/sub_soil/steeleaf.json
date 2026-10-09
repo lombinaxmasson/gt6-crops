@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:ores/steeleaf",
+      "required": false
+    },
+    {
+      "id": "#c:ores/steeleaf",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/steeleaf",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/steeleaf",
+      "required": false
+    }
+  ]
+}

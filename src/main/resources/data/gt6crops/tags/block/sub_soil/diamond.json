@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:ores/diamond",
+      "required": false
+    },
+    {
+      "id": "#c:ores/diamond",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/diamond",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/diamond",
+      "required": false
+    }
+  ]
+}

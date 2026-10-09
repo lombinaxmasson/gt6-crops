@@ -1,0 +1,53 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:ores/tungsten",
+      "required": false
+    },
+    {
+      "id": "#c:ores/tungsten",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/tungsten",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/tungsten",
+      "required": false
+    },
+    {
+      "id": "#forge:ores/scheelite",
+      "required": false
+    },
+    {
+      "id": "#c:ores/scheelite",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/scheelite",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/scheelite",
+      "required": false
+    },
+    {
+      "id": "#forge:ores/tungstate",
+      "required": false
+    },
+    {
+      "id": "#c:ores/tungstate",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/tungstate",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/tungstate",
+      "required": false
+    }
+  ]
+}

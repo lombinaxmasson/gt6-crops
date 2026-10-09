@@ -1,0 +1,37 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:ores/tin",
+      "required": false
+    },
+    {
+      "id": "#c:ores/tin",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/tin",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/tin",
+      "required": false
+    },
+    {
+      "id": "#forge:ores/cassiterite",
+      "required": false
+    },
+    {
+      "id": "#c:ores/cassiterite",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/cassiterite",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/cassiterite",
+      "required": false
+    }
+  ]
+}

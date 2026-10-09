@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:ores/coal",
+      "required": false
+    },
+    {
+      "id": "#c:ores/coal",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/coal",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/coal",
+      "required": false
+    }
+  ]
+}

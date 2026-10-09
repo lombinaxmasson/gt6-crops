@@ -1,0 +1,40 @@
+GT6 Crops ships the files below from Crops NH
+(https://github.com/GTNewHorizons/CropsNH, commit 1d2936f53192b2648a853ab529df758fd40a4f20).
+
+Unmodified; some are renamed:
+
+  assets/gt6crops/textures/item/crop_seed_base.png
+      from assets/cropsnh/textures/items/genericSeed/vanilla1.png
+  assets/gt6crops/textures/item/crop_seed_overlay.png
+      from assets/cropsnh/textures/items/genericSeed/vanilla2.png
+  assets/gt6crops/textures/block/crop/cocoa/1.png through 4.png
+      from assets/cropsnh/textures/blocks/crops/cocoa/1.png through 4.png
+  assets/gt6crops/textures/block/crop/pumpkin/1.png through 3.png
+      from assets/cropsnh/textures/blocks/crops/pumpkin/1.png through 3.png
+  assets/gt6crops/textures/block/crop/melon/1.png through 3.png
+      from assets/cropsnh/textures/blocks/crops/melon/1.png through 3.png
+
+Modified by lombinaxmasson on 2026-10-09:
+
+  assets/gt6crops/textures/crop_parts/pumpkin_vine.png
+  assets/gt6crops/textures/crop_parts/pumpkin_fruit.png
+      from assets/cropsnh/textures/blocks/crops/pumpkin/4.png
+  assets/gt6crops/textures/crop_parts/melon_vine.png
+  assets/gt6crops/textures/crop_parts/melon_fruit.png
+      from assets/cropsnh/textures/blocks/crops/melon/4.png
+
+  The fruit in those two images reuses pixels of Minecraft's pumpkin_side and
+  melon_side textures, which are not CropsNH's to license. The *_vine images are
+  the originals with those pixels removed. The *_fruit images mark the removed
+  pixels and store, in their red and green channels, which vanilla pixel each one
+  showed. The game redraws stage 4 from these and the player's own vanilla
+  textures, so no Minecraft pixels ship here.
+
+Copyright (c) 2022-2026 the GTNH Team.
+
+These files are licensed under the GNU Lesser General Public License, version 3
+or (at your option) any later version. The licence texts are LGPL-3.0.txt and
+GPL-3.0.txt in this folder. Each file stays a separate image, so a resource pack
+can replace it.
+
+This notice covers only the files listed above.

@@ -33,7 +33,17 @@ public record CropCard(
         int statColor,
         int statWeed,
         List<String> attributes,
-        String texture) {
+        String texture,
+        RenderShape renderShape,
+        CropConditions conditions) {
+
+    /** How the stage sheets stand in the crop stick, after CropsNH's plant render shapes. */
+    public enum RenderShape {
+        /** Two sheets each way at 4 and 12 pixels, like vanilla crops. */
+        HASH,
+        /** Two diagonal sheets, like vanilla flowers and sugar cane. */
+        X
+    }
 
     public static CropCard fromJson(JsonObject json) {
         List<ItemRef> specials = new ArrayList<>();
@@ -61,7 +71,9 @@ public record CropCard(
                 stats[3],
                 stats[4],
                 attributes(json),
-                string(json, "texture", json.get("id").getAsString().replace("_", "")));
+                string(json, "texture", json.get("id").getAsString().replace("_", "")),
+                renderShape(json),
+                CropConditions.fromJson(json));
     }
 
     public boolean canGrow(int size) {
@@ -126,6 +138,16 @@ public record CropCard(
             integer(json, "stat_defensive"),
             integer(json, "stat_color"),
             integer(json, "stat_weed")
+        };
+    }
+
+    private static RenderShape renderShape(JsonObject json) {
+        String shape = string(json, "render_shape", "hash");
+        return switch (shape) {
+            case "hash" -> RenderShape.HASH;
+            case "x" -> RenderShape.X;
+            default -> throw new IllegalArgumentException("Unknown render_shape " + shape
+                    + " on crop card " + json.get("id").getAsString());
         };
     }
 

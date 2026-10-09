@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:ores/emerald",
+      "required": false
+    },
+    {
+      "id": "#c:ores/emerald",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/emerald",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/emerald",
+      "required": false
+    }
+  ]
+}

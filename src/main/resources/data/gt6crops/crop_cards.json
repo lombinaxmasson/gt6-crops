@@ -1,7 +1,7 @@
 {
     "schema_version":  1,
     "source":  "GT6CE/CrucibleCraft crop ledger plus vanilla cards",
-    "crop_count":  83,
+    "crop_count":  90,
     "crops":  [
                   {
                       "id":  "indigo",
@@ -40,6 +40,8 @@
                                         "material":  "indigo",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/dirt_grass"],
+                      "liked_biomes":  ["#c:is_wet", "#c:is_lush"],
                       "texture":  "indigo"
                   },
                   {
@@ -76,6 +78,8 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "liked_biomes":  ["#c:is_wet", "#c:is_river", "#c:is_beach", "#c:is_sandy"],
                       "texture":  "flax"
                   },
                   {
@@ -117,6 +121,8 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/sand", "#gt6crops:soil/gravel", "#gt6crops:soil/soul_sand"],
+                      "liked_biomes":  ["#c:is_hot", "#c:is_wasteland"],
                       "texture":  "oilberries"
                   },
                   {
@@ -156,6 +162,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/stone"],
+                      "sub_soil":  ["#gt6crops:sub_soil/emerald"],
+                      "liked_biomes":  ["#c:is_mountain", "#c:is_hill"],
                       "texture":  "bobsyeruncleranks"
                   },
                   {
@@ -196,6 +205,10 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/stone"],
+                      "sub_soil":  ["#gt6crops:sub_soil/diamond"],
+                      "liked_biomes":  ["#c:is_cold", "#c:is_sparse_vegetation"],
+                      "render_shape":  "x",
                       "texture":  "diareed"
                   },
                   {
@@ -245,6 +258,10 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/stone"],
+                      "sub_soil":  ["#gt6crops:sub_soil/coal"],
+                      "liked_biomes":  ["#c:is_dead", "#c:is_spooky"],
+                      "render_shape":  "x",
                       "texture":  "withereed"
                   },
                   {
@@ -286,6 +303,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/netherrack"],
+                      "liked_biomes":  ["#c:is_nether", "#c:is_hot"],
+                      "render_shape":  "x",
                       "texture":  "blazereed"
                   },
                   {
@@ -344,6 +364,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_plains", "#c:is_forest"],
                       "texture":  "eggplant"
                   },
                   {
@@ -380,6 +403,8 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "liked_biomes":  ["#c:is_plains", "#c:is_forest"],
                       "texture":  "corium"
                   },
                   {
@@ -432,6 +457,8 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/soul_sand"],
+                      "liked_biomes":  ["#c:is_dead", "#c:is_spooky"],
                       "texture":  "corpseplant"
                   },
                   {
@@ -473,6 +500,8 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "liked_biomes":  ["#c:is_dead", "#c:is_spooky"],
                       "texture":  "creeperweed"
                   },
                   {
@@ -524,6 +553,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "sub_soil":  ["#gt6crops:sub_soil/end_stone"],
+                      "liked_biomes":  ["#c:is_end", "#c:is_cold"],
                       "texture":  "enderbloom"
                   },
                   {
@@ -582,6 +614,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/dirt_grass"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_plains", "#c:is_magical"],
                       "texture":  "meatrose"
                   },
                   {
@@ -623,6 +658,8 @@
                                         "material":  "milk",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "liked_biomes":  ["#c:is_plains", "#c:is_lush"],
                       "texture":  "milkwart"
                   },
                   {
@@ -662,6 +699,9 @@
                                         "material":  "glowstone",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/stone", "#gt6crops:soil/dirt_grass", "#gt6crops:soil/mycelium", "#gt6crops:soil/netherrack"],
+                      "liked_biomes":  ["#c:is_nether", "#c:is_magical", "#c:is_mushroom"],
+                      "render_shape":  "x",
                       "texture":  "glowshrooms"
                   },
                   {
@@ -699,6 +739,8 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/dirt_grass"],
+                      "liked_biomes":  ["#c:is_wet", "#c:is_swamp"],
                       "texture":  "slimeplant"
                   },
                   {
@@ -747,6 +789,8 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "liked_biomes":  ["#c:is_wet", "#c:is_lush"],
                       "texture":  "spidernip"
                   },
                   {
@@ -785,6 +829,8 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "liked_biomes":  ["#c:is_nether", "#c:is_spooky"],
                       "texture":  "tearstalks"
                   },
                   {
@@ -824,6 +870,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/stone"],
+                      "sub_soil":  ["#gt6crops:sub_soil/tin"],
+                      "liked_biomes":  ["#c:is_mountain", "#c:is_hill"],
                       "texture":  "tine"
                   },
                   {
@@ -863,6 +912,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/stone"],
+                      "sub_soil":  ["#gt6crops:sub_soil/copper"],
+                      "liked_biomes":  ["#c:is_savanna", "#c:is_hot", "#c:is_sandy"],
                       "texture":  "coppon"
                   },
                   {
@@ -901,6 +953,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/stone"],
+                      "sub_soil":  ["#gt6crops:sub_soil/silver"],
+                      "liked_biomes":  ["#c:is_mountain", "#c:is_hot"],
                       "texture":  "argentia"
                   },
                   {
@@ -939,6 +994,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/stone"],
+                      "sub_soil":  ["#gt6crops:sub_soil/lead"],
+                      "liked_biomes":  ["#c:is_savanna", "#c:is_plains"],
                       "texture":  "plumbilia"
                   },
                   {
@@ -981,6 +1039,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/stone"],
+                      "sub_soil":  ["#gt6crops:sub_soil/steeleaf"],
+                      "liked_biomes":  ["#c:is_spooky", "#c:is_dead"],
                       "texture":  "steeleafranks"
                   },
                   {
@@ -1020,6 +1081,8 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "liked_biomes":  ["#c:is_spooky", "#c:is_dense_vegetation"],
                       "texture":  "liveroots"
                   },
                   {
@@ -1057,6 +1120,8 @@
                                         "item":  "gregtech:rye",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
                       "texture":  "rye"
                   },
                   {
@@ -1094,6 +1159,9 @@
                                         "item":  "gregtech:barley",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_plains", "#c:is_dry"],
                       "texture":  "barley"
                   },
                   {
@@ -1131,6 +1199,8 @@
                                         "item":  "gregtech:oats",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
                       "texture":  "oats"
                   },
                   {
@@ -1168,6 +1238,8 @@
                                         "item":  "gregtech:rice",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
                       "texture":  "rice"
                   },
                   {
@@ -1207,6 +1279,8 @@
                                         "material":  "tea",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "liked_biomes":  ["#c:is_wet", "#c:is_hill", "#c:is_hot"],
                       "texture":  "tea"
                   },
                   {
@@ -1246,6 +1320,7 @@
                                         "material":  "mint",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
                       "texture":  "mint"
                   },
                   {
@@ -1284,6 +1359,9 @@
                                         "item":  "gregtech:lemon",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/dirt_grass"],
+                      "liked_biomes":  ["#c:is_hot", "#c:is_dry", "#c:is_plains"],
+                      "render_shape":  "x",
                       "texture":  "lemonplant"
                   },
                   {
@@ -1322,6 +1400,8 @@
                                         "item":  "gregtech:apple",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
                       "texture":  "greenappletree"
                   },
                   {
@@ -1360,6 +1440,8 @@
                                         "item":  "gregtech:apple",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
                       "texture":  "yellowappletree"
                   },
                   {
@@ -1398,6 +1480,8 @@
                                         "item":  "minecraft:apple",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
                       "texture":  "redappletree"
                   },
                   {
@@ -1436,6 +1520,8 @@
                                         "item":  "gregtech:apple",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
                       "texture":  "darkredappletree"
                   },
                   {
@@ -1474,6 +1560,9 @@
                                         "item":  "gregtech:chili_pepper",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_hot", "#c:is_lush"],
                       "texture":  "chili"
                   },
                   {
@@ -1512,6 +1601,9 @@
                                         "item":  "gregtech:tomato",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_hot", "#c:is_wet"],
                       "texture":  "tomatoplant"
                   },
                   {
@@ -1549,6 +1641,9 @@
                                         "item":  "gregtech:red_grapes",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_hot", "#c:is_dry", "#c:is_sparse_vegetation"],
                       "texture":  "redgrapes"
                   },
                   {
@@ -1586,6 +1681,9 @@
                                         "item":  "gregtech:white_grapes",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_hot", "#c:is_dry", "#c:is_sparse_vegetation"],
                       "texture":  "whitegrapes"
                   },
                   {
@@ -1623,6 +1721,9 @@
                                         "item":  "gregtech:green_grapes",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_hot", "#c:is_dry", "#c:is_sparse_vegetation"],
                       "texture":  "greengrapes"
                   },
                   {
@@ -1665,6 +1766,9 @@
                                         "item":  "gregtech:purple_grapes",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_hot", "#c:is_dry", "#c:is_sparse_vegetation"],
                       "texture":  "purplegrapes"
                   },
                   {
@@ -1704,6 +1808,9 @@
                                         "item":  "gregtech:blueberry",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_hill", "#c:is_forest", "#c:is_lush"],
                       "texture":  "blueberrybush"
                   },
                   {
@@ -1742,6 +1849,8 @@
                                         "item":  "gregtech:gooseberry",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
                       "texture":  "gooseberrybush"
                   },
                   {
@@ -1781,6 +1890,8 @@
                                         "item":  "gregtech:candleberry",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
                       "texture":  "candleberrybush"
                   },
                   {
@@ -1819,6 +1930,8 @@
                                         "item":  "gregtech:cranberry",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
                       "texture":  "cranberries"
                   },
                   {
@@ -1857,6 +1970,8 @@
                                         "item":  "gregtech:black_currants",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
                       "texture":  "blackcurrants"
                   },
                   {
@@ -1895,6 +2010,8 @@
                                         "item":  "gregtech:white_currants",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
                       "texture":  "whitecurrants"
                   },
                   {
@@ -1933,6 +2050,8 @@
                                         "item":  "gregtech:red_currants",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
                       "texture":  "redcurrants"
                   },
                   {
@@ -1971,6 +2090,9 @@
                                         "item":  "gregtech:blackberry",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_wet", "#c:is_dense_vegetation", "#c:is_lush"],
                       "texture":  "blackberries"
                   },
                   {
@@ -2009,6 +2131,9 @@
                                         "item":  "gregtech:raspberry",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_plains", "#c:is_dry"],
                       "texture":  "raspberries"
                   },
                   {
@@ -2047,6 +2172,9 @@
                                         "item":  "gregtech:strawberry",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_plains", "#c:is_lush"],
                       "texture":  "strawberries"
                   },
                   {
@@ -2084,6 +2212,10 @@
                                         "item":  "gregtech:onion",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_dry", "#c:is_sandy", "#c:is_sparse_vegetation"],
+                      "render_shape":  "x",
                       "texture":  "onion"
                   },
                   {
@@ -2121,6 +2253,9 @@
                                         "item":  "gregtech:cucumber",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_hot", "#c:is_lush"],
                       "texture":  "cucumber"
                   },
                   {
@@ -2158,6 +2293,8 @@
                                         "item":  "gregtech:peanut",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
                       "texture":  "peanuts"
                   },
                   {
@@ -2197,6 +2334,8 @@
                                         "item":  "gregtech:ananas",
                                         "count":  4
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
                       "texture":  "ananas"
                   },
                   {
@@ -2233,6 +2372,7 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
                       "texture":  "desertnova",
                       "blocked_without":  "arsmagica"
                   },
@@ -2269,6 +2409,7 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
                       "texture":  "cerublossom",
                       "blocked_without":  "arsmagica"
                   },
@@ -2309,6 +2450,8 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/dirt_grass"],
+                      "liked_biomes":  ["#c:is_magical", "#c:is_lush"],
                       "texture":  "shimmerleaf",
                       "blocked_without":  "thaumcraft"
                   },
@@ -2349,6 +2492,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/dirt_grass"],
+                      "sub_soil":  ["#gt6crops:sub_soil/blaze"],
+                      "liked_biomes":  ["#c:is_hot", "#c:is_dry", "#c:is_magical"],
                       "texture":  "cinderpearl",
                       "blocked_without":  "thaumcraft"
                   },
@@ -2387,6 +2533,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/stone"],
+                      "sub_soil":  ["#gt6crops:sub_soil/iron"],
+                      "liked_biomes":  ["#c:is_mountain", "#c:is_hill"],
                       "texture":  "indigo"
                   },
                   {
@@ -2424,6 +2573,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/stone"],
+                      "sub_soil":  ["#gt6crops:sub_soil/gold"],
+                      "liked_biomes":  ["#c:is_badlands", "#c:is_sandy"],
                       "texture":  "argentia"
                   },
                   {
@@ -2461,6 +2613,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/stone"],
+                      "sub_soil":  ["#gt6crops:sub_soil/zinc"],
+                      "liked_biomes":  ["#c:is_dry", "#c:is_hot"],
                       "texture":  "argentia"
                   },
                   {
@@ -2498,6 +2653,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/stone"],
+                      "sub_soil":  ["#gt6crops:sub_soil/nickel"],
+                      "liked_biomes":  ["#c:is_plains", "#c:is_lush"],
                       "texture":  "plumbilia"
                   },
                   {
@@ -2535,6 +2693,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/stone"],
+                      "sub_soil":  ["#gt6crops:sub_soil/aluminium"],
+                      "liked_biomes":  ["#c:is_cold", "#c:is_dry"],
                       "texture":  "indigo"
                   },
                   {
@@ -2572,6 +2733,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/stone"],
+                      "sub_soil":  ["#gt6crops:sub_soil/manganese"],
+                      "liked_biomes":  ["#c:is_nether", "#c:is_hot"],
                       "texture":  "plumbilia"
                   },
                   {
@@ -2609,6 +2773,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/stone"],
+                      "sub_soil":  ["#gt6crops:sub_soil/titanium"],
+                      "liked_biomes":  ["#c:is_hot", "#c:is_savanna"],
                       "texture":  "argentia"
                   },
                   {
@@ -2647,6 +2814,8 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/stone"],
+                      "sub_soil":  ["#gt6crops:sub_soil/chromium"],
                       "texture":  "indigo"
                   },
                   {
@@ -2685,6 +2854,9 @@
                                         "kind":  "none",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/stone"],
+                      "sub_soil":  ["#gt6crops:sub_soil/tungsten"],
+                      "liked_biomes":  ["#c:is_ocean", "#c:is_wet", "#c:is_cold"],
                       "texture":  "plumbilia"
                   },
                   {
@@ -2755,6 +2927,9 @@
                                         "item":  "minecraft:wheat_seeds",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_plains", "#c:is_lush"],
                       "texture":  "wheat"
                   },
                   {
@@ -2792,6 +2967,9 @@
                                         "item":  "minecraft:carrot",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_plains", "#c:is_hot", "#c:is_sandy"],
                       "texture":  "carrot"
                   },
                   {
@@ -2829,6 +3007,9 @@
                                         "item":  "minecraft:potato",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_plains", "#c:is_cold", "#c:is_tree/coniferous"],
                       "texture":  "potato"
                   },
                   {
@@ -2866,6 +3047,8 @@
                                         "item":  "minecraft:beetroot_seeds",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
                       "texture":  "beetroot"
                   },
                   {
@@ -2903,6 +3086,9 @@
                                         "item":  "minecraft:pumpkin_seeds",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_plains", "#c:is_wet"],
                       "texture":  "pumpkin"
                   },
                   {
@@ -2940,6 +3126,9 @@
                                         "item":  "minecraft:melon_seeds",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_wet", "#c:is_lush"],
                       "texture":  "melon"
                   },
                   {
@@ -2977,6 +3166,9 @@
                                         "item":  "minecraft:sugar_cane",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/sand", "#gt6crops:soil/dirt_grass"],
+                      "liked_biomes":  ["#c:is_wet", "#c:is_hot"],
+                      "render_shape":  "x",
                       "texture":  "sugar_cane"
                   },
                   {
@@ -3014,6 +3206,8 @@
                                         "item":  "minecraft:nether_wart",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/soul_sand"],
+                      "liked_biomes":  ["#c:is_nether", "#c:is_hot"],
                       "texture":  "nether_wart"
                   },
                   {
@@ -3051,6 +3245,9 @@
                                         "item":  "minecraft:cocoa_beans",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/farmland"],
+                      "min_light":  9,
+                      "liked_biomes":  ["#c:is_jungle", "#c:is_wet", "#c:is_dense_vegetation", "#c:is_lush"],
                       "texture":  "cocoa"
                   },
                   {
@@ -3088,6 +3285,8 @@
                                         "item":  "minecraft:dandelion",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/dirt_grass"],
+                      "liked_biomes":  ["#c:is_plains", "#c:is_lush", "#c:is_forest"],
                       "texture":  "dandelion"
                   },
                   {
@@ -3125,6 +3324,8 @@
                                         "item":  "minecraft:poppy",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/dirt_grass"],
+                      "liked_biomes":  ["#c:is_plains", "#c:is_lush", "#c:is_hill"],
                       "texture":  "poppy"
                   },
                   {
@@ -3162,6 +3363,9 @@
                                         "item":  "minecraft:blue_orchid",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/dirt_grass"],
+                      "liked_biomes":  ["#c:is_wet", "#c:is_lush", "#c:is_swamp"],
+                      "render_shape":  "x",
                       "texture":  "blue_orchid"
                   },
                   {
@@ -3199,6 +3403,8 @@
                                         "item":  "minecraft:allium",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/dirt_grass"],
+                      "liked_biomes":  ["#c:is_dry", "#c:is_sandy", "#c:is_sparse_vegetation"],
                       "texture":  "allium"
                   },
                   {
@@ -3236,6 +3442,8 @@
                                         "item":  "minecraft:azure_bluet",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/dirt_grass"],
+                      "liked_biomes":  ["#c:is_hill", "#c:is_forest", "#c:is_lush"],
                       "texture":  "azure_bluet"
                   },
                   {
@@ -3273,6 +3481,8 @@
                                         "item":  "minecraft:red_tulip",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/dirt_grass"],
+                      "liked_biomes":  ["#c:is_plains", "#c:is_lush", "#c:is_hot"],
                       "texture":  "red_tulip"
                   },
                   {
@@ -3310,6 +3520,8 @@
                                         "item":  "minecraft:orange_tulip",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/dirt_grass"],
+                      "liked_biomes":  ["#c:is_plains", "#c:is_lush", "#c:is_wet"],
                       "texture":  "orange_tulip"
                   },
                   {
@@ -3347,6 +3559,8 @@
                                         "item":  "minecraft:white_tulip",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/dirt_grass"],
+                      "liked_biomes":  ["#c:is_plains", "#c:is_lush", "#c:is_cold"],
                       "texture":  "white_tulip"
                   },
                   {
@@ -3384,6 +3598,8 @@
                                         "item":  "minecraft:pink_tulip",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/dirt_grass"],
+                      "liked_biomes":  ["#c:is_plains", "#c:is_lush", "#c:is_wet"],
                       "texture":  "pink_tulip"
                   },
                   {
@@ -3421,6 +3637,8 @@
                                         "item":  "minecraft:oxeye_daisy",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/dirt_grass"],
+                      "liked_biomes":  ["#c:is_plains", "#c:is_lush", "#c:is_forest"],
                       "texture":  "oxeye_daisy"
                   },
                   {
@@ -3458,6 +3676,7 @@
                                         "item":  "minecraft:cornflower",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/dirt_grass"],
                       "texture":  "cornflower"
                   },
                   {
@@ -3495,6 +3714,7 @@
                                         "item":  "minecraft:lily_of_the_valley",
                                         "count":  1
                                     },
+                      "soil":  ["#gt6crops:soil/dirt_grass"],
                       "texture":  "lily_of_the_valley"
                   }
               ]

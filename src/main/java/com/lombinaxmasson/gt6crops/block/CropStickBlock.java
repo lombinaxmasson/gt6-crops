@@ -27,7 +27,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -91,7 +90,7 @@ public final class CropStickBlock extends Block implements EntityBlock {
 
     @Override
     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        return level.getBlockState(pos.below()).is(Blocks.FARMLAND);
+        return CropCards.isSoil(level.getBlockState(pos.below()));
     }
 
     @Override
@@ -221,7 +220,7 @@ public final class CropStickBlock extends Block implements EntityBlock {
 
     /**
      * Plants a crop seed or a matching base seed on an empty stick.
-     * A cross refuses the seed and tells the player why.
+     * A cross or the wrong soil refuses the seed and tells the player why.
      */
     static ItemInteractionResult offerSeed(
             Level level, CropTile crop, ItemStack stack, Player player) {
@@ -236,6 +235,17 @@ public final class CropStickBlock extends Block implements EntityBlock {
             if (!level.isClientSide) {
                 player.displayClientMessage(
                         Component.translatable("message.gt6crops.no_plant_on_cross"),
+                        true);
+            }
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (!GrowthCheck.soilAccepts(card.conditions(), level, crop.getBlockPos())) {
+            if (!level.isClientSide) {
+                player.displayClientMessage(
+                        Component.translatable(
+                                "message.gt6crops.wrong_soil",
+                                card.name(),
+                                GrowthCheck.join(card.conditions().soil())),
                         true);
             }
             return ItemInteractionResult.sidedSuccess(level.isClientSide);

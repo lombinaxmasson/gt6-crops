@@ -11,6 +11,7 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import com.lombinaxmasson.gt6crops.card.CropCard;
+import com.lombinaxmasson.gt6crops.card.CropConditions;
 import com.lombinaxmasson.gt6crops.card.ItemRef;
 
 class CropRulesTest {
@@ -72,11 +73,27 @@ class CropRulesTest {
         CropRules.Stats stats = new CropRules.Stats(8, 4, 4);
 
         int healthy = CropRules.growthPoints(
-                card, stats, new CropRules.Environment(10, 10, 10), true, true);
+                card, stats, new CropRules.Environment(10, 10, 10), true, true, 0);
         int deprived = CropRules.growthPoints(
-                card, stats, new CropRules.Environment(0, 0, 0), false, false);
+                card, stats, new CropRules.Environment(0, 0, 0), false, false, 0);
 
         assertTrue(healthy > deprived);
+    }
+
+    @Test
+    void likedBiomesSpeedUpGrowthUpToTheCap() {
+        CropCard card = card("test", 2, "Crop");
+        CropRules.Stats stats = new CropRules.Stats(31, 4, 4);
+        CropRules.Environment environment = new CropRules.Environment(10, 10, 10);
+
+        int none = CropRules.growthPoints(card, stats, environment, true, true, 0);
+        int capped = CropRules.growthPoints(
+                card, stats, environment, true, true, CropRules.MAX_LIKED_BIOMES);
+        int beyondCap = CropRules.growthPoints(
+                card, stats, environment, true, true, CropRules.MAX_LIKED_BIOMES + 3);
+
+        assertTrue(capped > none);
+        assertEquals(capped, beyondCap);
     }
 
     @Test
@@ -120,6 +137,8 @@ class CropRulesTest {
                 1,
                 1,
                 List.of(attribute),
-                id);
+                id,
+                CropCard.RenderShape.HASH,
+                CropConditions.DEFAULT);
     }
 }

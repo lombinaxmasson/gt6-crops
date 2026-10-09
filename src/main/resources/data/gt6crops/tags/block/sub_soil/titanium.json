@@ -1,0 +1,53 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:ores/titanium",
+      "required": false
+    },
+    {
+      "id": "#c:ores/titanium",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/titanium",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/titanium",
+      "required": false
+    },
+    {
+      "id": "#forge:ores/ilmenite",
+      "required": false
+    },
+    {
+      "id": "#c:ores/ilmenite",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/ilmenite",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/ilmenite",
+      "required": false
+    },
+    {
+      "id": "#forge:ores/rutile",
+      "required": false
+    },
+    {
+      "id": "#c:ores/rutile",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/rutile",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/rutile",
+      "required": false
+    }
+  ]
+}

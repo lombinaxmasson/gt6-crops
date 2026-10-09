@@ -9,6 +9,7 @@ import com.gregtech.gregtech.api.crop.CropScanSource;
 import com.lombinaxmasson.gt6crops.Gt6Crops;
 import com.lombinaxmasson.gt6crops.card.CropCard;
 import com.lombinaxmasson.gt6crops.card.CropCards;
+import com.lombinaxmasson.gt6crops.card.CropConditions;
 import com.lombinaxmasson.gt6crops.card.CropMutations;
 import com.lombinaxmasson.gt6crops.rules.CropBreeding;
 import com.lombinaxmasson.gt6crops.item.CropSeedItem;
@@ -197,6 +198,7 @@ public final class CropTile extends BlockEntity implements CropScanSource {
                 lines.add(Component.translatable(
                         "message.gt6crops.inspect.stats",
                         stats.growth(), stats.gain(), stats.resistance()));
+                inspectConditions(crop.conditions(), lines);
             }
         }
         lines.add(Component.translatable(
@@ -209,6 +211,23 @@ public final class CropTile extends BlockEntity implements CropScanSource {
                 environment.airQuality(),
                 CropRules.MAX_ENVIRONMENT));
         return lines;
+    }
+
+    private void inspectConditions(CropConditions conditions, List<Component> lines) {
+        if (level == null) {
+            return;
+        }
+        lines.addAll(GrowthCheck.describe(
+                conditions,
+                GrowthCheck.problems(conditions, level, worldPosition),
+                level,
+                worldPosition));
+        if (!conditions.likedBiomes().isEmpty()) {
+            lines.add(Component.translatable(
+                    "message.gt6crops.inspect.liked_biomes",
+                    GrowthCheck.join(conditions.likedBiomes()),
+                    GrowthCheck.likedBiomes(conditions, level, worldPosition)));
+        }
     }
 
     @Override
@@ -269,13 +288,15 @@ public final class CropTile extends BlockEntity implements CropScanSource {
             return;
         }
 
-        if (card.canGrow(crop.size)) {
+        if (card.canGrow(crop.size)
+                && GrowthCheck.problems(card.conditions(), level, pos).isEmpty()) {
             int points = CropRules.growthPoints(
                     card,
                     crop.stats,
                     crop.environment,
                     crop.nutrientStorage > 0,
-                    crop.hydrationStorage > 0);
+                    crop.hydrationStorage > 0,
+                    GrowthCheck.likedBiomes(card.conditions(), level, pos));
             crop.growthProgress += points;
             if (crop.growthProgress >= CropRules.growthThreshold(card)) {
                 crop.growthProgress = 0;
@@ -317,7 +338,9 @@ public final class CropTile extends BlockEntity implements CropScanSource {
         if (outcome == null) {
             return;
         }
-        CropCards.find(outcome.cardId()).ifPresent(card -> plant(card, outcome.stats()));
+        CropCards.find(outcome.cardId())
+                .filter(card -> GrowthCheck.problems(card.conditions(), level, pos).isEmpty())
+                .ifPresent(card -> plant(card, outcome.stats()));
     }
 
     private void trySpreadWeed(Level level, BlockPos pos, Random random) {

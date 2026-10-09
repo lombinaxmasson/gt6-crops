@@ -1,0 +1,37 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:ores/zinc",
+      "required": false
+    },
+    {
+      "id": "#c:ores/zinc",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/zinc",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/zinc",
+      "required": false
+    },
+    {
+      "id": "#forge:ores/sphalerite",
+      "required": false
+    },
+    {
+      "id": "#c:ores/sphalerite",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/sphalerite",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/sphalerite",
+      "required": false
+    }
+  ]
+}

@@ -16,6 +16,8 @@ import com.lombinaxmasson.gt6crops.DataFiles;
 import com.lombinaxmasson.gt6crops.Gt6Crops;
 
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.fml.ModList;
 
 /**
@@ -25,6 +27,7 @@ public final class CropCards {
     private static final Gson GSON = new Gson();
     private static final Map<String, CropCard> CARDS = new LinkedHashMap<>();
     private static final List<String> SKIPPED = new ArrayList<>();
+    private static final List<RegistryRef<Block>> SOILS = new ArrayList<>();
     private static boolean initialized;
 
     private CropCards() {}
@@ -45,6 +48,9 @@ public final class CropCards {
             if (CARDS.put(card.id(), card) != null) {
                 throw new IllegalStateException("Duplicate crop card " + card.id());
             }
+            card.conditions().soil().stream()
+                    .filter(soil -> !SOILS.contains(soil))
+                    .forEach(SOILS::add);
         }
         initialized = true;
         CropMutations.bind(List.copyOf(CARDS.keySet()));
@@ -78,6 +84,17 @@ public final class CropCards {
 
     public static Optional<CropCard> weed() {
         return find("weed");
+    }
+
+    /** A crop stick can stand on any block that some loaded card accepts as soil. */
+    public static boolean isSoil(BlockState state) {
+        initialize();
+        for (RegistryRef<Block> soil : SOILS) {
+            if (soil.matches(state.getBlockHolder())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static List<String> skipped() {

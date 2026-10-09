@@ -1,0 +1,53 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:ores/nickel",
+      "required": false
+    },
+    {
+      "id": "#c:ores/nickel",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/nickel",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/nickel",
+      "required": false
+    },
+    {
+      "id": "#forge:ores/pentlandite",
+      "required": false
+    },
+    {
+      "id": "#c:ores/pentlandite",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/pentlandite",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/pentlandite",
+      "required": false
+    },
+    {
+      "id": "#forge:ores/garnierite",
+      "required": false
+    },
+    {
+      "id": "#c:ores/garnierite",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/garnierite",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/garnierite",
+      "required": false
+    }
+  ]
+}
