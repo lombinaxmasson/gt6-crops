@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "ASA",
+    "PHP",
+    "CIC"
+  ],
+  "key": {
+    "A": {
+      "item": "gregtech:compact_robot_arm_lv"
+    },
+    "S": {
+      "item": "gregtech:compact_sensor_lv"
+    },
+    "P": {
+      "tag": "forge:plates/steel_galvanized"
+    },
+    "H": {
+      "item": "gregtech:casing_machine_steelgalvanized"
+    },
+    "C": {
+      "item": "gregtech:cable_01_tin"
+    },
+    "I": {
+      "item": "gregtech:pipe_medium_galvanized_steel"
+    }
+  },
+  "result": {
+    "id": "gt6crops:crop_manager_lv",
+    "count": 1
+  }
+}

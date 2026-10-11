@@ -39,7 +39,34 @@ it is not bundled into the addon jar.
   exposes one random neighbouring crop, which escapes on a resistance roll or
   by spending 2 stored Weed-EX. Plant Cure (100 uses) heals a sick crop and
   tops its fertilizer up to 8. Digging, breaking, or replanting a crop also
-  ends the disease;
+  ends the disease. As in CropsNH, a sick crop's sticks turn pale green and
+  its plant keeps only the green of its texture;
+- CropsNH-style weeds. An empty single stick grows a weed one cycle in 100.
+  Weeds grow whatever their conditions. A weed that is half grown, and any
+  other crop that is fully grown with growth above 24 and resistance below its
+  growth, spreads weeds on cycles where a roll from 0 to 49, minus its growth,
+  is 2 or less. Each spread picks one random side. An empty stick, single or
+  cross, gets a weed; a planted crop is exposed to disease as above, so
+  resistance 31 is immune; and air over grass, dirt, or farmland turns into
+  short grass on a grass block. Stored Weed-EX keeps a weed out of a stick by
+  spending 5. It is only spent when it blocks a weed or disease. Weeds cannot
+  be harvested; clear them with a spade or Weed-EX, or break the stick;
+- CropsNH-style trampling. Each tick a player or mob sprints through a planted
+  crop, it tramples the crop with a chance of 1 in 100 × 0.95^tier (1 in 95 at
+  tier 1, 1 in 59 at tier 10), and only when a roll from 0 to 30 beats the
+  crop's resistance. Landing on a crop from more than 0.75 blocks tramples it
+  with a chance of the fall height minus 0.75, so a fall of 1.75 blocks or
+  more always does.
+  A trampled stick breaks as if mined, and farmland under it turns to dirt.
+  Weeds, empty sticks, crops with resistance 31, and crops on a soil in the
+  `gt6crops:trample_proof_soil` block tag are never trampled. That tag is
+  empty by default;
+- CropsNH-style seed scanning. A crossbred crop starts unscanned, and a seed
+  dug up from it reads "Unknown Seed" with no stats. Scanning the crop, with
+  GT's crop scanner or by right-clicking it with a magnifying glass, reveals
+  both. Base seeds, weeds, and crops and seeds from before this existed count
+  as scanned. GT6CE has no machine that scans seed items, so a seed can only
+  be scanned by planting it first;
 - CropsNH-style growth conditions: each crop needs its own soil, some need a
   particular block under the soil or a minimum light level, and liked biomes
   speed growth up;
@@ -53,6 +80,86 @@ The card compatibility notes are in
 [`docs/crop-compatibility.md`](docs/crop-compatibility.md). The proposed GT6CE
 integration contract is in
 [`docs/gt6ce-crop-api-request.md`](docs/gt6ce-crop-api-request.md).
+
+## Machines
+
+The Addon API cannot add GT machine types, so the machines are this addon's own
+blocks that take EU from GT6CE cables the way GT6CE's machines do. A packet
+below half the machine's voltage is lost, and one above twice its voltage
+makes it explode (see `machines.overvoltage_explosions`). A machine stores no
+energy: it only works on ticks when at least half its voltage arrives.
+
+Right-clicking a machine opens its screen, and right-clicking it with a bucket
+or other fluid container pours into its tanks. From any side, hoppers and pipes
+can fill the input slots and tanks and empty the output slots.
+
+### Crop Manager
+
+The Crop Manager (LV) tends the crop sticks within 5 blocks of it
+horizontally and 2 vertically, as CropsNH's does. After 50 powered ticks in a
+row it runs one round; a tick without power starts the count over. Four
+switches on its screen choose what a round does, and only harvesting is on
+when it is placed:
+
+- Harvesting puts ripe crops' produce in its 18 output slots, 5% more on
+  average than a hand harvest. Weeds are not harvested. When the output slots
+  are full it waits; drops that did not fit are kept, go out first next round,
+  and drop if the machine is broken.
+- Watering tops up a stick with 28 or less of 32 water from its 32,000 mB tank,
+  at 6 mB per point.
+- Fertilizing works the same way from its 36,864 mB liquid fertilizer tank.
+  Enriched fertilizer piped in counts as ten times as much liquid fertilizer.
+  While the tank holds less than 6 mB, a stick with 28 or less of 32 fertilizer
+  instead gets one item from its fertilizer slots (anything in
+  `gt6crops:fertilizer`), worth 8 as by hand.
+- Weed-EX is GT6CE's strong poison potion, as in CropsNH, held in a 1,500 mB
+  tank. Weed-EX items in its two Weed-EX slots pour 100 mB each into it. A stick
+  with 12 or less Weed-EX gets 12 for 10 mB. As in CropsNH, this does not clear
+  a weed that is already growing.
+
+Watering, fertilizing, and Weed-EX reach every stick in range, including empty
+sticks and weeds. Liquid and enriched fertilizer are this addon's fluids. Like
+CropsNH's, they have no block or bucket and only move through pipes and tanks.
+GT6CE machines make them from CropsNH's recipes, at 16 EU/t. CropsNH makes
+fertilizer items and extracts 144 mB from each; this addon has no fertilizer
+item, so its Mixer recipes make the liquid directly:
+
+- In the Mixer, one calcite, calcium, apatite, or glauconite dust with one
+  sulfur, phosphorite, or phosphate dust, three ash dusts, or one dark ash dust,
+  and 1,000 mB of water, make 144 mB of liquid fertilizer for each item CropsNH
+  would make: 1 to 3 from calcite and 2 to 4 from the others. Phosphorite takes
+  the place of CropsNH's tricalcium phosphate. Each takes 5 seconds per 144 mB.
+- In the Mixer, a dirt block, two wood dusts, four sand, and 1,000 mB of water
+  make 576 mB in 5 seconds.
+- In the Squeezer, a bone meal makes 48 mB, as much as it is worth by hand.
+- In the Mixer, four bone meal and 1,000 mB of liquid fertilizer make 1,000 mB of
+  enriched fertilizer in 1 second.
+
+Water can be any of the four GT6CE's own Mixer recipes take: plain, mineral,
+or distilled water, or spectral dew. A recipe is left out, with a warning in the log, if GT6CE
+lacks one of its dusts or already has a recipe those inputs would run.
+
+The Crop Manager's recipe is CropsNH's with GT6CE parts: two LV robot arms around an LV
+sensor, galvanized steel plates on either side of a galvanized steel machine
+casing, and tin cables on either side of a medium galvanized steel pipe, which
+takes the place of CropsNH's input hatch.
+
+## Configuration
+
+`config/gt6crops-common.toml` holds CropsNH's global settings. It can also be
+edited from the mod list's Config button. The server reads them during growth
+cycles, so a dedicated server uses its own copy.
+
+| Setting | Default | Meaning |
+|---|---|---|
+| `crops.growth_multiplier` | 1.0 | multiplies growth per cycle, from 0 to 2 |
+| `crops.breeding_chance` | 3 | an empty cross tries to crossbreed one cycle in this many |
+| `crops.breeding_low` | -2 | lowest change to each crossbred stat |
+| `crops.breeding_high` | 4 | highest change to each crossbred stat |
+| `weeds.enable_weeds` | true | turns weed growth and spreading on or off |
+| `weeds.weed_spawn_chance` | 100 | an empty single stick grows a weed one cycle in this many |
+| `weeds.weed_spread_chance` | 50 | the weed-spread roll runs from 0 to this minus 1 |
+| `machines.overvoltage_explosions` | true | a machine fed more than twice its voltage explodes, as GT6CE's do; when off, the packet is lost |
 
 ## Customizing crops
 
@@ -208,8 +315,9 @@ that have reached 80% of their size:
    random member of that pool. Pools have no tier limit, so a pool that mixes
    cheap and expensive crops is a shortcut to the expensive ones.
 4. The child's growth, gain, and resistance are the average of the parents
-   that took part, plus −2 to +4. Fertilizer on every one of those parents
-   removes the negative half.
+   that took part, plus −2 to +4 by default (see
+   [Configuration](#configuration)). Fertilizer on every one of those parents
+   removes the negative half. The child is unscanned.
 
 ### Seed colors and textures
 
@@ -258,8 +366,14 @@ every stage, as IC2 did; those pixels were erased because this addon draws
 the sticks as a model.
 
 The crop-stick model, its wood texture, the Weed-EX and crop-stick item
-icons, and the four weed stages are original to this addon. The Plant Cure
+icons, the four weed stages, the machine overlays, and the machine
+screen are original to this addon. The Plant Cure
 icon is the Weed-EX icon with its greens recoloured.
+
+Machines are drawn as GT6CE draws its own: GT6CE's metallic machine casing,
+tinted with the colour of the tier's casing material (galvanized steel for
+LV), under this addon's overlays. The casing texture is read from the
+installed GT6CE jar and is not shipped here.
 
 The crop-seed body and highlight masks (CropsNH's `genericSeed/vanilla1` and
 `vanilla2`, tinted per crop), the cocoa, pumpkin, and melon stages, and the
@@ -274,6 +388,12 @@ Flower and sugar cane stages are not shipped at all; they are drawn from the
 player's vanilla textures when the game loads.
 
 ## Development
+
+Op level 2 and above get `/gt6crops` debug commands. Look at a crop stick and use
+`tick [count]` to run growth cycles without waiting, `mature` or `setsize`,
+`setstats <g> <ga> <r>`, `fill` for storage, or `plant <card> [g ga r]`. Vanilla
+`/tick rate` also speeds the whole world, but the crop command is the one that
+skips the 256-tick gate.
 
 Set `JAVA_HOME` to the project JDK 21 before using Gradle. Do not commit the
 GT6CE jar; `libs/gt6ce/*.jar` is ignored. `build-commit.txt` and the checksum

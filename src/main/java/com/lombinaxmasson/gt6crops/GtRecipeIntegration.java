@@ -59,10 +59,10 @@ public final class GtRecipeIntegration {
                 added, context.platform(), context.minecraftVersion());
     }
 
-    private static void requireAccepted(RecipeMap map, Recipe recipe, String cardId) {
+    static void requireAccepted(RecipeMap map, Recipe recipe, String what) {
         if (map.addRecipe(recipe) == null) {
             throw new IllegalStateException(
-                    "gt6crops: rejected " + map.mNameInternal + " recipe for " + cardId);
+                    "gt6crops: rejected " + map.mNameInternal + " recipe for " + what);
         }
     }
 

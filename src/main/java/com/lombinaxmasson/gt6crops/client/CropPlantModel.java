@@ -35,8 +35,8 @@ import net.neoforged.neoforge.client.model.pipeline.QuadBakingVertexConsumer;
 
 /**
  * Stick model plus cached plant sheets in the card's render shape. The sheets are baked
- * once per sprite, tint, shape, and soil depth, then reused by chunk meshing instead of
- * a block-entity renderer.
+ * once per sprite, tint, shape, soil depth, and sickness, then reused by chunk meshing
+ * instead of a block-entity renderer.
  */
 public final class CropPlantModel implements IDynamicBakedModel {
     private static final float[] SHEET_OFFSETS = {4.0f / 16.0f, 12.0f / 16.0f};
@@ -51,11 +51,17 @@ public final class CropPlantModel implements IDynamicBakedModel {
     private static final int FARMLAND_DEPTH = 1;
     /** Tint index that {@link Gt6CropsClient} colors with the biome's grass color. */
     static final int GRASS_TINT = 0;
+    /** CropsNH draws a sick crop's sticks pale green and its plant through a green filter. */
+    static final int SICK_STICK_TINT = 1;
+    static final int SICK_PLANT_TINT = 2;
+    static final int SICK_GRASS_TINT = 3;
 
-    private record Plant(CropTextures.PlantSprite sprite, CropCard.RenderShape shape, int soilDepth) {}
+    private record Plant(
+            CropTextures.PlantSprite sprite, CropCard.RenderShape shape, int soilDepth, boolean sick) {}
 
     private final BakedModel sticks;
     private final Map<Plant, List<BakedQuad>> plantQuads = new ConcurrentHashMap<>();
+    private final Map<BakedQuad, BakedQuad> sickSticks = new ConcurrentHashMap<>();
 
     public CropPlantModel(BakedModel sticks) {
         this.sticks = sticks;
@@ -77,7 +83,13 @@ public final class CropPlantModel implements IDynamicBakedModel {
             RandomSource rand,
             ModelData data,
             @Nullable RenderType renderType) {
+        boolean sick = Boolean.TRUE.equals(data.get(CropTile.SICK));
         List<BakedQuad> base = sticks.getQuads(state, side, rand);
+        if (sick) {
+            base = base.stream()
+                    .map(quad -> sickSticks.computeIfAbsent(quad, CropPlantModel::sickStick))
+                    .toList();
+        }
         if (side != null) {
             return base;
         }
@@ -92,7 +104,7 @@ public final class CropPlantModel implements IDynamicBakedModel {
         }
         Integer depth = data.get(SOIL_DEPTH);
         Plant plant = new Plant(CropTextures.of(card, size), card.renderShape(),
-                depth == null ? FARMLAND_DEPTH : depth);
+                depth == null ? FARMLAND_DEPTH : depth, sick);
         List<BakedQuad> plants = plantQuads.computeIfAbsent(plant, this::bake);
         if (plants.isEmpty()) {
             return base;
@@ -113,20 +125,33 @@ public final class CropPlantModel implements IDynamicBakedModel {
             return List.of();
         }
         float bottom = -plant.soilDepth() / 16.0f;
+        int tintIndex = tint.grassTint()
+                ? (plant.sick() ? SICK_GRASS_TINT : GRASS_TINT)
+                : (plant.sick() ? SICK_PLANT_TINT : -1);
         List<BakedQuad> quads = new ArrayList<>(8);
         switch (plant.shape()) {
             case HASH -> {
                 for (float offset : SHEET_OFFSETS) {
-                    sheet(quads, sprite, tint, bottom, offset, 0, offset, 1);
-                    sheet(quads, sprite, tint, bottom, 0, offset, 1, offset);
+                    sheet(quads, sprite, tintIndex, bottom, offset, 0, offset, 1);
+                    sheet(quads, sprite, tintIndex, bottom, 0, offset, 1, offset);
                 }
             }
             case X -> {
-                sheet(quads, sprite, tint, bottom, CROSS_MIN, CROSS_MIN, CROSS_MAX, CROSS_MAX);
-                sheet(quads, sprite, tint, bottom, CROSS_MIN, CROSS_MAX, CROSS_MAX, CROSS_MIN);
+                sheet(quads, sprite, tintIndex, bottom, CROSS_MIN, CROSS_MIN, CROSS_MAX, CROSS_MAX);
+                sheet(quads, sprite, tintIndex, bottom, CROSS_MIN, CROSS_MAX, CROSS_MAX, CROSS_MIN);
             }
         }
         return List.copyOf(quads);
+    }
+
+    private static BakedQuad sickStick(BakedQuad quad) {
+        return new BakedQuad(
+                quad.getVertices(),
+                SICK_STICK_TINT,
+                quad.getDirection(),
+                quad.getSprite(),
+                quad.isShade(),
+                quad.hasAmbientOcclusion());
     }
 
     /**
@@ -138,7 +163,7 @@ public final class CropPlantModel implements IDynamicBakedModel {
     private static void sheet(
             List<BakedQuad> quads,
             TextureAtlasSprite sprite,
-            CropTextures.PlantSprite tint,
+            int tintIndex,
             float bottom,
             float x0,
             float z0,
@@ -152,21 +177,21 @@ public final class CropPlantModel implements IDynamicBakedModel {
         float length = (float) Math.sqrt((x1 - x0) * (x1 - x0) + (z1 - z0) * (z1 - z0));
         float normalX = (z0 - z1) / length;
         float normalZ = (x1 - x0) / length;
-        quads.add(quad(sprite, tint, normalX, normalZ, bottomLeft, bottomRight, topRight, topLeft));
-        quads.add(quad(sprite, tint, -normalX, -normalZ, bottomLeft, topLeft, topRight, bottomRight));
+        quads.add(quad(sprite, tintIndex, normalX, normalZ, bottomLeft, bottomRight, topRight, topLeft));
+        quads.add(quad(sprite, tintIndex, -normalX, -normalZ, bottomLeft, topLeft, topRight, bottomRight));
     }
 
     /** Corners are {x, y, z, u, v}, counter-clockwise as seen from the horizontal normal. */
     private static BakedQuad quad(
             TextureAtlasSprite sprite,
-            CropTextures.PlantSprite tint,
+            int tintIndex,
             float normalX,
             float normalZ,
             float[]... corners) {
         QuadBakingVertexConsumer consumer = new QuadBakingVertexConsumer();
         consumer.setSprite(sprite);
         consumer.setDirection(Direction.getNearest(normalX, 0, normalZ));
-        consumer.setTintIndex(tint.grassTint() ? GRASS_TINT : -1);
+        consumer.setTintIndex(tintIndex);
         consumer.setShade(false);
         for (float[] corner : corners) {
             consumer.addVertex(corner[0], corner[1], corner[2])

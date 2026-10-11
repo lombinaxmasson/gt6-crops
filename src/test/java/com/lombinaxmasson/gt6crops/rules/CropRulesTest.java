@@ -22,7 +22,7 @@ class CropRulesTest {
         CropRules.Stats second = new CropRules.Stats(31, 20, 0);
 
         CropRules.Stats child = CropBreeding.variate(
-                List.of(first, second), false, new Random(7));
+                List.of(first, second), false, CropBreeding.Variation.DEFAULT, new Random(7));
 
         assertTrue(child.growth() >= 0 && child.growth() <= 31);
         assertTrue(child.gain() >= 0 && child.gain() <= 31);
@@ -34,11 +34,28 @@ class CropRulesTest {
         CropRules.Stats parent = new CropRules.Stats(4, 4, 4);
         Random random = new Random(1);
         for (int attempt = 0; attempt < 40; attempt++) {
-            CropRules.Stats child = CropBreeding.variate(List.of(parent, parent), true, random);
+            CropRules.Stats child = CropBreeding.variate(
+                    List.of(parent, parent), true, CropBreeding.Variation.DEFAULT, random);
             assertTrue(child.growth() >= 4);
             assertTrue(child.gain() >= 4);
             assertTrue(child.resistance() >= 4);
         }
+    }
+
+    @Test
+    void fixedVariationAddsExactlyThatChange() {
+        CropRules.Stats parent = new CropRules.Stats(10, 10, 10);
+        CropBreeding.Variation plusTwo = new CropBreeding.Variation(2, 2);
+
+        CropRules.Stats child = CropBreeding.variate(
+                List.of(parent, parent), false, plusTwo, new Random(5));
+
+        assertEquals(new CropRules.Stats(12, 12, 12), child);
+    }
+
+    @Test
+    void variationHighBelowLowCountsAsLow() {
+        assertEquals(new CropBreeding.Variation(3, 3), new CropBreeding.Variation(3, -1));
     }
 
     @Test
@@ -50,7 +67,8 @@ class CropRulesTest {
         boolean sawFlax = false;
         Random random = new Random(3);
         for (int attempt = 0; attempt < 30 && !sawFlax; attempt++) {
-            CropBreeding.Outcome outcome = book.resolve(List.of(wheat, azure), random);
+            CropBreeding.Outcome outcome = book.resolve(
+                    List.of(wheat, azure), CropBreeding.Variation.DEFAULT, random);
             if (outcome != null && "flax".equals(outcome.cardId())) {
                 sawFlax = true;
             }
@@ -129,6 +147,93 @@ class CropRulesTest {
         assertTrue(CropRules.isStarving(6, 0, bare));
         assertFalse(CropRules.isStarving(12, 0, tended));
         assertEquals(CropRules.nutrientsNeeded(6, 0), bare + 1);
+    }
+
+    @Test
+    void onlyRipeFastGrowingCropsSpreadWeeds() {
+        CropCard card = card("test", 2, "Crop");
+        CropRules.Stats fast = new CropRules.Stats(25, 0, 24);
+
+        assertTrue(CropRules.spreadsWeeds(card, 4, fast));
+        assertFalse(CropRules.spreadsWeeds(card, 3, fast));
+        assertFalse(CropRules.spreadsWeeds(card, 4, new CropRules.Stats(24, 0, 0)));
+        assertFalse(CropRules.spreadsWeeds(card, 4, new CropRules.Stats(25, 0, 25)));
+    }
+
+    @Test
+    void weedsSpreadOnceHalfGrown() {
+        CropCard weed = card("weed", 1, "Weed");
+
+        assertFalse(CropRules.spreadsWeeds(weed, 1, CropRules.WEED_STATS));
+        assertTrue(CropRules.spreadsWeeds(weed, 2, CropRules.WEED_STATS));
+    }
+
+    @Test
+    void weedSpreadRollFavoursHighGrowth() {
+        Random random = new Random(9);
+        int slow = 0;
+        int fast = 0;
+        for (int attempt = 0; attempt < 1000; attempt++) {
+            if (CropRules.shouldSpreadWeed(1, CropRules.WEED_SPREAD_CHANCE, random)) {
+                slow++;
+            }
+            if (CropRules.shouldSpreadWeed(CropRules.MAX_STAT, CropRules.WEED_SPREAD_CHANCE, random)) {
+                fast++;
+            }
+        }
+        assertTrue(slow > 0 && slow < fast && fast < 1000);
+    }
+
+    @Test
+    void fullResistanceCannotBeTrampled() {
+        assertTrue(CropRules.canBeTrampled(CropRules.MAX_STAT - 1));
+        assertFalse(CropRules.canBeTrampled(CropRules.MAX_STAT));
+    }
+
+    @Test
+    void sprintTramplingNeedsResistanceBelowTheRoll() {
+        Random random = new Random(11);
+        int weak = 0;
+        for (int attempt = 0; attempt < 10_000; attempt++) {
+            if (CropRules.tramplesWhenSprinting(1, 0, random)) {
+                weak++;
+            }
+            assertFalse(CropRules.tramplesWhenSprinting(1, 30, random));
+        }
+        assertTrue(weak > 0);
+    }
+
+    @Test
+    void landingTramplesOnlyAboveThreeQuartersOfABlock() {
+        Random random = new Random(13);
+        int high = 0;
+        for (int attempt = 0; attempt < 1000; attempt++) {
+            assertFalse(CropRules.tramplesWhenLanding(CropRules.MIN_TRAMPLE_FALL, random));
+            if (CropRules.tramplesWhenLanding(1.25F, random)) {
+                high++;
+            }
+            assertTrue(CropRules.tramplesWhenLanding(2.0F, random));
+        }
+        assertTrue(high > 300 && high < 700);
+    }
+
+    @Test
+    void machineHarvestBonusAddsItsShareOnAverage() {
+        CropRules.Stats noGain = new CropRules.Stats(1, 0, 1);
+        Random random = new Random(17);
+        int total = 0;
+        for (int attempt = 0; attempt < 10000; attempt++) {
+            int count = CropRules.harvestCount(noGain, 1.05, random);
+            assertTrue(count == 1 || count == 2);
+            total += count;
+        }
+        assertTrue(total > 10300 && total < 10700);
+    }
+
+    @Test
+    void machineHarvestWithoutBonusMatchesTheHandHarvest() {
+        CropRules.Stats noGain = new CropRules.Stats(1, 0, 1);
+        assertEquals(1, CropRules.harvestCount(noGain, 1.0, new Random(3)));
     }
 
     @Test

@@ -1,0 +1,7 @@
+{
+  "parent": "gt6crops:block/machine/base",
+  "textures": {
+    "front": "gt6crops:block/machine/crop_manager/front_active",
+    "back": "gt6crops:block/machine/overlay_back_active"
+  }
+}

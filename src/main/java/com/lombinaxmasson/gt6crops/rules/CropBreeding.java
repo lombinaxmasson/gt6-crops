@@ -38,6 +38,15 @@ public final class CropBreeding {
 
     public record Outcome(String cardId, CropRules.Stats stats) {}
 
+    /** The change to each stat around the parents' average; {@code high} never drops below {@code low}. */
+    public record Variation(int low, int high) {
+        public static final Variation DEFAULT = new Variation(BREEDING_LOW, BREEDING_HIGH);
+
+        public Variation {
+            high = Math.max(low, high);
+        }
+    }
+
     public record Mutation(String child, List<String> parents, boolean machineOnly) {}
 
     public static final class Book {
@@ -67,7 +76,7 @@ public final class CropBreeding {
             return mutations;
         }
 
-        public Outcome resolve(List<Parent> neighbors, Random random) {
+        public Outcome resolve(List<Parent> neighbors, Variation variation, Random random) {
             if (neighbors.isEmpty()) {
                 return null;
             }
@@ -78,7 +87,7 @@ public final class CropBreeding {
                     List<Parent> same = crossing.stream()
                             .filter(parent -> parent.cardId().equals(chosen.cardId()))
                             .toList();
-                    return outcome(chosen.cardId(), same, random);
+                    return outcome(chosen.cardId(), same, variation, random);
                 }
             }
 
@@ -112,7 +121,7 @@ public final class CropBreeding {
                 List<Parent> used = breeding.stream()
                         .filter(parent -> required.contains(parent.cardId()))
                         .toList();
-                return outcome(chosen.child(), used, random);
+                return outcome(chosen.child(), used, variation, random);
             }
 
             List<List<String>> poolHits = new ArrayList<>();
@@ -134,13 +143,13 @@ public final class CropBreeding {
             List<Parent> used = breeding.stream()
                     .filter(parent -> memberSet.contains(parent.cardId()))
                     .toList();
-            return outcome(pool.get(random.nextInt(pool.size())), used, random);
+            return outcome(pool.get(random.nextInt(pool.size())), used, variation, random);
         }
 
-        private Outcome outcome(String cardId, List<Parent> used, Random random) {
+        private Outcome outcome(String cardId, List<Parent> used, Variation variation, Random random) {
             boolean onlyUp = !used.isEmpty() && used.stream().allMatch(Parent::fertilized);
             List<CropRules.Stats> stats = used.stream().map(Parent::stats).toList();
-            return new Outcome(cardId, variate(stats, onlyUp, random));
+            return new Outcome(cardId, variate(stats, onlyUp, variation, random));
         }
 
         private Comparator<String> order() {
@@ -149,11 +158,11 @@ public final class CropBreeding {
     }
 
     public static CropRules.Stats variate(
-            List<CropRules.Stats> parents, boolean onlyUp, Random random) {
+            List<CropRules.Stats> parents, boolean onlyUp, Variation variation, Random random) {
         return new CropRules.Stats(
-                vary(parents, CropRules.Stats::growth, onlyUp, random),
-                vary(parents, CropRules.Stats::gain, onlyUp, random),
-                vary(parents, CropRules.Stats::resistance, onlyUp, random));
+                vary(parents, CropRules.Stats::growth, onlyUp, variation, random),
+                vary(parents, CropRules.Stats::gain, onlyUp, variation, random),
+                vary(parents, CropRules.Stats::resistance, onlyUp, variation, random));
     }
 
     private static Book from(FileDto file, List<String> loadedIds) {
@@ -194,18 +203,19 @@ public final class CropBreeding {
             List<CropRules.Stats> parents,
             java.util.function.ToIntFunction<CropRules.Stats> stat,
             boolean onlyUp,
+            Variation variation,
             Random random) {
         int sum = 0;
         for (CropRules.Stats parent : parents) {
             sum += stat.applyAsInt(parent);
         }
         int average = sum / parents.size();
-        int span = BREEDING_HIGH + 1 - BREEDING_LOW;
-        int variation = random.nextInt(span) + BREEDING_LOW;
-        if (onlyUp && variation < 0) {
-            variation = 0;
+        int span = variation.high() + 1 - variation.low();
+        int change = random.nextInt(span) + variation.low();
+        if (onlyUp && change < 0) {
+            change = 0;
         }
-        return Math.max(0, Math.min(CropRules.MAX_STAT, average + variation));
+        return Math.max(0, Math.min(CropRules.MAX_STAT, average + change));
     }
 
     private static final class FileDto {

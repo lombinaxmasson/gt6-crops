@@ -25,6 +25,20 @@ public final class CropRules {
     private static final int NUTRIENT_SCALE = 5;
     private static final int NUTRIENTS_PER_TIER = 10;
     private static final int BASE_GROWTH_SPEED = 6;
+    private static final int WEED_SPREAD_MIN_GROWTH = 24;
+    private static final int WEED_SPREAD_MARGIN = 2;
+    private static final int SPRINT_TRAMPLE_ROLL = 100;
+    private static final double SPRINT_TRAMPLE_TIER_FACTOR = 0.95;
+    /** CropsNH only tramples crops from falls longer than this. */
+    public static final float MIN_TRAMPLE_FALL = 0.75F;
+
+    /** CropsNH's defaults for the chances in {@code Gt6CropsConfig}. */
+    public static final int BREEDING_CHANCE = 3;
+    public static final int WEED_SPAWN_CHANCE = 100;
+    public static final int WEED_SPREAD_CHANCE = 50;
+
+    /** CropsNH gives every weed these stats. */
+    public static final Stats WEED_STATS = new Stats(1, 1, 1);
 
     private CropRules() {}
 
@@ -79,21 +93,64 @@ public final class CropRules {
         return Math.max(1, (int) Math.round(points));
     }
 
-    public static boolean shouldAttemptCrossbreed(Random random) {
-        return random.nextInt(3) == 0;
+    public static boolean shouldAttemptCrossbreed(int chance, Random random) {
+        return random.nextInt(chance) == 0;
     }
 
-    public static boolean shouldSpawnWeed(Random random) {
-        return random.nextInt(100) == 0;
+    public static boolean shouldSpawnWeed(int chance, Random random) {
+        return random.nextInt(chance) == 0;
     }
 
-    public static boolean shouldSpreadWeed(int resistance, Random random) {
-        return random.nextInt(MAX_STAT + 1) >= resistance;
+    /**
+     * CropsNH: a weed spreads once half grown. Any other crop spreads only when
+     * fully grown, with growth above 24 and resistance below its growth.
+     */
+    public static boolean spreadsWeeds(CropCard card, int size, Stats stats) {
+        if (card.isWeed()) {
+            return size * 2 >= card.maxSize();
+        }
+        return !card.canGrow(size)
+                && stats.resistance() < stats.growth()
+                && stats.growth() > WEED_SPREAD_MIN_GROWTH;
+    }
+
+    /** CropsNH's spread roll, which a higher growth stat passes more often. */
+    public static boolean shouldSpreadWeed(int growth, int chance, Random random) {
+        return random.nextInt(chance) - growth <= WEED_SPREAD_MARGIN;
+    }
+
+    /** CropsNH: a crop at the highest resistance cannot be trampled. */
+    public static boolean canBeTrampled(int resistance) {
+        return resistance < MAX_STAT;
+    }
+
+    /**
+     * CropsNH rolls this every tick a sprinting entity spends in the crop, so it is
+     * rare: one in {@code 100 × 0.95^tier}, then resistance can still save the crop.
+     */
+    public static boolean tramplesWhenSprinting(int tier, int resistance, Random random) {
+        int roll = Math.max(1, (int) (SPRINT_TRAMPLE_ROLL * Math.pow(SPRINT_TRAMPLE_TIER_FACTOR, tier)));
+        return random.nextInt(roll) == 0 && random.nextInt(MAX_STAT) > resistance;
+    }
+
+    /**
+     * CropsNH: a fall longer than 0.75 blocks tramples with a chance of the distance
+     * beyond 0.75, so a jump (about 1.25) tramples half the time and 1.75 always does.
+     */
+    public static boolean tramplesWhenLanding(float fallDistance, Random random) {
+        return fallDistance > MIN_TRAMPLE_FALL && random.nextFloat() < fallDistance - MIN_TRAMPLE_FALL;
     }
 
     public static int harvestCount(Stats stats, Random random) {
         int bonus = stats.gain() / 8;
         return 1 + bonus + (random.nextInt(32) < stats.gain() ? 1 : 0);
+    }
+
+    /** CropsNH machines scale a harvest by a multiplier, and the leftover fraction is one more by chance. */
+    public static int harvestCount(Stats stats, double multiplier, Random random) {
+        double scaled = harvestCount(stats, random) * multiplier;
+        int count = (int) scaled;
+        return random.nextDouble() < scaled - count ? count + 1 : count;
     }
 
     /**

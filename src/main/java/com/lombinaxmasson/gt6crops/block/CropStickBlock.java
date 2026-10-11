@@ -3,6 +3,7 @@ package com.lombinaxmasson.gt6crops.block;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import com.gregtech.gregtech.api.tool.GTToolHelper;
@@ -21,6 +22,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -110,6 +112,17 @@ public final class CropStickBlock extends Block implements EntityBlock {
             boolean movedByPiston) {
         if (!state.canSurvive(level, pos)) {
             level.destroyBlock(pos, true);
+        }
+    }
+
+    /** Landing on a crop is handled in {@link CropStickEvents}, since the fall ends on the soil. */
+    @Override
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (!level.isClientSide
+                && entity instanceof LivingEntity living
+                && living.isSprinting()
+                && level.getBlockEntity(pos) instanceof CropTile crop) {
+            crop.sprintedThrough(entity);
         }
     }
 
@@ -242,7 +255,9 @@ public final class CropStickBlock extends Block implements EntityBlock {
 
     /**
      * Plants a crop seed or a matching base seed on an empty stick.
-     * A cross or the wrong soil refuses the seed and tells the player why.
+     * A cross or the wrong soil refuses the seed and tells the player why;
+     * as in CropsNH, an unscanned seed does not say which soil it needs.
+     * A base seed counts as scanned.
      */
     static ItemInteractionResult offerSeed(
             Level level, CropTile crop, ItemStack stack, Player player) {
@@ -250,6 +265,8 @@ public final class CropStickBlock extends Block implements EntityBlock {
         if (card == null) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
+        Optional<CropSeedItem.SeedData> seed = CropSeedItem.data(stack);
+        boolean scanned = seed.map(CropSeedItem.SeedData::scanned).orElse(true);
         if (!crop.isEmpty()) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
@@ -264,20 +281,22 @@ public final class CropStickBlock extends Block implements EntityBlock {
         if (!GrowthCheck.soilAccepts(card.conditions(), level, crop.getBlockPos())) {
             if (!level.isClientSide) {
                 player.displayClientMessage(
-                        Component.translatable(
-                                "message.gt6crops.wrong_soil",
-                                card.name(),
-                                GrowthCheck.join(card.conditions().soil())),
+                        scanned
+                                ? Component.translatable(
+                                        "message.gt6crops.wrong_soil",
+                                        card.name(),
+                                        GrowthCheck.join(card.conditions().soil()))
+                                : Component.translatable("message.gt6crops.wrong_soil_unscanned"),
                         true);
             }
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         if (!level.isClientSide) {
-            CropRules.Stats stats = CropSeedItem.data(stack)
+            CropRules.Stats stats = seed
                     .map(CropSeedItem.SeedData::stats)
                     .orElseGet(() -> CropRules.initialStats(
                             card, new Random(level.random.nextLong())));
-            crop.plant(card, stats);
+            crop.plant(card, stats, scanned);
             consumeOne(stack, player);
             level.playSound(
                     null,

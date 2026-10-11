@@ -7,6 +7,8 @@ import java.util.Random;
 
 import com.gregtech.gregtech.api.crop.CropScanSource;
 import com.lombinaxmasson.gt6crops.Gt6Crops;
+import com.lombinaxmasson.gt6crops.Gt6CropsConfig;
+import com.lombinaxmasson.gt6crops.Gt6CropsTags;
 import com.lombinaxmasson.gt6crops.card.CropCard;
 import com.lombinaxmasson.gt6crops.card.CropCards;
 import com.lombinaxmasson.gt6crops.card.CropConditions;
@@ -21,8 +23,11 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -42,11 +47,14 @@ import net.neoforged.neoforge.client.model.data.ModelProperty;
 public final class CropTile extends BlockEntity implements CropScanSource {
     public static final ModelProperty<String> CROP = new ModelProperty<>();
     public static final ModelProperty<Integer> SIZE = new ModelProperty<>();
-    private static final int MAX_STORAGE = 32;
+    public static final ModelProperty<Boolean> SICK = new ModelProperty<>();
+    public static final int MAX_STORAGE = 32;
+    private static final int HAND_DOSE = 8;
     private static final int FULLY_SCANNED = 4;
     /** CropsNH adds 11 of its 100 water per rainy cycle; this is the same share of 32. */
     private static final int RAIN_WATER = 4;
     private static final int WEED_EX_PER_BLOCKED_INFECTION = 2;
+    private static final int WEED_EX_PER_BLOCKED_WEED = 5;
     /** CropsNH's Plant Cure tops fertilizer up to a quarter so the crop does not relapse at once. */
     private static final int CURE_FERTILIZER = MAX_STORAGE / 4;
 
@@ -58,6 +66,8 @@ public final class CropTile extends BlockEntity implements CropScanSource {
     private int hydrationStorage = 8;
     private int weedExStorage;
     private boolean sick;
+    /** CropsNH: a crossbred crop hides its stats until a magnifying glass or crop scanner looks at it. */
+    private boolean scanned = true;
     private CropRules.Environment environment = new CropRules.Environment(10, 10, 10);
 
     public CropTile(BlockPos pos, BlockState state) {
@@ -78,6 +88,18 @@ public final class CropTile extends BlockEntity implements CropScanSource {
 
     public CropRules.Environment environment() {
         return environment;
+    }
+
+    public int nutrientStorage() {
+        return nutrientStorage;
+    }
+
+    public int hydrationStorage() {
+        return hydrationStorage;
+    }
+
+    public int weedExStorage() {
+        return weedExStorage;
     }
 
     public boolean isEmpty() {
@@ -122,10 +144,11 @@ public final class CropTile extends BlockEntity implements CropScanSource {
         return cardId.isEmpty() ? Optional.empty() : CropCards.find(cardId);
     }
 
-    public void plant(CropCard card, CropRules.Stats newStats) {
+    public void plant(CropCard card, CropRules.Stats newStats, boolean newScanned) {
         cardId = card.id();
         size = 1;
         stats = newStats;
+        scanned = newScanned;
         growthProgress = 0;
         sick = false;
         setChanged();
@@ -136,48 +159,126 @@ public final class CropTile extends BlockEntity implements CropScanSource {
         return sick;
     }
 
+    public boolean isScanned() {
+        return scanned;
+    }
+
+    /** Marks the planted crop as scanned, so its seeds show their stats. */
+    public void scan() {
+        if (!isEmpty() && !scanned) {
+            scanned = true;
+            setChanged();
+        }
+    }
+
     /** Plant Cure heals a sick crop and gives it a little fertilizer. */
     public boolean cure() {
         if (!sick) {
             return false;
         }
-        sick = false;
         nutrientStorage = Math.max(nutrientStorage, CURE_FERTILIZER);
-        setChanged();
+        setSick(false);
         return true;
+    }
+
+    /** The client tints a sick crop, so a change of health is synced. */
+    private void setSick(boolean newSick) {
+        if (sick == newSick) {
+            return;
+        }
+        sick = newSick;
+        setChanged();
+        sync();
     }
 
     public boolean applyWeedEx() {
         if (card().map(CropCard::isWeed).orElse(false)) {
             clearCrop();
         }
-        weedExStorage = Math.min(MAX_STORAGE, weedExStorage + 8);
-        setChanged();
+        addWeedEx(HAND_DOSE);
         return true;
     }
 
     public boolean applyFertilizer() {
-        nutrientStorage = Math.min(MAX_STORAGE, nutrientStorage + 8);
-        setChanged();
+        addFertilizer(HAND_DOSE);
         return true;
     }
 
     public boolean applyWater() {
-        hydrationStorage = Math.min(MAX_STORAGE, hydrationStorage + 8);
-        setChanged();
+        addWater(HAND_DOSE);
         return true;
     }
 
+    /** Adds water up to {@link #MAX_STORAGE} and returns how much went in. */
+    public int addWater(int amount) {
+        int added = room(hydrationStorage, amount);
+        if (added > 0) {
+            hydrationStorage += added;
+            setChanged();
+        }
+        return added;
+    }
+
+    /** Adds fertilizer up to {@link #MAX_STORAGE} and returns how much went in. */
+    public int addFertilizer(int amount) {
+        int added = room(nutrientStorage, amount);
+        if (added > 0) {
+            nutrientStorage += added;
+            setChanged();
+        }
+        return added;
+    }
+
+    /**
+     * Adds Weed-EX up to {@link #MAX_STORAGE} and returns how much went in.
+     * Unlike a hand spray it leaves a weed standing, as CropsNH's Crop Manager does.
+     */
+    public int addWeedEx(int amount) {
+        int added = room(weedExStorage, amount);
+        if (added > 0) {
+            weedExStorage += added;
+            setChanged();
+        }
+        return added;
+    }
+
+    private static int room(int stored, int amount) {
+        return Math.max(0, Math.min(amount, MAX_STORAGE - stored));
+    }
+
     public boolean harvest(Player player) {
-        if (level == null || level.isClientSide || cardId.isEmpty()) {
+        CropCard crop = ripeCrop();
+        if (crop == null) {
             return false;
+        }
+        harvestDrops(crop, level.random).forEach(stack -> give(player, stack));
+        cutBack(crop);
+        return true;
+    }
+
+    /**
+     * A machine harvest: a ripe crop's drops scaled by {@code multiplier}, or nothing
+     * if the crop is not ripe. The crop is cut back as a hand harvest does.
+     */
+    public List<ItemStack> machineHarvest(double multiplier) {
+        CropCard crop = ripeCrop();
+        if (crop == null) {
+            return List.of();
+        }
+        List<ItemStack> drops = harvestDrops(crop, level.random, multiplier);
+        cutBack(crop);
+        return drops;
+    }
+
+    private CropCard ripeCrop() {
+        if (level == null || level.isClientSide || cardId.isEmpty()) {
+            return null;
         }
         CropCard crop = card().orElse(null);
-        if (crop == null || !crop.canHarvest(size)) {
-            return false;
-        }
+        return crop == null || crop.isWeed() || !crop.canHarvest(size) ? null : crop;
+    }
 
-        harvestDrops(crop, level.random).forEach(stack -> give(player, stack));
+    private void cutBack(CropCard crop) {
         if (crop.afterHarvestSize() <= 0) {
             clearCrop();
         } else {
@@ -186,7 +287,6 @@ public final class CropTile extends BlockEntity implements CropScanSource {
             syncAge();
             setChanged();
         }
-        return true;
     }
 
     /**
@@ -206,7 +306,7 @@ public final class CropTile extends BlockEntity implements CropScanSource {
             if (crop.canHarvest(size)) {
                 harvestDrops(crop, level.random).forEach(stack -> give(player, stack));
             }
-            give(player, CropSeedItem.create(crop, stats));
+            give(player, CropSeedItem.create(crop, stats, scanned));
         }
         clearCrop();
         return true;
@@ -220,16 +320,18 @@ public final class CropTile extends BlockEntity implements CropScanSource {
         }
         List<ItemStack> drops = crop.canHarvest(size) ? harvestDrops(crop, random) : new ArrayList<>();
         if (CropRules.resists(stats.resistance(), new Random(random.nextLong()))) {
-            drops.add(CropSeedItem.create(crop, stats));
+            drops.add(CropSeedItem.create(crop, stats, scanned));
         }
         return drops;
     }
 
     private List<ItemStack> harvestDrops(CropCard crop, RandomSource random) {
+        return harvestDrops(crop, random, 1.0);
+    }
+
+    private List<ItemStack> harvestDrops(CropCard crop, RandomSource random, double multiplier) {
         List<ItemStack> drops = new ArrayList<>();
-        int amount = crop.isWeed()
-                ? 0
-                : CropRules.harvestCount(stats, new Random(random.nextLong()));
+        int amount = CropRules.harvestCount(stats, multiplier, new Random(random.nextLong()));
         crop.harvestDrop().ifPresent(drop -> {
             ItemStack harvested = drop.copy();
             harvested.setCount(Math.min(
@@ -242,8 +344,9 @@ public final class CropTile extends BlockEntity implements CropScanSource {
         return drops;
     }
 
-    /** Chat lines shown by the GT magnifying glass. */
+    /** Chat lines shown by the GT magnifying glass, which scans the crop as CropsNH's plant lens does. */
     public List<Component> inspect() {
+        scan();
         refreshEnvironmentNow();
         List<Component> lines = new ArrayList<>();
         CropCard crop = card().orElse(null);
@@ -338,12 +441,15 @@ public final class CropTile extends BlockEntity implements CropScanSource {
                 environment.nutrients(),
                 environment.humidity(),
                 environment.airQuality(),
-                FULLY_SCANNED);
+                scanned ? FULLY_SCANNED : 0);
     }
 
-    /** Seed stats are always visible, so there is no scan level to raise. */
     @Override
-    public void setCropScanLevel(int scanLevel) {}
+    public void setCropScanLevel(int scanLevel) {
+        if (scanLevel >= FULLY_SCANNED) {
+            scan();
+        }
+    }
 
     public static void serverTick(
             Level level, BlockPos pos, BlockState state, CropTile crop) {
@@ -351,52 +457,99 @@ public final class CropTile extends BlockEntity implements CropScanSource {
         if (cycle != 0L) {
             return;
         }
-        crop.refreshEnvironment(level, pos);
-        crop.weedExStorage = Math.max(0, crop.weedExStorage - 1);
+        crop.runGrowthCycle(level, pos);
+    }
+
+    /**
+     * One CropsNH growth cycle. Debug commands call this to skip the 256-tick wait.
+     * Returns how many size stages the crop gained.
+     */
+    public int runGrowthCycle(Level level, BlockPos pos) {
+        int before = size;
+        refreshEnvironment(level, pos);
         if (level.isRainingAt(pos.above())) {
-            crop.hydrationStorage = Math.min(MAX_STORAGE, crop.hydrationStorage + RAIN_WATER);
+            hydrationStorage = Math.min(MAX_STORAGE, hydrationStorage + RAIN_WATER);
         }
 
-        if (crop.isEmpty()) {
-            if (crop.isCrossTile()) {
-                crop.tryCrossbreed(level, pos);
-            } else if (crop.weedExStorage == 0
-                    && CropRules.shouldSpawnWeed(new Random(level.random.nextLong()))) {
-                CropCards.weed().ifPresent(weed ->
-                        crop.plant(weed, new CropRules.Stats(0, 0, 0)));
+        if (isEmpty()) {
+            if (isCrossTile()) {
+                tryCrossbreed(level, pos);
+            } else if (Gt6CropsConfig.weedsEnabled()
+                    && CropRules.shouldSpawnWeed(
+                            Gt6CropsConfig.weedSpawnChance(), new Random(level.random.nextLong()))) {
+                spawnWeed();
             }
-            return;
+            return size - before;
         }
 
-        CropCard card = crop.card().orElse(null);
+        CropCard card = card().orElse(null);
         if (card == null) {
-            crop.clearCrop();
-            return;
+            clearCrop();
+            return 0;
         }
         Random random = new Random(level.random.nextLong());
-        if (card.isWeed()) {
-            crop.trySpreadWeed(level, pos, random);
-            return;
+        if (sick) {
+            spreadDisease(level, pos, random);
+        } else if (card.canGrow(size)
+                && (card.isWeed() || GrowthCheck.problems(card.conditions(), level, pos).isEmpty())) {
+            grow(level, pos, card, random);
         }
+        if (Gt6CropsConfig.weedsEnabled()
+                && CropRules.spreadsWeeds(card, size, stats)
+                && CropRules.shouldSpreadWeed(stats.growth(), Gt6CropsConfig.weedSpreadChance(), random)) {
+            spreadWeed(level, pos, random);
+        }
+        return size - before;
+    }
 
-        if (crop.sick) {
-            crop.spreadDisease(level, pos, random);
-        } else if (card.canGrow(crop.size)
-                && GrowthCheck.problems(card.conditions(), level, pos).isEmpty()) {
-            crop.grow(level, pos, card, random);
+    /** Debug helper: run several growth cycles in a row. */
+    public int forceGrowthCycles(int count) {
+        if (level == null || level.isClientSide || count <= 0) {
+            return 0;
         }
-        if (crop.size >= 2
-                && CropRules.shouldSpreadWeed(crop.stats.resistance(), random)) {
-            crop.trySpreadWeed(level, pos, random);
+        int gained = 0;
+        for (int i = 0; i < count; i++) {
+            gained += runGrowthCycle(level, worldPosition);
         }
+        return gained;
+    }
+
+    /** Debug helper: jump the planted crop to a size stage. */
+    public boolean setSize(int newSize) {
+        CropCard crop = card().orElse(null);
+        if (crop == null) {
+            return false;
+        }
+        size = Math.max(1, Math.min(crop.maxSize(), newSize));
+        growthProgress = 0;
+        setChanged();
+        syncAge();
+        return true;
+    }
+
+    /** Debug helper: rewrite the planted crop's genetics. */
+    public boolean setStats(CropRules.Stats newStats) {
+        if (isEmpty()) {
+            return false;
+        }
+        stats = newStats;
+        setChanged();
+        return true;
+    }
+
+    /** Debug helper: top up water, fertilizer and Weed-EX. */
+    public void fillStorage() {
+        nutrientStorage = MAX_STORAGE;
+        hydrationStorage = MAX_STORAGE;
+        weedExStorage = MAX_STORAGE;
+        setChanged();
     }
 
     /** A starving crop does not grow, and falls sick unless it passes a resistance check. */
     private void grow(Level level, BlockPos pos, CropCard card, Random random) {
         if (CropRules.isStarving(card.tier(), stats.growth(), nutrientScore(level, pos, card))) {
             if (!CropRules.resists(stats.resistance(), random)) {
-                sick = true;
-                setChanged();
+                setSick(true);
             }
             return;
         }
@@ -407,7 +560,7 @@ public final class CropTile extends BlockEntity implements CropScanSource {
                 nutrientStorage > 0,
                 hydrationStorage > 0,
                 GrowthCheck.likedBiomes(card.conditions(), level, pos));
-        growthProgress += points;
+        growthProgress += (long) (points * Gt6CropsConfig.growthMultiplier());
         if (growthProgress >= CropRules.growthThreshold(card)) {
             growthProgress = 0;
             size++;
@@ -420,7 +573,7 @@ public final class CropTile extends BlockEntity implements CropScanSource {
 
     private void tryCrossbreed(Level level, BlockPos pos) {
         Random random = new Random(level.random.nextLong());
-        if (!CropRules.shouldAttemptCrossbreed(random)) {
+        if (!CropRules.shouldAttemptCrossbreed(Gt6CropsConfig.breedingChance(), random)) {
             return;
         }
         List<CropBreeding.Parent> parents = new ArrayList<>();
@@ -439,13 +592,14 @@ public final class CropTile extends BlockEntity implements CropScanSource {
                     card.canBreed(other.size),
                     other.nutrientStorage > 0));
         }
-        CropBreeding.Outcome outcome = CropMutations.book().resolve(parents, random);
+        CropBreeding.Outcome outcome = CropMutations.book().resolve(
+                parents, Gt6CropsConfig.breedingVariation(), random);
         if (outcome == null) {
             return;
         }
         CropCards.find(outcome.cardId())
                 .filter(card -> GrowthCheck.problems(card.conditions(), level, pos).isEmpty())
-                .ifPresent(card -> plant(card, outcome.stats()));
+                .ifPresent(card -> plant(card, outcome.stats(), false));
     }
 
     /** CropsNH: each cycle a sick crop exposes one random neighbouring crop. */
@@ -470,27 +624,82 @@ public final class CropTile extends BlockEntity implements CropScanSource {
         }
         if (weedExStorage > 0) {
             weedExStorage = Math.max(0, weedExStorage - WEED_EX_PER_BLOCKED_INFECTION);
+            setChanged();
         } else {
-            sick = true;
+            setSick(true);
         }
-        setChanged();
     }
 
-    private void trySpreadWeed(Level level, BlockPos pos, Random random) {
-        if (!CropRules.shouldSpreadWeed(stats.resistance(), random)
-                || weedExStorage > 0) {
-            return;
-        }
-        CropCard weed = CropCards.weed().orElse(null);
-        if (weed == null) {
-            return;
-        }
-        for (Direction direction : Direction.Plane.HORIZONTAL) {
-            if (level.getBlockEntity(pos.relative(direction)) instanceof CropTile target
-                    && target.isEmpty()) {
-                target.plant(weed, new CropRules.Stats(0, 0, 0));
-                return;
+    /**
+     * CropsNH: weeds reach one random side. An empty stick takes a weed, a planted
+     * crop is exposed to disease, and air over grass, dirt or farmland grows grass.
+     */
+    private void spreadWeed(Level level, BlockPos pos, Random random) {
+        BlockPos target = pos.relative(Direction.from2DDataValue(random.nextInt(4)));
+        if (level.getBlockEntity(target) instanceof CropTile other) {
+            if (other.isEmpty()) {
+                other.spawnWeed();
+            } else {
+                other.catchDisease(random);
             }
+        } else if (level.isEmptyBlock(target)) {
+            BlockPos ground = target.below();
+            BlockState soil = level.getBlockState(ground);
+            if (soil.is(Blocks.GRASS_BLOCK) || soil.is(Blocks.DIRT) || soil.is(Blocks.FARMLAND)) {
+                level.setBlock(ground, Blocks.GRASS_BLOCK.defaultBlockState(), Block.UPDATE_ALL);
+                level.setBlock(target, Blocks.SHORT_GRASS.defaultBlockState(), Block.UPDATE_ALL);
+            }
+        }
+    }
+
+    /** Stored Weed-EX keeps the weed out, and is spent doing it. */
+    private void spawnWeed() {
+        if (weedExStorage > 0) {
+            weedExStorage = Math.max(0, weedExStorage - WEED_EX_PER_BLOCKED_WEED);
+            setChanged();
+            return;
+        }
+        CropCards.weed().ifPresent(weed -> plant(weed, CropRules.WEED_STATS, true));
+    }
+
+    /** CropsNH: sprinting through a planted crop can trample it. */
+    public void sprintedThrough(Entity entity) {
+        CropCard crop = trampleable();
+        if (crop != null && CropRules.tramplesWhenSprinting(
+                crop.tier(), stats.resistance(), new Random(level.random.nextLong()))) {
+            trample(entity);
+        }
+    }
+
+    /** CropsNH: landing on a planted crop from more than 0.75 blocks can trample it. */
+    public void landedOn(Entity entity, float fallDistance) {
+        if (trampleable() != null
+                && CropRules.tramplesWhenLanding(fallDistance, new Random(level.random.nextLong()))) {
+            trample(entity);
+        }
+    }
+
+    /** Weeds, empty sticks, resistance 31, and trample-proof soil are safe. */
+    private CropCard trampleable() {
+        if (level == null || level.isClientSide || !CropRules.canBeTrampled(stats.resistance())) {
+            return null;
+        }
+        CropCard crop = card().orElse(null);
+        if (crop == null || crop.isWeed()
+                || level.getBlockState(worldPosition.below()).is(Gt6CropsTags.TRAMPLE_PROOF_SOIL)) {
+            return null;
+        }
+        return crop;
+    }
+
+    /** The sticks break with their usual drops, and farmland under them turns to dirt. */
+    private void trample(Entity entity) {
+        BlockPos below = worldPosition.below();
+        level.playSound(null, worldPosition, SoundEvents.CROP_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.destroyBlock(worldPosition, true, entity);
+        BlockState soil = level.getBlockState(below);
+        if (soil.is(Blocks.FARMLAND)) {
+            FarmBlock.turnToDirt(entity, soil, level, below);
         }
     }
 
@@ -536,13 +745,21 @@ public final class CropTile extends BlockEntity implements CropScanSource {
         if (oldState.getValue(CropStickBlock.AGE) != age) {
             level.setBlock(worldPosition, oldState.setValue(CropStickBlock.AGE, age), 3);
         }
+        sync();
+    }
+
+    /** Sends the tile to clients, which redraw it with the new model data. */
+    private void sync() {
+        if (level == null) {
+            return;
+        }
         level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
         requestModelDataUpdate();
     }
 
     @Override
     public ModelData getModelData() {
-        return ModelData.builder().with(CROP, cardId).with(SIZE, size).build();
+        return ModelData.builder().with(CROP, cardId).with(SIZE, size).with(SICK, sick).build();
     }
 
     private static void give(Player player, ItemStack stack) {
@@ -567,6 +784,7 @@ public final class CropTile extends BlockEntity implements CropScanSource {
         tag.putInt("HydrationStorage", hydrationStorage);
         tag.putInt("WeedExStorage", weedExStorage);
         tag.putBoolean("Sick", sick);
+        tag.putBoolean("Scanned", scanned);
         tag.putInt("Nutrients", environment.nutrients());
         tag.putInt("Humidity", environment.humidity());
         tag.putInt("AirQuality", environment.airQuality());
@@ -586,6 +804,8 @@ public final class CropTile extends BlockEntity implements CropScanSource {
         hydrationStorage = clampStorage(tag.getInt("HydrationStorage"));
         weedExStorage = clampStorage(tag.getInt("WeedExStorage"));
         sick = tag.getBoolean("Sick");
+        // Crops planted before scanning existed have no flag and keep showing their stats.
+        scanned = !tag.contains("Scanned") || tag.getBoolean("Scanned");
         environment = new CropRules.Environment(
                 tag.getInt("Nutrients"),
                 tag.getInt("Humidity"),
