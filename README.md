@@ -387,6 +387,18 @@ ship in the jar.
 Flower and sugar cane stages are not shipped at all; they are drawn from the
 player's vanilla textures when the game loads.
 
+## License
+
+GT6 Crops is licensed under the GNU Lesser General Public License, version 3
+or (at your option) any later version. `LICENSE` is the LGPL-3.0 text and
+`COPYING` is the GPL-3.0 text it incorporates. The same two texts ship in the
+jar as `META-INF/licenses/LGPL-3.0.txt` and `GPL-3.0.txt`. The mods list shows
+the SPDX identifier `LGPL-3.0-or-later`.
+
+The CropsNH files listed in `META-INF/licenses/CropsNH-NOTICE.txt` stay under
+that same licence, copyright the GTNH Team. Crop-stage textures copied from
+the GT6 reference catalog are CC0-1.0, as noted under Asset provenance.
+
 ## Development
 
 Op level 2 and above get `/gt6crops` debug commands. Look at a crop stick and use
