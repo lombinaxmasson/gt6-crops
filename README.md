@@ -190,6 +190,81 @@ Its recipe is CropsNH's: a GT6CE spade, a robot arm, and a water bucket on
 top, the tier's circuits on either side of its machine casing, and its cables
 on either side of a dirt block. The parts are those in the table above.
 
+## Recipe viewer
+
+EMI is optional and is not packed into this jar. When it is installed, the crop
+stick is the workstation for three tabs. The pages use the slot diagrams under
+`textures/gui/nei/`. EMI's craft tree leaves them out.
+
+- **Planting** is CropsNH's crop page, one per crop, weeds aside. The left
+  column is the crop seed, the soil, and, when the card has one, the block
+  under the soil. The right side is the harvest, three columns, the main drop
+  first. Each drop carries CropsNH's yellow chance in its corner: the main drop
+  reads 100.00%, and each special drop reads 25.00%. The arrow is painted on
+  the sheet. Under the panel: tier, growth points for a stage, liked biomes,
+  light when it is not the full 0-15 range, and how the seed is planted. A crop
+  with a base seed also gets CropsNH's alternate-seed page in this same tab:
+  the base seed on the left, the crop seed on the right.
+- **Crossbreeding** is one page per fixed mutation. Two parents use
+  `breeding2.png`; three or four use `breeding4.png`. The parents sit on the
+  arms and stay in the ground. The child seed is the center slot, and the soil
+  and subsoil under it are the child's. The harvest stays on the planting page.
+  The lines under the panel are the world rule: 80% size, the try rate, the
+  half of attempts that copy a neighbor, the ledger order that lets an earlier
+  neighbor block the cross, and the stat average. A `machine_only` mutation is
+  still listed, with a line that a crop stick never performs it.
+- **Crossbreeding Pool** is one page per pool. Members fill nine columns inside
+  a frame tiled from `mutation_pool.png`. The name under the frame comes from
+  `emi.gt6crops.pool.<id>` (a datapack pool with no translation falls back to
+  its id with the underscores turned into words). Two mature members can give
+  any member, and only when no fixed cross matched.
+
+The try rate and the stat range printed on the cross and pool pages are this
+client's `config/gt6crops-common.toml`. A dedicated server uses its own copy
+for the crosses that actually happen.
+
+Looking up a crop seed finds every page that grows it, uses it, or gives it.
+Seeds of one crop match each other whatever their growth, gain, and resistance
+are. The seed drawn on a page hides those numbers, because they are not the
+result of the cross or of planting.
+
+### Page sheets
+
+These five files are the slot diagrams, under `assets/gt6crops/textures/gui/nei/`.
+Redraw them in place. Keep the file name, the pixel size, and every gray hole
+where it is. The code puts each 16×16 icon on the hole whose top-left is in
+the table. Text under a diagram is squeezed horizontally to 166 pixels when a
+line is wider than that, and it is not wrapped. The color is `0x191616`.
+
+| File | Size | Icons, top-left of the 16×16 hole |
+|---|---|---|
+| `breeding2.png` | 80×75 | Parents (1, 16) and (63, 16). Child (32, 16). Soil (32, 37). Subsoil (32, 58). Lines start at y=77. |
+| `breeding4.png` | 122×75 | Parents (22, 16), (84, 16), (1, 16), (105, 16). Child (53, 16). Soil (53, 37). Subsoil (53, 58). |
+| `crop_list.png` | 140×75 | Seed (16, 16). Soil (16, 37). Subsoil (16, 58). Drops from (87, 12), step 18, three columns. The arrow is painted between the columns. Lines start at y=77. |
+| `mutation_pool.png` | 162×38, tiled | Top cap is the first 9 rows. Each extra row uses rows 10–27. The bottom cap is the last 9 rows. Icons from (1, 1), step 18, nine columns. The name is at (0, rows×18+2). |
+| `alternate_seeds.png` | 59×18 | Base seed (1, 1). Crop seed (42, 1). The arrow between them is painted on the sheet. |
+
+### Optional tab icons
+
+Until the file below exists, that tab uses the crop stick item. A resource
+reload picks a new file up. Do not add a blank or fully transparent file:
+a file that exists replaces the stick, even if it draws nothing. These are the
+tab buttons, not the pages above.
+
+Each file is a 16×16 PNG under `assets/gt6crops/textures/gui/emi/`, with a
+transparent background. Paint pixels, not anti-aliased strokes: alpha is only
+fully off or fully on. Leave the outer pixel empty so EMI's tab highlight does
+not clip the drawing. EMI does not tint the icon, so the colors you paint are
+the colors it shows. Use the oak of `textures/item/crop_stick.png`. The block
+texture `textures/block/crop_stick.png` is a wood tile the model stretches
+onto the stick; do not crop that tile into the icon.
+
+| File | What to draw |
+|---|---|
+| `planting.png` | One upright crop stick, not the diagonal item icon. A sprout of about three green pixels at the top, and a two-pixel brown soil line at the bottom. This is the Planting tab. |
+| `crossbreeding.png` | The cross as it stands in the world: one upright stick, and a second stick across its upper half. No leaves and no seeds. This is the Crossbreeding tab. |
+| `mutation_pool.png` | Four separate 2×2 seed marks, each an oak body with one green pixel, spaced so they read as a group. No stick. This is the Crossbreeding Pool tab. |
+
 ## Configuration
 
 `config/gt6crops-common.toml` holds CropsNH's global settings. It can also be
@@ -369,7 +444,9 @@ that have reached 80% of their size:
 4. The child's growth, gain, and resistance are the average of the parents
    that took part, plus −2 to +4 by default (see
    [Configuration](#configuration)). Fertilizer on every one of those parents
-   removes the negative half. The child is unscanned.
+   removes the negative half. The child is unscanned. With EMI installed, the same
+rules are the Crossbreeding, Planting, and Crossbreeding Pool tabs; see
+[Recipe viewer](#recipe-viewer).
 
 ### Seed colors and textures
 
@@ -430,7 +507,9 @@ installed GT6CE jar and is not shipped here.
 
 The crop-seed body and highlight masks (CropsNH's `genericSeed/vanilla1` and
 `vanilla2`, tinted per crop), the cocoa, pumpkin, and melon stages, and the
-pumpkin and melon vines in `textures/crop_parts/` come from CropsNH. They are
+pumpkin and melon vines in `textures/crop_parts/` come from CropsNH. The five
+EMI page sheets in `textures/gui/nei/` are the slot diagrams cropped out of
+CropsNH's NEI sheets. They are
 copyright the GTNH Team and licensed under LGPL-3.0-or-later. CropsNH's ripe
 pumpkin and melon reuse pixels of Minecraft's textures, so those pixels were
 removed and are redrawn from the player's own textures. The notice listing every

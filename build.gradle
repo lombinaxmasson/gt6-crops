@@ -128,6 +128,8 @@ configurations {
 
 dependencies {
     // Recipe viewer and block overlay for runClient only. localRuntime keeps them out of the published jar.
+    // compileOnly lets the EMI plugin build; the addon still loads when EMI is absent.
+    compileOnly "maven.modrinth:emi:${emi_version}"
     localRuntime "maven.modrinth:emi:${emi_version}"
     localRuntime "maven.modrinth:jade:${jade_version}"
 

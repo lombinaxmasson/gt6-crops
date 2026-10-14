@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -49,16 +50,19 @@ public final class CropBreeding {
 
     public record Mutation(String child, List<String> parents, boolean machineOnly) {}
 
+    /** One pool in file order, after cards that did not load were removed. */
+    public record Pool(String id, List<String> crops) {}
+
     public static final class Book {
-        public static final Book EMPTY = new Book(List.of(), Map.of(), Map.of());
+        public static final Book EMPTY = new Book(List.of(), List.of(), Map.of());
 
         private final List<Mutation> mutations;
-        private final Map<String, List<String>> pools;
+        private final List<Pool> pools;
         private final Map<String, Integer> order;
 
         private Book(
                 List<Mutation> mutations,
-                Map<String, List<String>> pools,
+                List<Pool> pools,
                 Map<String, Integer> order) {
             this.mutations = mutations;
             this.pools = pools;
@@ -74,6 +78,10 @@ public final class CropBreeding {
 
         public List<Mutation> mutations() {
             return mutations;
+        }
+
+        public List<Pool> pools() {
+            return pools;
         }
 
         public Outcome resolve(List<Parent> neighbors, Variation variation, Random random) {
@@ -125,7 +133,8 @@ public final class CropBreeding {
             }
 
             List<List<String>> poolHits = new ArrayList<>();
-            for (List<String> members : pools.values()) {
+            for (Pool pool : pools) {
+                List<String> members = pool.crops();
                 Set<String> memberSet = new HashSet<>(members);
                 int hits = 0;
                 for (Parent parent : breeding) {
@@ -184,7 +193,7 @@ public final class CropBreeding {
                         dto.child, List.copyOf(dto.parents), dto.machineOnly));
             }
         }
-        Map<String, List<String>> pools = new HashMap<>();
+        Map<String, List<String>> pools = new LinkedHashMap<>();
         if (file != null && file.pools != null) {
             for (PoolDto dto : file.pools) {
                 if (dto.id == null || dto.crops == null) {
@@ -196,7 +205,11 @@ public final class CropBreeding {
                 }
             }
         }
-        return new Book(List.copyOf(mutations), Map.copyOf(pools), Map.copyOf(order));
+        List<Pool> poolList = new ArrayList<>();
+        for (Map.Entry<String, List<String>> entry : pools.entrySet()) {
+            poolList.add(new Pool(entry.getKey(), entry.getValue()));
+        }
+        return new Book(List.copyOf(mutations), List.copyOf(poolList), Map.copyOf(order));
     }
 
     private static int vary(

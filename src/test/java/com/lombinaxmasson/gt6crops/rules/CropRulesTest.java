@@ -77,6 +77,18 @@ class CropRulesTest {
     }
 
     @Test
+    void poolsKeepFileOrderAndNeedTwoLoadedCrops() throws Exception {
+        try (InputStream stream = CropRulesTest.class.getResourceAsStream("/data/gt6crops/mutations.json")) {
+            assertNotNull(stream);
+            CropBreeding.Book book = CropBreeding.Book.load(stream, List.of(
+                    "cocoa", "corpse_plant", "wheat", "azure_bluet"));
+
+            assertEquals("addictive", book.pools().get(0).id());
+            assertEquals(List.of("cocoa", "corpse_plant"), book.pools().get(0).crops());
+        }
+    }
+
+    @Test
     void mutationBookContainsTheSugarCaneRecipe() {
         CropBreeding.Book book = book();
         assertTrue(book.mutations().stream().anyMatch(mutation ->

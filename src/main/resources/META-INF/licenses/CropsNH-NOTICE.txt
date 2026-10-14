@@ -1,7 +1,7 @@
 GT6 Crops ships the files below from Crops NH
-(https://github.com/GTNewHorizons/CropsNH, commit 1d2936f53192b2648a853ab529df758fd40a4f20).
+(https://github.com/GTNewHorizons/CropsNH).
 
-Unmodified; some are renamed:
+Unmodified, from commit 1d2936f53192b2648a853ab529df758fd40a4f20; some are renamed:
 
   assets/gt6crops/textures/item/crop_seed_base.png
       from assets/cropsnh/textures/items/genericSeed/vanilla1.png
@@ -29,6 +29,21 @@ Modified by lombinaxmasson on 2026-10-09:
   pixels and store, in their red and green channels, which vanilla pixel each one
   showed. The game redraws stage 4 from these and the player's own vanilla
   textures, so no Minecraft pixels ship here.
+
+Modified on 2026-10-14, from commit fbda7f8a930e165725a82b5f276c8a7563135c70.
+The NEI panel was cropped away, leaving the slot diagram. Three of the files
+were renamed:
+
+  assets/gt6crops/textures/gui/nei/breeding2.png
+      from assets/cropsnh/textures/gui/nei/breeding2.png
+  assets/gt6crops/textures/gui/nei/breeding4.png
+      from assets/cropsnh/textures/gui/nei/breeding4.png
+  assets/gt6crops/textures/gui/nei/crop_list.png
+      from assets/cropsnh/textures/gui/nei/cropList.png
+  assets/gt6crops/textures/gui/nei/mutation_pool.png
+      from assets/cropsnh/textures/gui/nei/mutationPool.png
+  assets/gt6crops/textures/gui/nei/alternate_seeds.png
+      from assets/cropsnh/textures/gui/nei/alternateSeeds.png
 
 Copyright (c) 2022-2026 the GTNH Team.
 

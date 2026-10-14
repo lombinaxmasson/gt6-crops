@@ -97,3 +97,10 @@ GT6CE crop sticks, crop cards, and IC2-inspired crossbreeding.
     versionRange="[0.0.0,)"
     ordering="AFTER"
     side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="emi"
+    type="optional"
+    versionRange="[1.1.0,)"
+    ordering="AFTER"
+    side="CLIENT"
