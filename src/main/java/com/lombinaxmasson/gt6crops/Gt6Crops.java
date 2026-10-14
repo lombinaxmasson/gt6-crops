@@ -1,5 +1,10 @@
 package com.lombinaxmasson.gt6crops;
 
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.function.Function;
+
 import org.slf4j.Logger;
 
 import com.gregtech.gregtech.api.addon.GregTechAddon;
@@ -17,8 +22,12 @@ import com.lombinaxmasson.gt6crops.item.WeedExItem;
 import com.lombinaxmasson.gt6crops.machine.CropManagerBlock;
 import com.lombinaxmasson.gt6crops.machine.CropManagerMenu;
 import com.lombinaxmasson.gt6crops.machine.CropManagerTile;
+import com.lombinaxmasson.gt6crops.machine.MachineBlock;
 import com.lombinaxmasson.gt6crops.machine.MachineTier;
 import com.lombinaxmasson.gt6crops.machine.MachineTile;
+import com.lombinaxmasson.gt6crops.machine.SeedGeneratorBlock;
+import com.lombinaxmasson.gt6crops.machine.SeedGeneratorMenu;
+import com.lombinaxmasson.gt6crops.machine.SeedGeneratorTile;
 import com.lombinaxmasson.gt6crops.rules.CropRules;
 
 import net.minecraft.core.registries.Registries;
@@ -94,17 +103,23 @@ public final class Gt6Crops {
                     .of(CropTile::new, CROP_STICK.get())
                     .build(null));
 
-    public static final DeferredBlock<CropManagerBlock> CROP_MANAGER =
-            BLOCKS.register("crop_manager_lv", () -> new CropManagerBlock(MachineTier.LV));
-    public static final DeferredItem<BlockItem> CROP_MANAGER_ITEM =
-            ITEMS.register("crop_manager_lv", () -> new BlockItem(
-                    CROP_MANAGER.get(), new Item.Properties()));
+    public static final Map<MachineTier, DeferredBlock<CropManagerBlock>> CROP_MANAGERS =
+            machines("crop_manager", CropManagerBlock::new);
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CropManagerTile>> CROP_MANAGER_TILE =
             BLOCK_ENTITIES.register("crop_manager", () -> BlockEntityType.Builder
-                    .of(CropManagerTile::new, CROP_MANAGER.get())
+                    .of(CropManagerTile::new, blocks(CROP_MANAGERS))
                     .build(null));
     public static final DeferredHolder<MenuType<?>, MenuType<CropManagerMenu>> CROP_MANAGER_MENU =
             MENUS.register("crop_manager", () -> IMenuTypeExtension.create(CropManagerMenu::new));
+
+    public static final Map<MachineTier, DeferredBlock<SeedGeneratorBlock>> SEED_GENERATORS =
+            machines("seed_generator", SeedGeneratorBlock::new);
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SeedGeneratorTile>> SEED_GENERATOR_TILE =
+            BLOCK_ENTITIES.register("seed_generator", () -> BlockEntityType.Builder
+                    .of(SeedGeneratorTile::new, blocks(SEED_GENERATORS))
+                    .build(null));
+    public static final DeferredHolder<MenuType<?>, MenuType<SeedGeneratorMenu>> SEED_GENERATOR_MENU =
+            MENUS.register("seed_generator", () -> IMenuTypeExtension.create(SeedGeneratorMenu::new));
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> CREATIVE_TAB =
             CREATIVE_MODE_TABS.register("main", () -> CreativeModeTab.builder()
@@ -115,7 +130,8 @@ public final class Gt6Crops {
                         output.accept(CROP_STICK_ITEM.get());
                         output.accept(WEED_EX.get());
                         output.accept(PLANT_CURE.get());
-                        output.accept(CROP_MANAGER_ITEM.get());
+                        CROP_MANAGERS.values().forEach(output::accept);
+                        SEED_GENERATORS.values().forEach(output::accept);
                         if (!CropCards.initialized()) {
                             return;
                         }
@@ -163,6 +179,23 @@ public final class Gt6Crops {
 
     private static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
         MachineTile.registerCapabilities(event, CROP_MANAGER_TILE.get());
+        MachineTile.registerCapabilities(event, SEED_GENERATOR_TILE.get());
+    }
+
+    /** One block and block item per tier, named {@code <name>_<tier>}. */
+    private static <B extends MachineBlock> Map<MachineTier, DeferredBlock<B>> machines(
+            String name, Function<MachineTier, B> factory) {
+        Map<MachineTier, DeferredBlock<B>> result = new EnumMap<>(MachineTier.class);
+        for (MachineTier tier : MachineTier.values()) {
+            DeferredBlock<B> block = BLOCKS.register(name + "_" + tier.id(), () -> factory.apply(tier));
+            ITEMS.registerSimpleBlockItem(block);
+            result.put(tier, block);
+        }
+        return Collections.unmodifiableMap(result);
+    }
+
+    private static Block[] blocks(Map<MachineTier, ? extends DeferredBlock<? extends Block>> machines) {
+        return machines.values().stream().map(DeferredBlock::get).toArray(Block[]::new);
     }
 
     private static ItemStack seedIcon() {

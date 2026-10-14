@@ -165,6 +165,7 @@
                       "soil":  ["#gt6crops:soil/stone"],
                       "sub_soil":  ["#gt6crops:sub_soil/emerald"],
                       "liked_biomes":  ["#c:is_mountain", "#c:is_hill"],
+                      "duplication_catalysts":  [{"kind": "vanilla", "item": "minecraft:emerald", "count": 1}, {"kind": "gt_form", "prefix": "dust", "material": "emerald", "count": 1}],
                       "texture":  "bobsyeruncleranks"
                   },
                   {
@@ -209,6 +210,7 @@
                       "sub_soil":  ["#gt6crops:sub_soil/diamond"],
                       "liked_biomes":  ["#c:is_cold", "#c:is_sparse_vegetation"],
                       "render_shape":  "x",
+                      "duplication_catalysts":  [{"kind": "gt_form", "prefix": "dust", "material": "diamond", "count": 1}, {"kind": "vanilla", "item": "minecraft:diamond", "count": 1}],
                       "texture":  "diareed"
                   },
                   {
@@ -262,6 +264,7 @@
                       "sub_soil":  ["#gt6crops:sub_soil/coal"],
                       "liked_biomes":  ["#c:is_dead", "#c:is_spooky"],
                       "render_shape":  "x",
+                      "duplication_catalysts":  [{"kind": "vanilla", "item": "minecraft:wither_skeleton_skull", "count": 1}, {"kind": "vanilla", "item": "minecraft:coal", "count": 1}],
                       "texture":  "withereed"
                   },
                   {
@@ -306,6 +309,7 @@
                       "soil":  ["#gt6crops:soil/netherrack"],
                       "liked_biomes":  ["#c:is_nether", "#c:is_hot"],
                       "render_shape":  "x",
+                      "duplication_catalysts":  [{"kind": "vanilla", "item": "minecraft:blaze_powder", "count": 2}, {"kind": "vanilla", "item": "minecraft:blaze_rod", "count": 1}],
                       "texture":  "blazereed"
                   },
                   {
@@ -556,6 +560,7 @@
                       "soil":  ["#gt6crops:soil/farmland"],
                       "sub_soil":  ["#gt6crops:sub_soil/end_stone"],
                       "liked_biomes":  ["#c:is_end", "#c:is_cold"],
+                      "duplication_catalysts":  [{"kind": "vanilla", "item": "minecraft:ender_pearl", "count": 1}, {"kind": "gt_form", "prefix": "dust", "material": "ender_pearl", "count": 1}],
                       "texture":  "enderbloom"
                   },
                   {
@@ -702,6 +707,7 @@
                       "soil":  ["#gt6crops:soil/stone", "#gt6crops:soil/dirt_grass", "#gt6crops:soil/mycelium", "#gt6crops:soil/netherrack"],
                       "liked_biomes":  ["#c:is_nether", "#c:is_magical", "#c:is_mushroom"],
                       "render_shape":  "x",
+                      "duplication_catalysts":  [{"kind": "vanilla", "item": "minecraft:glowstone_dust", "count": 1}],
                       "texture":  "glowshrooms"
                   },
                   {
@@ -741,6 +747,7 @@
                                     },
                       "soil":  ["#gt6crops:soil/dirt_grass"],
                       "liked_biomes":  ["#c:is_wet", "#c:is_swamp"],
+                      "duplication_catalysts":  [{"kind": "vanilla", "item": "minecraft:slime_ball", "count": 1}],
                       "texture":  "slimeplant"
                   },
                   {
@@ -831,6 +838,7 @@
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
                       "liked_biomes":  ["#c:is_nether", "#c:is_spooky"],
+                      "duplication_catalysts":  [{"kind": "vanilla", "item": "minecraft:ghast_tear", "count": 1}],
                       "texture":  "tearstalks"
                   },
                   {
@@ -873,6 +881,7 @@
                       "soil":  ["#gt6crops:soil/stone"],
                       "sub_soil":  ["#gt6crops:sub_soil/tin"],
                       "liked_biomes":  ["#c:is_mountain", "#c:is_hill"],
+                      "duplication_catalysts":  [{"kind": "gt_form", "prefix": "dust", "material": "tin", "count": 1}, {"kind": "gt_form", "prefix": "dust", "material": "cassiterite", "count": 1}, {"kind": "gt_form", "prefix": "dust", "material": "cassiterite_sand", "count": 1}],
                       "texture":  "tine"
                   },
                   {
@@ -915,6 +924,7 @@
                       "soil":  ["#gt6crops:soil/stone"],
                       "sub_soil":  ["#gt6crops:sub_soil/copper"],
                       "liked_biomes":  ["#c:is_savanna", "#c:is_hot", "#c:is_sandy"],
+                      "duplication_catalysts":  [{"kind": "gt_form", "prefix": "dust", "material": "copper", "count": 1}],
                       "texture":  "coppon"
                   },
                   {
@@ -956,6 +966,7 @@
                       "soil":  ["#gt6crops:soil/stone"],
                       "sub_soil":  ["#gt6crops:sub_soil/silver"],
                       "liked_biomes":  ["#c:is_mountain", "#c:is_hot"],
+                      "duplication_catalysts":  [{"kind": "gt_form", "prefix": "dust", "material": "silver", "count": 1}],
                       "texture":  "argentia"
                   },
                   {
@@ -997,6 +1008,7 @@
                       "soil":  ["#gt6crops:soil/stone"],
                       "sub_soil":  ["#gt6crops:sub_soil/lead"],
                       "liked_biomes":  ["#c:is_savanna", "#c:is_plains"],
+                      "duplication_catalysts":  [{"kind": "gt_form", "prefix": "dust", "material": "lead", "count": 1}],
                       "texture":  "plumbilia"
                   },
                   {
@@ -1042,6 +1054,7 @@
                       "soil":  ["#gt6crops:soil/stone"],
                       "sub_soil":  ["#gt6crops:sub_soil/steeleaf"],
                       "liked_biomes":  ["#c:is_spooky", "#c:is_dead"],
+                      "duplication_catalysts":  [{"kind": "gt_form", "prefix": "dust", "material": "steeleaf", "count": 1}, {"kind": "gt_form", "prefix": "ingot", "material": "steeleaf", "count": 1}],
                       "texture":  "steeleafranks"
                   },
                   {
@@ -1083,6 +1096,7 @@
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
                       "liked_biomes":  ["#c:is_spooky", "#c:is_dense_vegetation"],
+                      "duplication_catalysts":  [{"kind": "gt_form", "prefix": "dust", "material": "live_root", "count": 1}],
                       "texture":  "liveroots"
                   },
                   {
@@ -2452,6 +2466,7 @@
                                     },
                       "soil":  ["#gt6crops:soil/dirt_grass"],
                       "liked_biomes":  ["#c:is_magical", "#c:is_lush"],
+                      "duplication_catalysts":  [{"kind": "gt_form", "prefix": "nugget", "material": "mercury", "count": 1}],
                       "texture":  "shimmerleaf",
                       "blocked_without":  "thaumcraft"
                   },
@@ -2495,6 +2510,7 @@
                       "soil":  ["#gt6crops:soil/dirt_grass"],
                       "sub_soil":  ["#gt6crops:sub_soil/blaze"],
                       "liked_biomes":  ["#c:is_hot", "#c:is_dry", "#c:is_magical"],
+                      "duplication_catalysts":  [{"kind": "vanilla", "item": "minecraft:blaze_powder", "count": 2}],
                       "texture":  "cinderpearl",
                       "blocked_without":  "thaumcraft"
                   },
@@ -2536,6 +2552,7 @@
                       "soil":  ["#gt6crops:soil/stone"],
                       "sub_soil":  ["#gt6crops:sub_soil/iron"],
                       "liked_biomes":  ["#c:is_mountain", "#c:is_hill"],
+                      "duplication_catalysts":  [{"kind": "gt_form", "prefix": "dust", "material": "iron", "count": 1}],
                       "texture":  "indigo"
                   },
                   {
@@ -2576,6 +2593,7 @@
                       "soil":  ["#gt6crops:soil/stone"],
                       "sub_soil":  ["#gt6crops:sub_soil/gold"],
                       "liked_biomes":  ["#c:is_badlands", "#c:is_sandy"],
+                      "duplication_catalysts":  [{"kind": "gt_form", "prefix": "dust", "material": "gold", "count": 1}],
                       "texture":  "argentia"
                   },
                   {
@@ -2616,6 +2634,7 @@
                       "soil":  ["#gt6crops:soil/stone"],
                       "sub_soil":  ["#gt6crops:sub_soil/zinc"],
                       "liked_biomes":  ["#c:is_dry", "#c:is_hot"],
+                      "duplication_catalysts":  [{"kind": "gt_form", "prefix": "dust", "material": "zinc", "count": 1}],
                       "texture":  "argentia"
                   },
                   {
@@ -2656,6 +2675,7 @@
                       "soil":  ["#gt6crops:soil/stone"],
                       "sub_soil":  ["#gt6crops:sub_soil/nickel"],
                       "liked_biomes":  ["#c:is_plains", "#c:is_lush"],
+                      "duplication_catalysts":  [{"kind": "gt_form", "prefix": "dust", "material": "nickel", "count": 1}],
                       "texture":  "plumbilia"
                   },
                   {
@@ -2696,6 +2716,7 @@
                       "soil":  ["#gt6crops:soil/stone"],
                       "sub_soil":  ["#gt6crops:sub_soil/aluminium"],
                       "liked_biomes":  ["#c:is_cold", "#c:is_dry"],
+                      "duplication_catalysts":  [{"kind": "gt_form", "prefix": "dust", "material": "aluminium", "count": 1}, {"kind": "gt_form", "prefix": "dust", "material": "bauxite", "count": 2}],
                       "texture":  "indigo"
                   },
                   {
@@ -2736,6 +2757,7 @@
                       "soil":  ["#gt6crops:soil/stone"],
                       "sub_soil":  ["#gt6crops:sub_soil/manganese"],
                       "liked_biomes":  ["#c:is_nether", "#c:is_hot"],
+                      "duplication_catalysts":  [{"kind": "gt_form", "prefix": "dust", "material": "manganese", "count": 1}],
                       "texture":  "plumbilia"
                   },
                   {
@@ -2776,6 +2798,7 @@
                       "soil":  ["#gt6crops:soil/stone"],
                       "sub_soil":  ["#gt6crops:sub_soil/titanium"],
                       "liked_biomes":  ["#c:is_hot", "#c:is_savanna"],
+                      "duplication_catalysts":  [{"kind": "gt_form", "prefix": "dust", "material": "titanium", "count": 1}, {"kind": "gt_form", "prefix": "dust", "material": "rutile", "count": 2}, {"kind": "gt_form", "prefix": "dust", "material": "ilmenite", "count": 2}],
                       "texture":  "argentia"
                   },
                   {
@@ -2816,6 +2839,7 @@
                                     },
                       "soil":  ["#gt6crops:soil/stone"],
                       "sub_soil":  ["#gt6crops:sub_soil/chromium"],
+                      "duplication_catalysts":  [{"kind": "gt_form", "prefix": "dust", "material": "chromium", "count": 1}],
                       "texture":  "indigo"
                   },
                   {
@@ -2857,6 +2881,7 @@
                       "soil":  ["#gt6crops:soil/stone"],
                       "sub_soil":  ["#gt6crops:sub_soil/tungsten"],
                       "liked_biomes":  ["#c:is_ocean", "#c:is_wet", "#c:is_cold"],
+                      "duplication_catalysts":  [{"kind": "gt_form", "prefix": "dust", "material": "tungsten", "count": 1}, {"kind": "gt_form", "prefix": "dust", "material": "tungstate", "count": 1}, {"kind": "gt_form", "prefix": "dust", "material": "scheelite", "count": 1}],
                       "texture":  "plumbilia"
                   },
                   {

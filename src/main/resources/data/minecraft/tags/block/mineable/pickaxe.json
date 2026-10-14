@@ -1,5 +1,14 @@
 {
   "values": [
-    "gt6crops:crop_manager_lv"
+    "gt6crops:crop_manager_lv",
+    "gt6crops:crop_manager_mv",
+    "gt6crops:crop_manager_hv",
+    "gt6crops:crop_manager_ev",
+    "gt6crops:crop_manager_iv",
+    "gt6crops:seed_generator_lv",
+    "gt6crops:seed_generator_mv",
+    "gt6crops:seed_generator_hv",
+    "gt6crops:seed_generator_ev",
+    "gt6crops:seed_generator_iv"
   ]
 }

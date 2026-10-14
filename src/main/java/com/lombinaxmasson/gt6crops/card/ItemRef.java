@@ -122,6 +122,7 @@ public record ItemRef(
             case "plantgtwart" -> MaterialPrefix.plantGtWart;
             case "dust" -> MaterialPrefix.dust;
             case "tinydust", "dusttiny" -> MaterialPrefix.dustTiny;
+            case "gem" -> MaterialPrefix.gem;
             case "nugget" -> MaterialPrefix.nugget;
             case "chunk", "chunkgt" -> MaterialPrefix.chunkGt;
             case "ingot" -> MaterialPrefix.ingot;

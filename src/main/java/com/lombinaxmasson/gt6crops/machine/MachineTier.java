@@ -9,8 +9,12 @@ import com.gregtech.gregtech.api.energy.GTVoltageTiers;
  * packets from half to twice its voltage and explodes above that.
  */
 public enum MachineTier {
-    /** GT6CE builds LV electric machines from galvanized steel. */
-    LV(1, 0xFAF0F0);
+    /** GT6CE's machine casings: galvanized steel, aluminium, stainless steel, chromium and titanium. */
+    LV(1, 0xFAF0F0),
+    MV(2, 0x80C8F0),
+    HV(3, 0xC8C8DC),
+    EV(4, 0xFFE6E6),
+    IV(5, 0xDCA0F0);
 
     private final int index;
     private final int casingColor;
@@ -20,7 +24,7 @@ public enum MachineTier {
         this.casingColor = casingColor;
     }
 
-    /** GT's tier number: 1 for LV. CropsNH scales its machines by it. */
+    /** GT's tier number: 1 for LV up to 5 for IV. CropsNH scales its machines by it. */
     public int index() {
         return index;
     }

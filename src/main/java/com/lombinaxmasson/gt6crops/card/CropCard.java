@@ -35,7 +35,8 @@ public record CropCard(
         List<String> attributes,
         String texture,
         RenderShape renderShape,
-        CropConditions conditions) {
+        CropConditions conditions,
+        List<ItemRef> duplicationCatalysts) {
 
     /** How the stage sheets stand in the crop stick, after CropsNH's plant render shapes. */
     public enum RenderShape {
@@ -46,18 +47,13 @@ public record CropCard(
     }
 
     public static CropCard fromJson(JsonObject json) {
-        List<ItemRef> specials = new ArrayList<>();
-        if (json.has("special_drops") && !json.get("special_drops").isJsonNull()) {
-            JsonArray array = json.getAsJsonArray("special_drops");
-            array.forEach(value -> specials.add(ItemRef.fromJson(value.getAsJsonObject())));
-        }
         int[] stats = stats(json);
         return new CropCard(
                 json.get("id").getAsString(),
                 json.get("name").getAsString(),
                 string(json, "discovered_by", "gt6crops"),
                 ItemRef.fromJson(json.getAsJsonObject("drop")),
-                List.copyOf(specials),
+                itemRefs(json, "special_drops"),
                 ItemRef.fromJson(json.getAsJsonObject("base_seed")),
                 json.get("crossbreed_only").getAsBoolean(),
                 Math.max(1, json.get("tier").getAsInt()),
@@ -73,7 +69,8 @@ public record CropCard(
                 attributes(json),
                 string(json, "texture", json.get("id").getAsString().replace("_", "")),
                 renderShape(json),
-                CropConditions.fromJson(json));
+                CropConditions.fromJson(json),
+                itemRefs(json, "duplication_catalysts"));
     }
 
     public boolean canGrow(int size) {
@@ -123,6 +120,23 @@ public record CropCard(
         return new int[] {statChemical, statFood, statDefensive, statColor, statWeed};
     }
 
+    /**
+     * The Seed Generator spends one of these, the first it finds enough of, to copy this crop's seed.
+     * Entries that resolve to no item are left out, as CropsNH leaves out empty ore names;
+     * unlike CropsNH, a card left with none cannot be copied rather than needing nothing.
+     */
+    public List<ItemStack> resolvedCatalysts() {
+        List<ItemStack> result = new ArrayList<>();
+        for (ItemRef catalyst : duplicationCatalysts) {
+            catalyst.resolve().ifPresent(result::add);
+        }
+        return result;
+    }
+
+    public boolean canDuplicate() {
+        return duplicationCatalysts.isEmpty() || !resolvedCatalysts().isEmpty();
+    }
+
     private static int[] stats(JsonObject json) {
         if (json.has("stats")) {
             JsonArray values = json.getAsJsonArray("stats");
@@ -149,6 +163,14 @@ public record CropCard(
             default -> throw new IllegalArgumentException("Unknown render_shape " + shape
                     + " on crop card " + json.get("id").getAsString());
         };
+    }
+
+    private static List<ItemRef> itemRefs(JsonObject json, String key) {
+        List<ItemRef> result = new ArrayList<>();
+        if (json.has(key) && !json.get(key).isJsonNull()) {
+            json.getAsJsonArray(key).forEach(value -> result.add(ItemRef.fromJson(value.getAsJsonObject())));
+        }
+        return List.copyOf(result);
     }
 
     private static List<String> attributes(JsonObject json) {

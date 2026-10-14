@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "SAW",
+    "CHC",
+    "BDB"
+  ],
+  "key": {
+    "S": {
+      "item": "gregtech:tool_spade"
+    },
+    "A": {
+      "item": "gregtech:compact_robot_arm_iv"
+    },
+    "W": {
+      "item": "minecraft:water_bucket"
+    },
+    "C": {
+      "tag": "gregtech:circuits_tier_5_plus"
+    },
+    "H": {
+      "item": "gregtech:casing_machine_titanium"
+    },
+    "B": {
+      "item": "gregtech:cable_01_platinum"
+    },
+    "D": {
+      "item": "minecraft:dirt"
+    }
+  },
+  "result": {
+    "id": "gt6crops:seed_generator_iv",
+    "count": 1
+  }
+}

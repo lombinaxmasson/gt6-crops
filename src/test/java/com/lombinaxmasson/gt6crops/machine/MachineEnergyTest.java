@@ -16,6 +16,15 @@ class MachineEnergyTest {
     }
 
     @Test
+    void tiersRunFromLvToIv() {
+        assertEquals(5, MachineTier.values().length);
+        assertEquals(128, MachineTier.MV.voltage());
+        assertEquals(8192, MachineTier.IV.voltage());
+        assertEquals(5, MachineTier.IV.index());
+        assertEquals("iv", MachineTier.IV.id());
+    }
+
+    @Test
     void onlyPacketsAboveTwiceTheVoltageAreOvervoltage() {
         MachineEnergy energy = new MachineEnergy(MachineTier.LV);
 

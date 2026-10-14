@@ -26,6 +26,13 @@
       "from": [0, 0, 0],
       "to": [16, 16, 16],
       "faces": {
+        "north": {"texture": "#colored", "cullface": "north", "tintindex": 0}
+      }
+    },
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
         "down": {"texture": "#bottom", "cullface": "down"},
         "up": {"texture": "#top", "cullface": "up"},
         "north": {"texture": "#front", "cullface": "north"},

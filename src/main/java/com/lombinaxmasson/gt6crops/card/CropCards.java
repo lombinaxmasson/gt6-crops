@@ -48,6 +48,10 @@ public final class CropCards {
             if (CARDS.put(card.id(), card) != null) {
                 throw new IllegalStateException("Duplicate crop card " + card.id());
             }
+            if (!card.canDuplicate()) {
+                Gt6Crops.LOGGER.warn("gt6crops: no duplication catalyst of crop card {} exists; "
+                        + "the Seed Generator cannot copy it", card.id());
+            }
             card.conditions().soil().stream()
                     .filter(soil -> !SOILS.contains(soil))
                     .forEach(SOILS::add);

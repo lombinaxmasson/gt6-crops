@@ -279,6 +279,7 @@ class CropRulesTest {
                 List.of(attribute),
                 id,
                 CropCard.RenderShape.HASH,
-                CropConditions.DEFAULT);
+                CropConditions.DEFAULT,
+                List.of());
     }
 }

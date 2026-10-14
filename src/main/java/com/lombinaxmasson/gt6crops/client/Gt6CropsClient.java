@@ -77,6 +77,7 @@ public final class Gt6CropsClient {
     @SubscribeEvent
     public static void registerMachineScreens(RegisterMenuScreensEvent event) {
         event.register(Gt6Crops.CROP_MANAGER_MENU.get(), CropManagerScreen::new);
+        event.register(Gt6Crops.SEED_GENERATOR_MENU.get(), SeedGeneratorScreen::new);
     }
 
     @SubscribeEvent

@@ -93,10 +93,23 @@ Right-clicking a machine opens its screen, and right-clicking it with a bucket
 or other fluid container pours into its tanks. From any side, hoppers and pipes
 can fill the input slots and tanks and empty the output slots.
 
+Both machines come in GT6CE's five lowest electric tiers, LV to IV, each
+tinted like that tier's machine casing.
+
 ### Crop Manager
 
-The Crop Manager (LV) tends the crop sticks within 5 blocks of it
-horizontally and 2 vertically, as CropsNH's does. After 50 powered ticks in a
+The Crop Manager tends the crop sticks around it, as CropsNH's does. Its reach,
+tanks, and harvest bonus grow with its tier, as in CropsNH:
+
+| Tier | Reach (horizontal, vertical) | Harvest bonus | Water | Fertilizer | Weed-EX |
+|---|---|---|---|---|---|
+| LV | 5, 2 | 5% | 32,000 mB | 36,864 mB | 1,500 mB |
+| MV | 7, 2 | 10% | 64,000 mB | 73,728 mB | 3,000 mB |
+| HV | 9, 2 | 15% | 96,000 mB | 110,592 mB | 4,500 mB |
+| EV | 11, 2 | 20% | 128,000 mB | 147,456 mB | 6,000 mB |
+| IV | 13, 2 | 25% | 160,000 mB | 184,320 mB | 7,500 mB |
+
+The rest of this section uses the LV numbers. After 50 powered ticks in a
 row it runs one round; a tick without power starts the count over. Four
 switches on its screen choose what a round does, and only harvesting is on
 when it is placed:
@@ -139,10 +152,43 @@ Water can be any of the four GT6CE's own Mixer recipes take: plain, mineral,
 or distilled water, or spectral dew. A recipe is left out, with a warning in the log, if GT6CE
 lacks one of its dusts or already has a recipe those inputs would run.
 
-The Crop Manager's recipe is CropsNH's with GT6CE parts: two LV robot arms around an LV
-sensor, galvanized steel plates on either side of a galvanized steel machine
-casing, and tin cables on either side of a medium galvanized steel pipe, which
-takes the place of CropsNH's input hatch.
+The Crop Manager's recipe is CropsNH's with GT6CE parts of its tier: two robot
+arms around a sensor, plates on either side of a machine casing, and cables on
+either side of a medium fluid pipe, which takes the place of CropsNH's input
+hatch.
+
+| Tier | Plates and casing | Cable | Pipe | Circuit (Seed Generator) |
+|---|---|---|---|---|
+| LV | galvanized steel | tin | galvanized steel | basic |
+| MV | aluminium | copper | aluminium | good |
+| HV | stainless steel | gold | stainless steel | advanced |
+| EV | chromium | aluminium | chrome | elite |
+| IV | titanium | platinum | titanium | master |
+
+### Seed Generator
+
+The Seed Generator copies a scanned crop seed, as CropsNH's does. A seed in
+either input slot is kept, and a copy with the same species, stats, and scan
+goes to the output slot. Unscanned seeds and weeds are not copied.
+
+- A copy costs 36 mB of enriched fertilizer per stat point (growth, gain, and
+  resistance added up), at least 1 mB. Its tank only takes enriched
+  fertilizer. As in CropsNH, the LV to EV tanks are a tenth of a GT5u basic
+  machine's: 1,600, 3,200, 6,400, and 12,800 mB, and the IV tank holds
+  256,000 mB. A maxed seed costs 3,348 mB, so the LV generator only copies
+  seeds of up to 44 total stats and the MV one up to 88.
+- Some crops also take a catalyst from the input slots, the first of the
+  card's `duplication_catalysts` the slots hold enough of. Metal crops take a
+  dust of their metal or its ore, for example, and Diareed a diamond.
+- A copy is CropsNH's LV recipe, 30 EU/t for 8 seconds, overclocked as GT6CE
+  overclocks its own recipes on higher tiers. The fertilizer and catalyst are
+  spent when the copy starts, and it only starts if the output slot has room.
+  As in GT6CE, a tick with too little power starts the copy over, but nothing
+  spent is lost.
+
+Its recipe is CropsNH's: a GT6CE spade, a robot arm, and a water bucket on
+top, the tier's circuits on either side of its machine casing, and its cables
+on either side of a dirt block. The parts are those in the table above.
 
 ## Configuration
 
@@ -224,6 +270,12 @@ New growth-stage sprites go in a resource pack, under
   right-clicking a crop stick with `base_seed` plants it.
 - `drop` is the harvest. Each entry in `special_drops` has a one-in-four chance
   per harvest.
+- `duplication_catalysts` (optional) lists alternatives for the Seed
+  Generator to spend when it copies the seed, each with its own `count`;
+  it takes the first the input slots hold enough of. Entries that do not
+  resolve are left out, and a card that lists catalysts of which none resolve
+  cannot be copied, with a warning in the log. Without the field, copies need
+  only fertilizer.
 - `texture` names the sprite folder and defaults to the id without
   underscores. Several cards can share one folder.
 - `render_shape` (optional) is `hash`, the default, for two sheets each way
@@ -236,14 +288,14 @@ New growth-stage sprites go in a resource pack, under
 - `stats`, `attributes`, and `discovered_by` are CropsNH metadata. The rules do
   not read them.
 
-`drop`, `special_drops`, and `base_seed` are item references:
+`drop`, `special_drops`, `base_seed`, and `duplication_catalysts` are item references:
 
 - `{"kind": "vanilla", "item": "minecraft:wheat_seeds"}` takes any registered
   item id. `item`, `gt_item`, and `foods_addon` work the same way.
 - `{"kind": "gt_form", "prefix": "plantGtBerry", "material": "tin"}` is a GT
   material form. The prefixes are `plantGtBerry`, `plantGtBlossom`,
-  `plantGtFiber`, `plantGtTwig`, `plantGtWart`, `dust`, `dustTiny`, `nugget`,
-  `chunkGt`, `ingot`, and `stick`. Material names are GT6CE names with case,
+  `plantGtFiber`, `plantGtTwig`, `plantGtWart`, `dust`, `dustTiny`, `gem`,
+  `nugget`, `chunkGt`, `ingot`, and `stick`. Material names are GT6CE names with case,
   `_`, `-`, and spaces ignored, so `live_root` finds `LiveRoot`. Any GT6CE
   material works, and so does switching a crop from blossoms to berries.
 - `{"kind": "none"}` is nothing. `count` defaults to 1.
@@ -372,7 +424,8 @@ icon is the Weed-EX icon with its greens recoloured.
 
 Machines are drawn as GT6CE draws its own: GT6CE's metallic machine casing,
 tinted with the colour of the tier's casing material (galvanized steel for
-LV), under this addon's overlays. The casing texture is read from the
+LV, then aluminium, stainless steel, chromium, and titanium), under this
+addon's overlays. The casing texture is read from the
 installed GT6CE jar and is not shipped here.
 
 The crop-seed body and highlight masks (CropsNH's `genericSeed/vanilla1` and

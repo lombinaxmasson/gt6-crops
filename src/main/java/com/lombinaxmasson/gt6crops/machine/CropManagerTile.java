@@ -59,7 +59,7 @@ public final class CropManagerTile extends MachineTile {
 
     /** CropsNH's global update rate. */
     private static final int CYCLE_TICKS = 50;
-    private static final int VERTICAL_RADIUS = 2;
+    public static final int VERTICAL_RADIUS = 2;
     private static final double HARVEST_BONUS_PER_TIER = 0.05;
     private static final int WATER_PER_TIER = 32_000;
     /** Four stacks of 144 mB per tier. */
@@ -102,8 +102,12 @@ public final class CropManagerTile extends MachineTile {
         setOn(HARVEST, true);
     }
 
-    private int horizontalRadius() {
-        return 3 + 2 * tier().index();
+    public static int horizontalRadius(MachineTier tier) {
+        return 3 + 2 * tier.index();
+    }
+
+    public static int harvestBonusPercent(MachineTier tier) {
+        return (int) Math.round(HARVEST_BONUS_PER_TIER * 100 * tier.index());
     }
 
     @Override
@@ -174,7 +178,7 @@ public final class CropManagerTile extends MachineTile {
     }
 
     private List<CropTile> cropsInRange(Level level) {
-        int h = horizontalRadius();
+        int h = horizontalRadius(tier());
         List<CropTile> crops = new ArrayList<>();
         for (BlockPos pos : BlockPos.betweenClosed(
                 worldPosition.offset(-h, -VERTICAL_RADIUS, -h),

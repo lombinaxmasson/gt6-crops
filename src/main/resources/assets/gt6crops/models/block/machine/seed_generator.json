@@ -1,0 +1,7 @@
+{
+  "parent": "gt6crops:block/machine/base",
+  "textures": {
+    "front": "gt6crops:block/machine/seed_generator/front",
+    "colored": "gt6crops:block/machine/seed_generator/colored"
+  }
+}
