@@ -25,6 +25,7 @@ public final class GtRecipeIntegration {
     private GtRecipeIntegration() {}
 
     public static void register(GregTechAddon.Context context) {
+        SeedScanRecipes.register();
         int added = 0;
         for (CropCard card : CropCards.cards()) {
             if (!card.drop().kind().equals("gt_form")

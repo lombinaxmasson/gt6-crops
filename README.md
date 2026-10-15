@@ -64,9 +64,10 @@ it is not bundled into the addon jar.
 - CropsNH-style seed scanning. A crossbred crop starts unscanned, and a seed
   dug up from it reads "Unknown Seed" with no stats. Scanning the crop, with
   GT's crop scanner or by right-clicking it with a magnifying glass, reveals
-  both. Base seeds, weeds, and crops and seeds from before this existed count
-  as scanned. GT6CE has no machine that scans seed items, so a seed can only
-  be scanned by planting it first;
+  both. The Plantalyzer does the same to a seed item: an unscanned seed comes
+  out scanned after 64 ticks at 16 EU/t, and a scanned seed comes back out
+  unchanged after 1 tick. Base seeds, weeds, and crops and seeds from before
+  this existed count as scanned.
 - CropsNH-style growth conditions: each crop needs its own soil, some need a
   particular block under the soil or a minimum light level, and liked biomes
   speed growth up;
