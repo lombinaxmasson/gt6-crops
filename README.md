@@ -2,7 +2,7 @@
 
 NeoForge 1.21.1 crop sticks and CropsNH-style crossbreeding for GT6CE.
 
-The addon uses the GT6CE Addon API v1 and keeps all GT6 content in the
+The addon uses the GT6CE Addon API v2 and keeps all GT6 content in the
 `gregtech` dependency. The GT6CE jar is a development/runtime dependency only;
 it is not bundled into the addon jar.
 
