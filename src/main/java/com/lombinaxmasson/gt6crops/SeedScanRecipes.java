@@ -2,8 +2,7 @@ package com.lombinaxmasson.gt6crops;
 
 import java.util.List;
 
-import com.gregtech.gregtech.api.recipe.Recipe;
-import com.gregtech.gregtech.data.MachineRecipeMaps;
+import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
 import com.lombinaxmasson.gt6crops.card.CropCard;
 import com.lombinaxmasson.gt6crops.card.CropCards;
 import com.lombinaxmasson.gt6crops.item.CropSeedItem;
@@ -26,6 +25,7 @@ public final class SeedScanRecipes {
     public static final long PASS_EU = 16;
 
     private static boolean registered;
+    private static boolean displayAccepted;
 
     private SeedScanRecipes() {}
 
@@ -34,15 +34,21 @@ public final class SeedScanRecipes {
             return;
         }
         registered = true;
-        MachineRecipeMaps.Plantalyzer.addDynamicRecipes(SeedScanRecipes::find);
-        registerDisplay();
+        AddonRecipes.Map plantalyzer = AddonRecipes.map("gt.recipe.plantalyzer");
+        plantalyzer.addDynamic(SeedScanRecipes::find);
+        registerDisplay(plantalyzer);
+    }
+
+    /** True when the recipe viewer accepted the one example row. Machines do not craft that row. */
+    public static boolean displayAccepted() {
+        return displayAccepted;
     }
 
     /**
      * The first crop seed in the input slots. Anything else is left for a later provider.
      * The recipe consumes one item and returns one, so a stack is scanned one seed at a time.
      */
-    public static Recipe find(List<ItemStack> items, List<FluidStack> fluids) {
+    public static AddonRecipes.Line find(List<ItemStack> items, List<FluidStack> fluids) {
         for (ItemStack stack : items) {
             if (stack == null || stack.isEmpty()) {
                 continue;
@@ -65,7 +71,7 @@ public final class SeedScanRecipes {
         return null;
     }
 
-    private static void registerDisplay() {
+    private static void registerDisplay(AddonRecipes.Map plantalyzer) {
         for (CropCard card : CropCards.cards()) {
             if (card.isWeed()) {
                 continue;
@@ -73,18 +79,19 @@ public final class SeedScanRecipes {
             CropRules.Stats example = new CropRules.Stats(1, 1, 1);
             ItemStack input = CropSeedItem.create(card, example, false);
             ItemStack output = CropSeedItem.create(card, example, true);
-            Recipe shown = MachineRecipeMaps.Plantalyzer.addFakeRecipe(false, row(input, output, SCAN_TICKS, SCAN_EU));
-            if (shown == null) {
+            AddonRecipes.Line shown = plantalyzer.addDisplay(row(input, output, SCAN_TICKS, SCAN_EU));
+            displayAccepted = shown != null;
+            if (!displayAccepted) {
                 Gt6Crops.LOGGER.warn("gt6crops: Plantalyzer rejected the seed-scan display row");
             }
             return;
         }
     }
 
-    private static Recipe row(ItemStack input, ItemStack output, long ticks, long eut) {
-        return new Recipe(
+    private static AddonRecipes.Line row(ItemStack input, ItemStack output, long ticks, long eut) {
+        return new AddonRecipes.Line(
                 new ItemStack[] {input},
                 new ItemStack[] {output},
-                null, null, null, null, ticks, eut, 0);
+                null, null, ticks, eut, 0);
     }
 }

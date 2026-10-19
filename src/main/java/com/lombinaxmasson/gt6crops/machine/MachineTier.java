@@ -53,4 +53,40 @@ public enum MachineTier {
     public String id() {
         return name().toLowerCase(Locale.ROOT);
     }
+
+    /** Casing material GregTech already registers. The shell rejects an unknown name at startup. */
+    public String casingMaterial() {
+        return switch (this) {
+            case LV -> "SteelGalvanized";
+            case MV -> "Aluminium";
+            case HV -> "StainlessSteel";
+            case EV -> "Chromium";
+            case IV -> "Titanium";
+        };
+    }
+
+    /** GregTech's tier number, 1 for LV through 5 for IV. */
+    public static MachineTier byIndex(int index) {
+        for (MachineTier tier : values()) {
+            if (tier.index == index) {
+                return tier;
+            }
+        }
+        throw new IllegalArgumentException("No crop machine tier " + index);
+    }
+
+    /** The tier suffix of {@code crop_manager_lv}, or null when the path is not one of these machines. */
+    public static MachineTier fromMachinePath(String path) {
+        int split = path.lastIndexOf('_');
+        if (split < 0 || split == path.length() - 1) {
+            return null;
+        }
+        String id = path.substring(split + 1);
+        for (MachineTier tier : values()) {
+            if (tier.id().equals(id)) {
+                return tier;
+            }
+        }
+        return null;
+    }
 }

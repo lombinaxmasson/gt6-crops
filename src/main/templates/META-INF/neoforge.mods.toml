@@ -94,7 +94,7 @@ GT6CE crop sticks, crop cards, and IC2-inspired crossbreeding.
 [[dependencies.${mod_id}]]
     modId="gregtech6"
     type="required"
-    versionRange="[0.0.0,)"
+    versionRange="[0.7,)"
     ordering="AFTER"
     side="BOTH"
 

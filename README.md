@@ -2,9 +2,11 @@
 
 NeoForge 1.21.1 crop sticks and CropsNH-style crossbreeding for GT6CE.
 
-The addon uses the GT6CE Addon API v2 and keeps all GT6 content in the
-`gregtech` dependency. The GT6CE jar is a development/runtime dependency only;
-it is not bundled into the addon jar.
+The addon compiles against the GT6CE NeoForge addon SDK, version 0.7.0, and
+keeps all GT6 content in the `gregtech` dependency. The SDK jar is
+compile-only. The full GT6CE mod jar is a development and test runtime only;
+neither jar is bundled into the addon jar. The mod dependency is `gregtech6`
+with `versionRange="[0.7,)"`.
 
 ## Current mechanics
 
@@ -84,11 +86,15 @@ integration contract is in
 
 ## Machines
 
-The Addon API cannot add GT machine types, so the machines are this addon's own
-blocks that take EU from GT6CE cables the way GT6CE's machines do. A packet
-below half the machine's voltage is lost, and one above twice its voltage
-makes it explode (see `machines.overvoltage_explosions`). A machine stores no
+Both machines are GregTech behavior machines. GregTech owns the block, item,
+screen, energy and inventory. This addon supplies the layout and the behavior.
+A packet below half the machine's voltage is lost, and one above twice its
+voltage explodes when GregTech's machine overvoltage setting is on. There is
+no separate `machines.overvoltage_explosions` setting. A machine stores no
 energy: it only works on ticks when at least half its voltage arrives.
+Machine items stack to 16, which is the shell's block item. The shell draws
+each switch as an on or off button; the wheat, bucket, bone meal and Weed-EX
+icons are not drawn. The switch names are unchanged.
 
 Right-clicking a machine opens its screen, and right-clicking it with a bucket
 or other fluid container pours into its tanks. From any side, hoppers and pipes
@@ -281,7 +287,6 @@ cycles, so a dedicated server uses its own copy.
 | `weeds.enable_weeds` | true | turns weed growth and spreading on or off |
 | `weeds.weed_spawn_chance` | 100 | an empty single stick grows a weed one cycle in this many |
 | `weeds.weed_spread_chance` | 50 | the weed-spread roll runs from 0 to this minus 1 |
-| `machines.overvoltage_explosions` | true | a machine fed more than twice its voltage explodes, as GT6CE's do; when off, the packet is lost |
 
 ## Customizing crops
 
@@ -541,7 +546,9 @@ Op level 2 and above get `/gt6crops` debug commands. Look at a crop stick and us
 skips the 256-tick gate.
 
 Set `JAVA_HOME` to the project JDK 21 before using Gradle. Do not commit the
-GT6CE jar; `libs/gt6ce/*.jar` is ignored. `build-commit.txt` and the checksum
-record the GT6CE build used locally. CI builds GT6CE from the commit in
-`build-commit.txt` and caches the jar by that commit, so updating GT6CE locally
-and committing the new `build-commit.txt` moves CI with it.
+GT6CE jars; `libs/gt6ce/*.jar` is ignored. Compilation uses
+`gregtech6-addon-sdk-1.21.1-neoforge-0.7.0.jar`. `runClient`, `runServer` and
+GameTest use `gregtech6-1.21.1-neoforge.jar`. `update-gt.ps1` downloads both
+from the NeoForge CI artifact. `build-commit.txt` records that build. CI
+builds the pinned GT6CE commit's mod jar and addon SDK, so the pin has to be
+a commit that publishes the SDK.

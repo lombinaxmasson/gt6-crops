@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-import com.gregtech.gregtech.api.tool.GTToolHelper;
-import com.gregtech.gregtech.api.tool.GTToolType;
+import com.gregtech.gregtech.api.addon.platform.AddonTool;
+import com.gregtech.gregtech.api.addon.platform.AddonTools;
 import com.lombinaxmasson.gt6crops.Gt6Crops;
 import com.lombinaxmasson.gt6crops.Gt6CropsTags;
 import com.lombinaxmasson.gt6crops.card.CropCard;
@@ -155,7 +155,7 @@ public final class CropStickBlock extends Block implements EntityBlock {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
-        if (GTToolHelper.isMagnifyingGlass(stack)) {
+        if (AddonTools.isMagnifyingGlass(stack)) {
             if (!level.isClientSide) {
                 crop.inspect().forEach(line -> player.displayClientMessage(line, false));
             }
@@ -164,7 +164,7 @@ public final class CropStickBlock extends Block implements EntityBlock {
 
         if (isSpade(stack) && !crop.isEmpty()) {
             if (!level.isClientSide && crop.uproot(player)) {
-                GTToolHelper.damageForUse(stack, 1, player, LivingEntity.getSlotForHand(hand));
+                AddonTools.damageForUse(stack, 1, player, LivingEntity.getSlotForHand(hand));
                 level.playSound(null, pos, SoundEvents.CROP_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
             }
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
@@ -318,8 +318,8 @@ public final class CropStickBlock extends Block implements EntityBlock {
     }
 
     private static boolean isSpade(ItemStack stack) {
-        return GTToolHelper.matchesTool(stack, GTToolType.SPADE)
-                || GTToolHelper.matchesTool(stack, GTToolType.UNIVERSAL_SPADE);
+        return AddonTools.matches(stack, AddonTool.SPADE)
+                || AddonTools.matches(stack, AddonTool.UNIVERSAL_SPADE);
     }
 
     private static void consumeOne(ItemStack stack, Player player) {

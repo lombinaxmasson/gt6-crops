@@ -3,11 +3,8 @@ package com.lombinaxmasson.gt6crops.card;
 import java.util.Locale;
 import java.util.Optional;
 
-import com.gregtech.gregtech.api.material.GTMaterial;
-import com.gregtech.gregtech.api.material.GTMaterialRegistry;
-import com.gregtech.gregtech.api.material.MaterialSentinels;
-import com.gregtech.gregtech.data.MaterialPrefix;
-import com.gregtech.gregtech.registry.GTItems;
+import com.gregtech.gregtech.api.addon.GregTechMaterials;
+import com.gregtech.gregtech.api.addon.platform.AddonItems;
 import com.google.gson.JsonObject;
 
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -64,20 +61,20 @@ public record ItemRef(
             if (prefix == null || material == null) {
                 return Optional.empty();
             }
-            MaterialPrefix resolvedPrefix = prefix(prefix);
-            GTMaterial resolvedMaterial = gtMaterial();
-            if (resolvedPrefix == null || !resolvedMaterial.isValid()) {
+            String resolvedPrefix = prefixName(prefix);
+            GregTechMaterials.Material resolvedMaterial = gtMaterial();
+            if (resolvedPrefix == null || !resolvedMaterial.valid()) {
                 return Optional.empty();
             }
-            ItemStack stack = GTItems.getStack(resolvedPrefix, resolvedMaterial, count);
+            ItemStack stack = AddonItems.stack(resolvedPrefix, resolvedMaterial.name(), count);
             return stack.isEmpty() ? Optional.empty() : Optional.of(stack);
         }
         return Optional.empty();
     }
 
-    /** The named GT material, or {@code MaterialSentinels.Invalid}. */
-    public GTMaterial gtMaterial() {
-        return material == null ? MaterialSentinels.Invalid : material(material);
+    /** The named GT material, or the invalid sentinel. */
+    public GregTechMaterials.Material gtMaterial() {
+        return material == null ? GregTechMaterials.invalid() : material(material);
     }
 
     private Optional<ItemStack> resolveItem(String id) {
@@ -93,14 +90,14 @@ public record ItemRef(
      * GT material names keep their original capitals. Ledger names are folded
      * so {@code live_root} resolves to {@code LiveRoot}.
      */
-    private static GTMaterial material(String raw) {
-        GTMaterial direct = GTMaterialRegistry.get(raw);
-        if (direct.isValid()) {
+    private static GregTechMaterials.Material material(String raw) {
+        GregTechMaterials.Material direct = GregTechMaterials.find(raw);
+        if (direct.valid()) {
             return direct;
         }
         String folded = fold(raw);
-        for (GTMaterial candidate : GTMaterialRegistry.allMaterials()) {
-            if (candidate.isValid() && fold(candidate.getName()).equals(folded)) {
+        for (GregTechMaterials.Material candidate : GregTechMaterials.all()) {
+            if (candidate.valid() && fold(candidate.name()).equals(folded)) {
                 return candidate;
             }
         }
@@ -112,21 +109,21 @@ public record ItemRef(
                 .toLowerCase(Locale.ROOT);
     }
 
-    private static MaterialPrefix prefix(String raw) {
+    private static String prefixName(String raw) {
         String value = raw.replace("-", "").replace("_", "").toLowerCase(Locale.ROOT);
         return switch (value) {
-            case "plantgtberry" -> MaterialPrefix.plantGtBerry;
-            case "plantgtblossom" -> MaterialPrefix.plantGtBlossom;
-            case "plantgtfiber" -> MaterialPrefix.plantGtFiber;
-            case "plantgttwig" -> MaterialPrefix.plantGtTwig;
-            case "plantgtwart" -> MaterialPrefix.plantGtWart;
-            case "dust" -> MaterialPrefix.dust;
-            case "tinydust", "dusttiny" -> MaterialPrefix.dustTiny;
-            case "gem" -> MaterialPrefix.gem;
-            case "nugget" -> MaterialPrefix.nugget;
-            case "chunk", "chunkgt" -> MaterialPrefix.chunkGt;
-            case "ingot" -> MaterialPrefix.ingot;
-            case "stick" -> MaterialPrefix.stick;
+            case "plantgtberry" -> "plantGtBerry";
+            case "plantgtblossom" -> "plantGtBlossom";
+            case "plantgtfiber" -> "plantGtFiber";
+            case "plantgttwig" -> "plantGtTwig";
+            case "plantgtwart" -> "plantGtWart";
+            case "dust" -> "dust";
+            case "tinydust", "dusttiny" -> "dustTiny";
+            case "gem" -> "gem";
+            case "nugget" -> "nugget";
+            case "chunk", "chunkgt" -> "chunkGt";
+            case "ingot" -> "ingot";
+            case "stick" -> "stick";
             default -> null;
         };
     }

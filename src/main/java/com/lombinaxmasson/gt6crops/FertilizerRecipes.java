@@ -6,12 +6,10 @@ import java.util.List;
 import java.util.Optional;
 
 import com.gregtech.gregtech.api.addon.GregTechAddon;
-import com.gregtech.gregtech.api.recipe.Recipe;
-import com.gregtech.gregtech.api.recipe.RecipeMap;
-import com.gregtech.gregtech.data.MachineRecipeMaps;
-import com.gregtech.gregtech.registry.GTFluids;
+import com.gregtech.gregtech.api.addon.platform.AddonFluids;
+import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
 import com.lombinaxmasson.gt6crops.card.ItemRef;
-import com.lombinaxmasson.gt6crops.machine.CropManagerTile;
+import com.lombinaxmasson.gt6crops.machine.CropManagerBehavior;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -53,9 +51,9 @@ final class FertilizerRecipes {
     private FertilizerRecipes() {
         waters.add(Fluids.WATER);
         for (String name : GT_WATERS) {
-            var water = GTFluids.still(name);
-            if (water != null && water.isBound()) {
-                waters.add(water.get());
+            FluidStack water = AddonFluids.still(name, WATER_MB);
+            if (water != null && !water.isEmpty()) {
+                waters.add(water.getFluid());
             } else {
                 Gt6Crops.LOGGER.warn("gt6crops: GT6CE has no {} fluid for fertilizer recipes", name);
             }
@@ -94,7 +92,8 @@ final class FertilizerRecipes {
                 skipped++;
                 return;
             }
-            add(MachineRecipeMaps.Mixer, what, new Recipe(items.get(), null, null, null,
+            add(AddonRecipes.map("gt.recipe.mixer"), what, new AddonRecipes.Line(
+                    items.get(), null,
                     new FluidStack[] {new FluidStack(water, WATER_MB)},
                     new FluidStack[] {fertilizer(fertilizer * MB_PER_FERTILIZER)},
                     ticks, EU_PER_TICK, 0));
@@ -102,30 +101,30 @@ final class FertilizerRecipes {
     }
 
     private void boneMeal() {
-        add(MachineRecipeMaps.Squeezer, "bone meal", new Recipe(
-                new ItemStack[] {boneMeal(1)}, null, null, null, null,
-                new FluidStack[] {fertilizer(CropManagerTile.FERTILIZER_ITEM_MB)},
+        add(AddonRecipes.map("gt.recipe.squeezer"), "bone meal", new AddonRecipes.Line(
+                new ItemStack[] {boneMeal(1)}, null, null,
+                new FluidStack[] {fertilizer(CropManagerBehavior.FERTILIZER_ITEM_MB)},
                 SQUEEZE_TICKS, EU_PER_TICK, 0));
     }
 
     private void enriched() {
-        add(MachineRecipeMaps.Mixer, "enriched fertilizer", new Recipe(
-                new ItemStack[] {boneMeal(ENRICHING_FERTILIZER_ITEMS)}, null, null, null,
+        add(AddonRecipes.map("gt.recipe.mixer"), "enriched fertilizer", new AddonRecipes.Line(
+                new ItemStack[] {boneMeal(ENRICHING_FERTILIZER_ITEMS)}, null,
                 new FluidStack[] {fertilizer(ENRICHED_MB)},
                 new FluidStack[] {new FluidStack(Gt6Crops.ENRICHED_FERTILIZER.source(), ENRICHED_MB)},
                 ENRICHING_TICKS, EU_PER_TICK, 0));
     }
 
-    private void add(RecipeMap map, String what, Recipe recipe) {
-        Recipe existing = map.findCollision(recipe);
+    private void add(AddonRecipes.Map map, String what, AddonRecipes.Line line) {
+        AddonRecipes.Line existing = map.collision(line);
         if (existing != null) {
             Gt6Crops.LOGGER.warn("gt6crops: skipped the {} {} recipe, its inputs already run {} + {}",
-                    map.mNameInternal, what, Arrays.toString(existing.mInputs),
-                    Arrays.toString(existing.mFluidInputs));
+                    map.name(), what, Arrays.toString(existing.itemInputs()),
+                    Arrays.toString(existing.fluidInputs()));
             skipped++;
             return;
         }
-        GtRecipeIntegration.requireAccepted(map, recipe, what);
+        GtRecipeIntegration.requireAccepted(map, line, what);
         added++;
     }
 

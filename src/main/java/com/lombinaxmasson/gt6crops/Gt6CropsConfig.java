@@ -6,8 +6,8 @@ import com.lombinaxmasson.gt6crops.rules.CropRules;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 /**
- * CropsNH's crop and weed settings and the machines' overvoltage rule, kept in
- * {@code config/gt6crops-common.toml}. Only the server reads them.
+ * CropsNH's crop and weed settings, kept in {@code config/gt6crops-common.toml}.
+ * Only the server reads them. Crop machines follow GregTech's own overvoltage setting.
  */
 public final class Gt6CropsConfig {
     public static final ModConfigSpec SPEC;
@@ -19,7 +19,6 @@ public final class Gt6CropsConfig {
     private static final ModConfigSpec.BooleanValue ENABLE_WEEDS;
     private static final ModConfigSpec.IntValue WEED_SPAWN_CHANCE;
     private static final ModConfigSpec.IntValue WEED_SPREAD_CHANCE;
-    private static final ModConfigSpec.BooleanValue OVERVOLTAGE_EXPLOSIONS;
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -58,14 +57,6 @@ public final class Gt6CropsConfig {
                 .defineInRange("weed_spread_chance", CropRules.WEED_SPREAD_CHANCE, 2, Integer.MAX_VALUE);
         builder.pop();
 
-        builder.comment("GT6 electric crop machines.").translation(key("machines")).push("machines");
-        OVERVOLTAGE_EXPLOSIONS = builder
-                .comment("Whether a machine fed more than twice its voltage explodes, as GT6CE's own machines do."
-                        + " When off, the packet is lost instead.")
-                .translation(key("overvoltage_explosions"))
-                .define("overvoltage_explosions", true);
-        builder.pop();
-
         SPEC = builder.build();
     }
 
@@ -93,10 +84,6 @@ public final class Gt6CropsConfig {
 
     public static int weedSpreadChance() {
         return WEED_SPREAD_CHANCE.get();
-    }
-
-    public static boolean overvoltageExplosions() {
-        return OVERVOLTAGE_EXPLOSIONS.get();
     }
 
     private static String key(String name) {

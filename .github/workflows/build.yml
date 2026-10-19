@@ -17,12 +17,12 @@ jobs:
       - name: Read pinned GT6CE commit
         run: echo "GT6CE_COMMIT=$(tr -d '[:space:]' < libs/gt6ce/build-commit.txt)" >> "$GITHUB_ENV"
 
-      - name: Restore GT6CE jar
+      - name: Restore GT6CE jars
         id: gt6ce-cache
         uses: actions/cache/restore@v4
         with:
-          path: libs/gt6ce/gregtech6-1.21.1-neoforge.jar
-          key: gt6ce-neoforge-1.21.1-${{ env.GT6CE_COMMIT }}
+          path: libs/gt6ce/*.jar
+          key: gt6ce-neoforge-sdk-1.21.1-${{ env.GT6CE_COMMIT }}
 
       - name: Checkout GT6CE
         if: steps.gt6ce-cache.outputs.cache-hit != 'true'
@@ -67,7 +67,7 @@ jobs:
             -Dorg.gradle.java.home="$JAVA17_HOME" \
             -Dorg.gradle.java.installations.fromEnv=JAVA17_HOME,JAVA21_HOME \
             -Dorg.gradle.java.installations.auto-download=false \
-            :neoforge:jar
+            :neoforge:addonSdkJar :neoforge:jar
           shopt -s nullglob
           jars=()
           for jar in neoforge/build/libs/*.jar; do
@@ -81,13 +81,21 @@ jobs:
             exit 1
           fi
           cp "${jars[0]}" ../libs/gt6ce/gregtech6-1.21.1-neoforge.jar
+          shopt -s nullglob
+          sdks=(neoforge/build/addon-sdk/gregtech6-addon-sdk-1.21.1-neoforge-*.jar)
+          if [ "${#sdks[@]}" -ne 1 ]; then
+            echo "Expected one GT6CE addon SDK, found: ${sdks[*]}"
+            echo "build-commit.txt must name a GT6CE commit that publishes the NeoForge SDK."
+            exit 1
+          fi
+          cp "${sdks[0]}" ../libs/gt6ce/
 
-      - name: Cache GT6CE jar
+      - name: Cache GT6CE jars
         if: steps.gt6ce-cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
         with:
-          path: libs/gt6ce/gregtech6-1.21.1-neoforge.jar
-          key: gt6ce-neoforge-1.21.1-${{ env.GT6CE_COMMIT }}
+          path: libs/gt6ce/*.jar
+          key: gt6ce-neoforge-sdk-1.21.1-${{ env.GT6CE_COMMIT }}
 
       - name: Compare GT6CE jar with the recorded checksum
         working-directory: libs/gt6ce

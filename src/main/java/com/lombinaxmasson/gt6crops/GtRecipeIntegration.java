@@ -1,14 +1,8 @@
 package com.lombinaxmasson.gt6crops;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import com.gregtech.gregtech.api.addon.GregTechAddon;
-import com.gregtech.gregtech.api.recipe.Recipe;
-import com.gregtech.gregtech.api.recipe.RecipeMap;
-import com.gregtech.gregtech.data.MaterialPrefix;
-import com.gregtech.gregtech.data.MachineRecipeMaps;
-import com.gregtech.gregtech.registry.GTItems;
+import com.gregtech.gregtech.api.addon.platform.AddonItems;
+import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
 import com.lombinaxmasson.gt6crops.card.CropCard;
 import com.lombinaxmasson.gt6crops.card.CropCards;
 
@@ -26,6 +20,8 @@ public final class GtRecipeIntegration {
 
     public static void register(GregTechAddon.Context context) {
         SeedScanRecipes.register();
+        AddonRecipes.Map mortar = AddonRecipes.map("gt.recipe.mortar");
+        AddonRecipes.Map shredder = AddonRecipes.map("gt.recipe.shredder");
         int added = 0;
         for (CropCard card : CropCards.cards()) {
             if (!card.drop().kind().equals("gt_form")
@@ -34,24 +30,15 @@ public final class GtRecipeIntegration {
             }
             ItemStack input = card.drop().resolve().orElse(ItemStack.EMPTY);
             var material = card.drop().gtMaterial();
-            ItemStack output = material.isValid()
-                    ? GTItems.getStack(MaterialPrefix.dustTiny, material)
+            ItemStack output = material.valid()
+                    ? AddonItems.stack("dustTiny", material.name())
                     : ItemStack.EMPTY;
-            if (input.isEmpty() || output.isEmpty()
-                    || alreadyHasInput(MachineRecipeMaps.Mortar, input)) {
+            if (input.isEmpty() || output.isEmpty() || mortar.hasItemInput(input)) {
                 continue;
             }
-            Recipe recipe = new Recipe(
-                    new ItemStack[] {input},
-                    new ItemStack[] {output},
-                    null, null, null, null, 16, 16, 0);
-            requireAccepted(MachineRecipeMaps.Mortar, recipe, card.id());
-            if (!alreadyHasInput(MachineRecipeMaps.Shredder, input)) {
-                Recipe shredderRecipe = new Recipe(
-                        new ItemStack[] {input},
-                        new ItemStack[] {output},
-                        null, null, null, null, 16, 16, 0);
-                requireAccepted(MachineRecipeMaps.Shredder, shredderRecipe, card.id());
+            requireAccepted(mortar, row(input, output), card.id());
+            if (!shredder.hasItemInput(input)) {
+                requireAccepted(shredder, row(input, output), card.id());
             }
             added++;
         }
@@ -60,17 +47,17 @@ public final class GtRecipeIntegration {
                 added, context.platform(), context.minecraftVersion());
     }
 
-    static void requireAccepted(RecipeMap map, Recipe recipe, String what) {
-        if (map.addRecipe(recipe) == null) {
+    static void requireAccepted(AddonRecipes.Map map, AddonRecipes.Line line, String what) {
+        if (map.add(line) == null) {
             throw new IllegalStateException(
-                    "gt6crops: rejected " + map.mNameInternal + " recipe for " + what);
+                    "gt6crops: rejected " + map.name() + " recipe for " + what);
         }
     }
 
-    private static boolean alreadyHasInput(RecipeMap map, ItemStack input) {
-        Collection<Recipe> recipes = map.mRecipeItemMap.get(input.getItem());
-        return recipes != null && recipes.stream()
-                .anyMatch(recipe -> Arrays.stream(recipe.mInputs)
-                        .anyMatch(candidate -> candidate.getItem() == input.getItem()));
+    private static AddonRecipes.Line row(ItemStack input, ItemStack output) {
+        return new AddonRecipes.Line(
+                new ItemStack[] {input},
+                new ItemStack[] {output},
+                null, null, 16, 16, 0);
     }
 }

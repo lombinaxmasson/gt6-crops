@@ -107,8 +107,6 @@
   "gt6crops.configuration.enable_weeds": "Enable Weeds",
   "gt6crops.configuration.weed_spawn_chance": "Weed Spawn Chance (1 in N)",
   "gt6crops.configuration.weed_spread_chance": "Weed Spread Roll",
-  "gt6crops.configuration.machines": "Machines",
-  "gt6crops.configuration.overvoltage_explosions": "Overvoltage Explosions",
   "gui.gt6crops.machine.tier": "%s  %s V",
   "gui.gt6crops.machine.energy": "Receiving %s / %s EU/t",
   "gui.gt6crops.machine.tank": "%s / %s mB",

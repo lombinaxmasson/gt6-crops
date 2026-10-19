@@ -6,14 +6,20 @@ import com.lombinaxmasson.gt6crops.Gt6Crops;
 import com.lombinaxmasson.gt6crops.fluid.CropFluid;
 import com.lombinaxmasson.gt6crops.item.CropSeedItem;
 import com.lombinaxmasson.gt6crops.item.SeedColors;
-import com.lombinaxmasson.gt6crops.machine.MachineBlock;
+import com.lombinaxmasson.gt6crops.machine.CropManagerBehavior;
+import com.lombinaxmasson.gt6crops.machine.MachineTier;
+import com.lombinaxmasson.gt6crops.machine.SeedGeneratorRules;
+import com.lombinaxmasson.gt6crops.rules.CropRules;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.network.chat.Component;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.block.Block;
@@ -24,12 +30,13 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterSpriteSourceTypesEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 /**
  * Client crop models, generated crop stages, crop, seed and machine tints, machine screens,
@@ -46,6 +53,7 @@ public final class Gt6CropsClient {
 
     public Gt6CropsClient(ModContainer container) {
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+        NeoForge.EVENT_BUS.addListener(Gt6CropsClient::machineTooltips);
     }
 
     @SubscribeEvent
@@ -75,12 +83,6 @@ public final class Gt6CropsClient {
     }
 
     @SubscribeEvent
-    public static void registerMachineScreens(RegisterMenuScreensEvent event) {
-        event.register(Gt6Crops.CROP_MANAGER_MENU.get(), CropManagerScreen::new);
-        event.register(Gt6Crops.SEED_GENERATOR_MENU.get(), SeedGeneratorScreen::new);
-    }
-
-    @SubscribeEvent
     public static void registerFluidTextures(RegisterClientExtensionsEvent event) {
         for (CropFluid fluid : new CropFluid[] {Gt6Crops.FERTILIZER, Gt6Crops.ENRICHED_FERTILIZER}) {
             int tint = 0xFF000000 | fluid.color();
@@ -103,7 +105,7 @@ public final class Gt6CropsClient {
         }
     }
 
-    /** Machine casings are greyscale and take their tier's material color, as in GT6CE. */
+    /** Machine casings are greyscale and take their tier's color. The shell does not tint them. */
     @SubscribeEvent
     public static void registerMachineTints(RegisterColorHandlersEvent.Block event) {
         Block[] machines = machineBlocks();
@@ -122,16 +124,62 @@ public final class Gt6CropsClient {
         }
     }
 
+    /** The shell's block item has no tooltip hook, so the game bus adds the old lines. */
+    private static void machineTooltips(ItemTooltipEvent event) {
+        ItemStack stack = event.getItemStack();
+        if (!(stack.getItem() instanceof BlockItem item)) {
+            return;
+        }
+        ResourceLocation id = BuiltInRegistries.BLOCK.getKey(item.getBlock());
+        if (!Gt6Crops.MODID.equals(id.getNamespace())) {
+            return;
+        }
+        String path = id.getPath();
+        MachineTier tier = MachineTier.fromMachinePath(path);
+        if (tier == null) {
+            return;
+        }
+        if (path.startsWith("crop_manager_")) {
+            event.getToolTip().add(Component.translatable("block.gt6crops.crop_manager.tooltip.range",
+                    CropManagerBehavior.horizontalRadius(tier), CropManagerBehavior.VERTICAL_RADIUS)
+                    .withStyle(ChatFormatting.GRAY));
+            event.getToolTip().add(Component.translatable("block.gt6crops.crop_manager.tooltip.bonus",
+                    CropManagerBehavior.harvestBonusPercent(tier)).withStyle(ChatFormatting.GRAY));
+        } else if (path.startsWith("seed_generator_")) {
+            event.getToolTip().add(Component.translatable("block.gt6crops.seed_generator.tooltip")
+                    .withStyle(ChatFormatting.GRAY));
+            event.getToolTip().add(Component.translatable("block.gt6crops.seed_generator.tooltip.cost",
+                    SeedGeneratorRules.FERTILIZER_PER_STAT, SeedGeneratorRules.capacity(tier))
+                    .withStyle(ChatFormatting.GRAY));
+            int maxStats = SeedGeneratorRules.maxTotalStats(tier);
+            if (maxStats < 3 * CropRules.MAX_STAT) {
+                event.getToolTip().add(Component.translatable("block.gt6crops.seed_generator.tooltip.small", maxStats)
+                        .withStyle(ChatFormatting.RED));
+            }
+        }
+    }
+
     private static Block[] machineBlocks() {
         return BuiltInRegistries.BLOCK.stream()
-                .filter(block -> block instanceof MachineBlock)
+                .filter(Gt6CropsClient::isMachine)
                 .toArray(Block[]::new);
     }
 
+    private static boolean isMachine(Block block) {
+        ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
+        if (!Gt6Crops.MODID.equals(id.getNamespace())) {
+            return false;
+        }
+        String path = id.getPath();
+        return path.startsWith("crop_manager_") || path.startsWith("seed_generator_");
+    }
+
     private static int casingColor(Block block, int tintIndex) {
-        return tintIndex == 0 && block instanceof MachineBlock machine
-                ? 0xFF000000 | machine.tier().casingColor()
-                : -1;
+        if (tintIndex != 0) {
+            return -1;
+        }
+        MachineTier tier = MachineTier.fromMachinePath(BuiltInRegistries.BLOCK.getKey(block).getPath());
+        return tier == null ? -1 : 0xFF000000 | tier.casingColor();
     }
 
     private static int grassColor(@Nullable BlockAndTintGetter level, @Nullable BlockPos pos) {
