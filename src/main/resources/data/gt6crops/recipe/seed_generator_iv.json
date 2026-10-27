@@ -8,22 +8,22 @@
   ],
   "key": {
     "S": {
-      "item": "gregtech:tool_spade"
+      "item": "gt6ce:tool_spade"
     },
     "A": {
-      "item": "gregtech:compact_robot_arm_iv"
+      "item": "gt6ce:compact_robot_arm_iv"
     },
     "W": {
       "item": "minecraft:water_bucket"
     },
     "C": {
-      "tag": "gregtech:circuits_tier_5_plus"
+      "tag": "gt6ce:circuits_tier_5_plus"
     },
     "H": {
-      "item": "gregtech:casing_machine_titanium"
+      "item": "gt6ce:casing_machine_titanium"
     },
     "B": {
-      "item": "gregtech:cable_01_platinum"
+      "item": "gt6ce:cable_01_platinum"
     },
     "D": {
       "item": "minecraft:dirt"

@@ -2,7 +2,7 @@ package com.lombinaxmasson.gt6crops.machine;
 
 import java.util.Locale;
 
-import com.gregtech.gregtech.api.energy.GTVoltageTiers;
+import gregtech.api.energy.GTVoltageTiers;
 
 /**
  * GT6 electric tiers. As with GT6CE's own basic machines, a machine takes

@@ -45,7 +45,7 @@ class MachineModelTexturesTest {
                 }
             }
         }
-        assertTrue(checked.stream().anyMatch(path -> path.startsWith("/assets/gregtech/")), "no GT6CE casing checked");
+        assertTrue(checked.stream().anyMatch(path -> path.startsWith("/assets/gt6ce/")), "no GT6CE casing checked");
         assertTrue(missing.isEmpty(), () -> "machine model textures not on the classpath: " + missing);
     }
 }

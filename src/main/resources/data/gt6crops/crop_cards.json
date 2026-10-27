@@ -1123,7 +1123,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:rye",
+                                   "item":  "gt6ce:rye",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -1131,7 +1131,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:rye",
+                                        "item":  "gt6ce:rye",
                                         "count":  1
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -1162,7 +1162,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:barley",
+                                   "item":  "gt6ce:barley",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -1170,7 +1170,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:barley",
+                                        "item":  "gt6ce:barley",
                                         "count":  1
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -1202,7 +1202,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:oats",
+                                   "item":  "gt6ce:oats",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -1210,7 +1210,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:oats",
+                                        "item":  "gt6ce:oats",
                                         "count":  1
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -1241,7 +1241,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:rice",
+                                   "item":  "gt6ce:rice",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -1249,7 +1249,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:rice",
+                                        "item":  "gt6ce:rice",
                                         "count":  1
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -1362,7 +1362,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:lemon",
+                                   "item":  "gt6ce:lemon",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -1370,7 +1370,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:lemon",
+                                        "item":  "gt6ce:lemon",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/dirt_grass"],
@@ -1403,7 +1403,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:apple",
+                                   "item":  "gt6ce:apple",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -1411,7 +1411,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:apple",
+                                        "item":  "gt6ce:apple",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -1443,7 +1443,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:apple",
+                                   "item":  "gt6ce:apple",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -1451,7 +1451,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:apple",
+                                        "item":  "gt6ce:apple",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -1523,7 +1523,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:apple",
+                                   "item":  "gt6ce:apple",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -1531,7 +1531,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:apple",
+                                        "item":  "gt6ce:apple",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -1563,7 +1563,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:chili_pepper",
+                                   "item":  "gt6ce:chili_pepper",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -1571,7 +1571,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:chili_pepper",
+                                        "item":  "gt6ce:chili_pepper",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -1604,7 +1604,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:tomato",
+                                   "item":  "gt6ce:tomato",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -1612,7 +1612,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:tomato",
+                                        "item":  "gt6ce:tomato",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -1644,7 +1644,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:red_grapes",
+                                   "item":  "gt6ce:red_grapes",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -1652,7 +1652,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:red_grapes",
+                                        "item":  "gt6ce:red_grapes",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -1684,7 +1684,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:white_grapes",
+                                   "item":  "gt6ce:white_grapes",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -1692,7 +1692,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:white_grapes",
+                                        "item":  "gt6ce:white_grapes",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -1724,7 +1724,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:green_grapes",
+                                   "item":  "gt6ce:green_grapes",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -1732,7 +1732,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:green_grapes",
+                                        "item":  "gt6ce:green_grapes",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -1765,19 +1765,19 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:purple_grapes",
+                                   "item":  "gt6ce:purple_grapes",
                                    "count":  1
                                },
                       "special_drops":  [
                                             {
                                                 "kind":  "gt_item",
-                                                "item":  "gregtech:purple_grapes",
+                                                "item":  "gt6ce:purple_grapes",
                                                 "count":  1
                                             }
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:purple_grapes",
+                                        "item":  "gt6ce:purple_grapes",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -1811,7 +1811,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:blueberry",
+                                   "item":  "gt6ce:blueberry",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -1819,7 +1819,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:blueberry",
+                                        "item":  "gt6ce:blueberry",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -1852,7 +1852,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:gooseberry",
+                                   "item":  "gt6ce:gooseberry",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -1860,7 +1860,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:gooseberry",
+                                        "item":  "gt6ce:gooseberry",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -1893,7 +1893,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:candleberry",
+                                   "item":  "gt6ce:candleberry",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -1901,7 +1901,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:candleberry",
+                                        "item":  "gt6ce:candleberry",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -1933,7 +1933,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:cranberry",
+                                   "item":  "gt6ce:cranberry",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -1941,7 +1941,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:cranberry",
+                                        "item":  "gt6ce:cranberry",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -1973,7 +1973,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:black_currants",
+                                   "item":  "gt6ce:black_currants",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -1981,7 +1981,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:black_currants",
+                                        "item":  "gt6ce:black_currants",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -2013,7 +2013,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:white_currants",
+                                   "item":  "gt6ce:white_currants",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -2021,7 +2021,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:white_currants",
+                                        "item":  "gt6ce:white_currants",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -2053,7 +2053,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:red_currants",
+                                   "item":  "gt6ce:red_currants",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -2061,7 +2061,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:red_currants",
+                                        "item":  "gt6ce:red_currants",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -2093,7 +2093,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:blackberry",
+                                   "item":  "gt6ce:blackberry",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -2101,7 +2101,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:blackberry",
+                                        "item":  "gt6ce:blackberry",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -2134,7 +2134,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:raspberry",
+                                   "item":  "gt6ce:raspberry",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -2142,7 +2142,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:raspberry",
+                                        "item":  "gt6ce:raspberry",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -2175,7 +2175,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:strawberry",
+                                   "item":  "gt6ce:strawberry",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -2183,7 +2183,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:strawberry",
+                                        "item":  "gt6ce:strawberry",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -2215,7 +2215,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:onion",
+                                   "item":  "gt6ce:onion",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -2223,7 +2223,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:onion",
+                                        "item":  "gt6ce:onion",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -2256,7 +2256,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:cucumber",
+                                   "item":  "gt6ce:cucumber",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -2264,7 +2264,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:cucumber",
+                                        "item":  "gt6ce:cucumber",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -2296,7 +2296,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:peanut",
+                                   "item":  "gt6ce:peanut",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -2304,7 +2304,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:peanut",
+                                        "item":  "gt6ce:peanut",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],
@@ -2337,7 +2337,7 @@
                       "crossbreed_only":  false,
                       "drop":  {
                                    "kind":  "gt_item",
-                                   "item":  "gregtech:ananas",
+                                   "item":  "gt6ce:ananas",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -2345,7 +2345,7 @@
                                         ],
                       "base_seed":  {
                                         "kind":  "gt_item",
-                                        "item":  "gregtech:ananas",
+                                        "item":  "gt6ce:ananas",
                                         "count":  4
                                     },
                       "soil":  ["#gt6crops:soil/farmland"],

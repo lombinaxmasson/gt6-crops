@@ -16,7 +16,7 @@ external dependency is present:
 
 ## Cards that depend on GT6CE food content
 
-The following cards use `gregtech:` food items and are enabled when the
+The following cards use `gt6ce:` food items and are enabled when the
 corresponding GT6CE item is registered:
 
 `rye`, `barley`, `oats`, `rice`, `lemon_plant`, `chili`, `tomato_plant`,
@@ -29,7 +29,7 @@ The four apple cards are deliberately handled separately:
 
 - `red_apple_tree` uses `minecraft:apple`, matching GT6's alias for the red apple.
 - `green_apple_tree`, `yellow_apple_tree`, and `dark_red_apple_tree` use
-  `gregtech:apple`. GT6CE did not port the three colored apple items.
+  `gt6ce:apple`. GT6CE did not port the three colored apple items.
 
 ## Metal cards from CropsNH
 

@@ -8,22 +8,22 @@
   ],
   "key": {
     "A": {
-      "item": "gregtech:compact_robot_arm_ev"
+      "item": "gt6ce:compact_robot_arm_ev"
     },
     "S": {
-      "item": "gregtech:compact_sensor_ev"
+      "item": "gt6ce:compact_sensor_ev"
     },
     "P": {
       "tag": "forge:plates/chromium"
     },
     "H": {
-      "item": "gregtech:casing_machine_chromium"
+      "item": "gt6ce:casing_machine_chromium"
     },
     "C": {
-      "item": "gregtech:cable_01_aluminium"
+      "item": "gt6ce:cable_01_aluminium"
     },
     "I": {
-      "item": "gregtech:pipe_medium_chrome"
+      "item": "gt6ce:pipe_medium_chrome"
     }
   },
   "result": {

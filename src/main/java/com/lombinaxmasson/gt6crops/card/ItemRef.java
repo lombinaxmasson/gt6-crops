@@ -3,8 +3,8 @@ package com.lombinaxmasson.gt6crops.card;
 import java.util.Locale;
 import java.util.Optional;
 
-import com.gregtech.gregtech.api.addon.GregTechMaterials;
-import com.gregtech.gregtech.api.addon.platform.AddonItems;
+import gregtech.api.addon.material.GregTechMaterials;
+import gregtech.api.addon.platform.AddonItems;
 import com.google.gson.JsonObject;
 
 import net.minecraft.core.registries.BuiltInRegistries;

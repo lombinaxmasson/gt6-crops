@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntUnaryOperator;
 
-import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
-import com.gregtech.gregtech.api.addon.platform.MachineBehaviorContext;
+import gregtech.api.addon.platform.MachineBehavior;
+import gregtech.api.addon.platform.MachineBehaviorContext;
 import com.lombinaxmasson.gt6crops.Gt6Crops;
 import com.lombinaxmasson.gt6crops.Gt6CropsTags;
 import com.lombinaxmasson.gt6crops.block.CropTile;
@@ -46,7 +46,7 @@ public final class CropManagerBehavior implements MachineBehavior {
 
     /** GT6CE's strong poison, the fluid in CropsNH's Weed-EX cans. */
     private static final ResourceLocation STRONG_POISON =
-            ResourceLocation.fromNamespaceAndPath("gregtech", "potion_poison_strong");
+            ResourceLocation.fromNamespaceAndPath("gt6ce", "potion_poison_strong");
 
     /** CropsNH's global update rate. */
     private static final int CYCLE_TICKS = 50;

@@ -2,8 +2,8 @@
   "parent": "minecraft:block/block",
   "render_type": "minecraft:cutout",
   "textures": {
-    "particle": "gregtech:block/material_icons/metallic/casingmachine",
-    "casing": "gregtech:block/material_icons/metallic/casingmachine",
+    "particle": "gt6ce:block/material_icons/metallic/casingmachine",
+    "casing": "gt6ce:block/material_icons/metallic/casingmachine",
     "side": "gt6crops:block/machine/overlay_side",
     "top": "gt6crops:block/machine/overlay_top",
     "bottom": "gt6crops:block/machine/overlay_bottom",

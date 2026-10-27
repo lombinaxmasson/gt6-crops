@@ -8,22 +8,22 @@
   ],
   "key": {
     "A": {
-      "item": "gregtech:compact_robot_arm_lv"
+      "item": "gt6ce:compact_robot_arm_lv"
     },
     "S": {
-      "item": "gregtech:compact_sensor_lv"
+      "item": "gt6ce:compact_sensor_lv"
     },
     "P": {
       "tag": "forge:plates/steel_galvanized"
     },
     "H": {
-      "item": "gregtech:casing_machine_steelgalvanized"
+      "item": "gt6ce:casing_machine_steelgalvanized"
     },
     "C": {
-      "item": "gregtech:cable_01_tin"
+      "item": "gt6ce:cable_01_tin"
     },
     "I": {
-      "item": "gregtech:pipe_medium_galvanized_steel"
+      "item": "gt6ce:pipe_medium_galvanized_steel"
     }
   },
   "result": {

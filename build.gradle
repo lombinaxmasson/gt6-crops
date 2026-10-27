@@ -137,8 +137,9 @@ configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
 
-def gtSdk = files('libs/gt6ce/gregtech6-addon-sdk-1.21.1-neoforge-0.7.0.jar')
-def gtMod = files('libs/gt6ce/gregtech6-1.21.1-neoforge.jar')
+def gtApi = files('libs/gt6ce/gt6ce-api-0.2.0.jar')
+def gtSdk = files('libs/gt6ce/gt6ce-addon-sdk-1.21.1-neoforge-0.2.0.jar')
+def gtMod = files('libs/gt6ce/gt6ce-1.21.1-neoforge.jar')
 
 dependencies {
     // Recipe viewer and block overlay for runClient only. localRuntime keeps them out of the published jar.
@@ -161,8 +162,9 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-    // The SDK is the only GregTech compile dependency, so internals stay invisible.
-    // The full mod jar is the dev and test runtime. Neither jar is packaged into this one.
+    // The common API and the NeoForge SDK are the only GregTech compile dependencies.
+    // The full mod jar is the dev and test runtime. None of these jars is packaged into this one.
+    compileOnly gtApi
     compileOnly gtSdk
     localRuntime gtMod
     testRuntimeOnly gtMod

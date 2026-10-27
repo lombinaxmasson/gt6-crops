@@ -2,11 +2,12 @@
 
 NeoForge 1.21.1 crop sticks and CropsNH-style crossbreeding for GT6CE.
 
-The addon compiles against the GT6CE NeoForge addon SDK, version 0.7.0, and
-keeps all GT6 content in the `gregtech` dependency. The SDK jar is
-compile-only. The full GT6CE mod jar is a development and test runtime only;
-neither jar is bundled into the addon jar. The mod dependency is `gregtech6`
-with `versionRange="[0.7,)"`.
+The addon compiles against GT6CE addon API 0.2.0. That is two compile-only
+jars: the common library `gt6ce-api-0.2.0.jar` and the NeoForge SDK
+`gt6ce-addon-sdk-1.21.1-neoforge-0.2.0.jar`. The full GT6CE mod jar is a
+development and test runtime only. None of these jars is bundled into the
+addon jar. The mod dependency is `gt6ce` with `versionRange="[0.1,)"`.
+GT6CE registers its items, blocks and fluids in the `gt6ce` namespace.
 
 ## Current mechanics
 
@@ -547,8 +548,9 @@ skips the 256-tick gate.
 
 Set `JAVA_HOME` to the project JDK 21 before using Gradle. Do not commit the
 GT6CE jars; `libs/gt6ce/*.jar` is ignored. Compilation uses
-`gregtech6-addon-sdk-1.21.1-neoforge-0.7.0.jar`. `runClient`, `runServer` and
-GameTest use `gregtech6-1.21.1-neoforge.jar`. `update-gt.ps1` downloads both
-from the NeoForge CI artifact. `build-commit.txt` records that build. CI
-builds the pinned GT6CE commit's mod jar and addon SDK, so the pin has to be
-a commit that publishes the SDK.
+`gt6ce-api-0.2.0.jar` and `gt6ce-addon-sdk-1.21.1-neoforge-0.2.0.jar`.
+`runClient`, `runServer` and GameTest use `gt6ce-1.21.1-neoforge.jar`.
+`update-gt.ps1` downloads all three from the NeoForge CI artifact.
+`build-commit.txt` records that build. CI builds the pinned GT6CE commit,
+including its API submodule, so the pin has to be a commit that publishes
+the common API and the NeoForge SDK.

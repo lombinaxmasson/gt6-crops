@@ -1,6 +1,6 @@
 package com.lombinaxmasson.gt6crops.gametest;
 
-import com.gregtech.gregtech.api.addon.platform.EnergyBlock;
+import gregtech.api.addon.platform.EnergyBlock;
 import com.lombinaxmasson.gt6crops.Gt6Crops;
 import com.lombinaxmasson.gt6crops.block.CropTile;
 import com.lombinaxmasson.gt6crops.card.CropCard;
@@ -141,7 +141,7 @@ public final class CropMachineTests {
         BlockPos machine = place(helper, "crop_manager_lv", new BlockPos(8, 0, 2));
         CropTile planted = plant(helper, machine.east(), card);
         int clean = planted.weedExStorage();
-        Fluid poison = BuiltInRegistries.FLUID.get(ResourceLocation.fromNamespaceAndPath("gregtech", "potion_poison_strong"));
+        Fluid poison = BuiltInRegistries.FLUID.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "potion_poison_strong"));
         helper.assertTrue(poison != null && poison != Fluids.EMPTY, "strong poison is registered");
         IFluidHandler fluids = fluids(helper, machine);
         helper.assertTrue(fluids.fill(new FluidStack(poison, 100), IFluidHandler.FluidAction.EXECUTE) == 100,

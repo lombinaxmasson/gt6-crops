@@ -2,7 +2,7 @@ package com.lombinaxmasson.gt6crops.gametest;
 
 import java.util.List;
 
-import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
+import gregtech.api.addon.platform.AddonRecipes;
 import com.lombinaxmasson.gt6crops.SeedScanRecipes;
 import com.lombinaxmasson.gt6crops.card.CropCard;
 import com.lombinaxmasson.gt6crops.card.CropCards;

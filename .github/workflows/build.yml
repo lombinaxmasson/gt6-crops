@@ -31,6 +31,7 @@ jobs:
           repository: SaltNya/GregTech6
           ref: ${{ env.GT6CE_COMMIT }}
           path: gt6ce-src
+          submodules: recursive
 
       - name: Setup JDK 17 for GT6CE
         if: steps.gt6ce-cache.outputs.cache-hit != 'true'
@@ -67,28 +68,47 @@ jobs:
             -Dorg.gradle.java.home="$JAVA17_HOME" \
             -Dorg.gradle.java.installations.fromEnv=JAVA17_HOME,JAVA21_HOME \
             -Dorg.gradle.java.installations.auto-download=false \
-            :neoforge:addonSdkJar :neoforge:jar
+            :minecraft:1.21.1-neoforge:build
           shopt -s nullglob
+          copy_one() {
+            local label="$1"
+            local destination="$2"
+            shift 2
+            local jars=("$@")
+            local selected=()
+            local jar
+            for jar in "${jars[@]}"; do
+              case "$jar" in
+                *-sources.jar|*-javadoc.jar|*-dev.jar) ;;
+                *) selected+=("$jar") ;;
+              esac
+            done
+            if [ "${#selected[@]}" -ne 1 ]; then
+              echo "Expected one $label, found: ${selected[*]:-none}"
+              echo "build-commit.txt must name a GT6CE commit that publishes the common API and the NeoForge SDK."
+              exit 1
+            fi
+            cp "${selected[0]}" "$destination"
+          }
+          copy_one "GT6CE common API" ../libs/gt6ce/ api/common/build/libs/gt6ce-api-*.jar
+          copy_one "GT6CE addon SDK" ../libs/gt6ce/ \
+            minecraft/versions/1.21.1-neoforge/build/addon-sdk/gt6ce-addon-sdk-1.21.1-neoforge-*.jar
           jars=()
-          for jar in neoforge/build/libs/*.jar; do
+          for jar in minecraft/versions/1.21.1-neoforge/build/libs/*.jar; do
             case "$jar" in
               *-sources.jar|*-javadoc.jar|*-dev.jar) ;;
-              *) jars+=("$jar") ;;
+              *)
+                if unzip -p "$jar" META-INF/neoforge.mods.toml >/dev/null 2>&1; then
+                  jars+=("$jar")
+                fi
+                ;;
             esac
           done
           if [ "${#jars[@]}" -ne 1 ]; then
-            echo "Expected one GT6CE NeoForge jar, found: ${jars[*]}"
+            echo "Expected one GT6CE NeoForge jar, found: ${jars[*]:-none}"
             exit 1
           fi
-          cp "${jars[0]}" ../libs/gt6ce/gregtech6-1.21.1-neoforge.jar
-          shopt -s nullglob
-          sdks=(neoforge/build/addon-sdk/gregtech6-addon-sdk-1.21.1-neoforge-*.jar)
-          if [ "${#sdks[@]}" -ne 1 ]; then
-            echo "Expected one GT6CE addon SDK, found: ${sdks[*]}"
-            echo "build-commit.txt must name a GT6CE commit that publishes the NeoForge SDK."
-            exit 1
-          fi
-          cp "${sdks[0]}" ../libs/gt6ce/
+          cp "${jars[0]}" ../libs/gt6ce/gt6ce-1.21.1-neoforge.jar
 
       - name: Cache GT6CE jars
         if: steps.gt6ce-cache.outputs.cache-hit != 'true'
@@ -100,7 +120,7 @@ jobs:
       - name: Compare GT6CE jar with the recorded checksum
         working-directory: libs/gt6ce
         run: |
-          if ! sha256sum --check --status gregtech6-1.21.1-neoforge.jar.sha256; then
+          if ! sha256sum --check --status gt6ce-1.21.1-neoforge.jar.sha256; then
             echo "::warning::GT6CE jar built from $GT6CE_COMMIT differs from the recorded checksum."
           fi
 

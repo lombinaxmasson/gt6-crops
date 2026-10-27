@@ -8,22 +8,22 @@
   ],
   "key": {
     "A": {
-      "item": "gregtech:compact_robot_arm_mv"
+      "item": "gt6ce:compact_robot_arm_mv"
     },
     "S": {
-      "item": "gregtech:compact_sensor_mv"
+      "item": "gt6ce:compact_sensor_mv"
     },
     "P": {
       "tag": "forge:plates/aluminium"
     },
     "H": {
-      "item": "gregtech:casing_machine_aluminium"
+      "item": "gt6ce:casing_machine_aluminium"
     },
     "C": {
-      "item": "gregtech:cable_01_copper"
+      "item": "gt6ce:cable_01_copper"
     },
     "I": {
-      "item": "gregtech:pipe_medium_aluminium"
+      "item": "gt6ce:pipe_medium_aluminium"
     }
   },
   "result": {

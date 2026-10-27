@@ -6,8 +6,9 @@ Filed: https://github.com/SaltNya/GregTech6/issues/13
 classes in the `ic2` namespace and does not use reflection or mixins to make
 its crop block look like an IC2 tile.
 
-GT6CE `81b663a1` added `com.gregtech.gregtech.api.crop.CropScanSource`, and
-`CropTile` implements it, so GT's crop scanner reads these crops. Plantalyzer
+GT6CE `81b663a1` added the crop scan contract. It is now
+`gregtech.api.crop.CropScanSource`, and `CropTile` implements it, so GT's
+crop scanner reads these crops. Plantalyzer
 input and the watering, Weed-EX, and harvesting tools still have no addon
 contract. This addon does not invent an `ic2` package to pretend.
 

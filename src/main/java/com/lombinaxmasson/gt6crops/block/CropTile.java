@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-import com.gregtech.gregtech.api.crop.CropScanSource;
+import gregtech.api.crop.CropScanSource;
 import com.lombinaxmasson.gt6crops.Gt6Crops;
 import com.lombinaxmasson.gt6crops.Gt6CropsConfig;
 import com.lombinaxmasson.gt6crops.Gt6CropsTags;

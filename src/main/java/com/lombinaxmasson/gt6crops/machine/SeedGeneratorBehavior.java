@@ -2,9 +2,8 @@ package com.lombinaxmasson.gt6crops.machine;
 
 import java.util.Optional;
 
-import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
-import com.gregtech.gregtech.api.addon.platform.MachineBehaviorContext;
-import com.gregtech.gregtech.api.recipe.MachineWorkCost;
+import gregtech.api.addon.platform.MachineBehavior;
+import gregtech.api.addon.platform.MachineBehaviorContext;
 import com.lombinaxmasson.gt6crops.Gt6Crops;
 import com.lombinaxmasson.gt6crops.card.CropCard;
 import com.lombinaxmasson.gt6crops.card.CropCards;
@@ -63,7 +62,7 @@ public final class SeedGeneratorBehavior implements MachineBehavior {
                 context.progress(0);
                 return;
             }
-            work = MachineWorkCost.advance(work, totalWork, Math.min(context.energy(), tier.inputMax()));
+            work = MachineWork.advance(work, totalWork, Math.min(context.energy(), tier.inputMax()));
             context.state().setLong("work", work);
             context.progress(totalWork <= 0 ? 0 : work / (float) totalWork);
             context.working(true);
@@ -106,7 +105,7 @@ public final class SeedGeneratorBehavior implements MachineBehavior {
             }
             int cost = SeedGeneratorRules.fertilizerCost(data.get().stats());
             ItemStack copy = seed.copyWithCount(1);
-            MachineWorkCost.Cost recipe = MachineWorkCost.calculate(
+            MachineWork.Cost recipe = MachineWork.calculate(
                     RECIPE_EUT, RECIPE_TICKS, 1, true, 10_000, tier.inputMin(), tier.inputMax(), false, false);
             if (recipe == null || context.fluid(FERTILIZER_TANK).getAmount() < cost
                     || !outputFits(context, copy) || !spendCatalyst(context, card.get(), true)) {

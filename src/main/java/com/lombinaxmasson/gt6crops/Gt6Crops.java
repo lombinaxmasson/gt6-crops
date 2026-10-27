@@ -2,8 +2,8 @@ package com.lombinaxmasson.gt6crops;
 
 import org.slf4j.Logger;
 
-import com.gregtech.gregtech.api.addon.GregTechAddon;
-import com.gregtech.gregtech.api.addon.GregTechAddons;
+import gregtech.api.addon.GregTechAddon;
+import gregtech.api.addon.GregTechAddons;
 import com.mojang.logging.LogUtils;
 import com.lombinaxmasson.gt6crops.block.CropStickBlock;
 import com.lombinaxmasson.gt6crops.block.CropTile;

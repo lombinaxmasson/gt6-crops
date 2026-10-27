@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import com.gregtech.gregtech.api.addon.GregTechAddon;
-import com.gregtech.gregtech.api.addon.platform.AddonFluids;
-import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
+import gregtech.api.addon.GregTechAddon;
+import gregtech.api.addon.platform.AddonFluids;
+import gregtech.api.addon.platform.AddonRecipes;
 import com.lombinaxmasson.gt6crops.card.ItemRef;
 import com.lombinaxmasson.gt6crops.machine.CropManagerBehavior;
 

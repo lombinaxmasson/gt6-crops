@@ -1,8 +1,8 @@
 package com.lombinaxmasson.gt6crops;
 
-import com.gregtech.gregtech.api.addon.GregTechAddon;
-import com.gregtech.gregtech.api.addon.platform.AddonItems;
-import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
+import gregtech.api.addon.GregTechAddon;
+import gregtech.api.addon.platform.AddonItems;
+import gregtech.api.addon.platform.AddonRecipes;
 import com.lombinaxmasson.gt6crops.card.CropCard;
 import com.lombinaxmasson.gt6crops.card.CropCards;
 

@@ -8,22 +8,22 @@
   ],
   "key": {
     "A": {
-      "item": "gregtech:compact_robot_arm_iv"
+      "item": "gt6ce:compact_robot_arm_iv"
     },
     "S": {
-      "item": "gregtech:compact_sensor_iv"
+      "item": "gt6ce:compact_sensor_iv"
     },
     "P": {
       "tag": "forge:plates/titanium"
     },
     "H": {
-      "item": "gregtech:casing_machine_titanium"
+      "item": "gt6ce:casing_machine_titanium"
     },
     "C": {
-      "item": "gregtech:cable_01_platinum"
+      "item": "gt6ce:cable_01_platinum"
     },
     "I": {
-      "item": "gregtech:pipe_medium_titanium"
+      "item": "gt6ce:pipe_medium_titanium"
     }
   },
   "result": {

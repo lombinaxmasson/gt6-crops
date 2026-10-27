@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-import com.gregtech.gregtech.api.addon.platform.AddonTool;
-import com.gregtech.gregtech.api.addon.platform.AddonTools;
+import gregtech.api.addon.platform.AddonTool;
+import gregtech.api.addon.platform.AddonTools;
 import com.lombinaxmasson.gt6crops.Gt6Crops;
 import com.lombinaxmasson.gt6crops.Gt6CropsTags;
 import com.lombinaxmasson.gt6crops.card.CropCard;
