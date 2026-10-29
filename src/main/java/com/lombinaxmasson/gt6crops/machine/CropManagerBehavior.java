@@ -103,17 +103,17 @@ public final class CropManagerBehavior implements MachineBehavior {
     @Override
     public void tick(MachineBehaviorContext context) {
         MachineTier tier = MachineTier.byIndex(context.tier());
-        if (context.mainInputStored() < tier.inputMin()) {
+        if (context.energy().mainStored() < tier.inputMin()) {
             cycleTicks = 0;
-            context.setProgress(0);
+            context.panel().setProgress(0);
             return;
         }
-        context.working(true);
+        context.panel().working(true);
         if (++cycleTicks >= CYCLE_TICKS) {
             cycleTicks = 0;
             runCycle(context, tier);
         }
-        context.setProgress(cycleTicks / (float) CYCLE_TICKS);
+        context.panel().setProgress(cycleTicks / (float) CYCLE_TICKS);
     }
 
     @Override
@@ -155,16 +155,16 @@ public final class CropManagerBehavior implements MachineBehavior {
 
     /** A concentrate is taken whole millibuckets at a time and stored as ten times that of fertilizer. */
     private static int acceptEnriched(MachineBehaviorContext context, FluidStack stack, boolean simulate) {
-        FluidStack held = context.fluid(FERTILIZER_TANK);
+        FluidStack held = context.fluids().snapshot(FERTILIZER_TANK);
         if (!held.isEmpty() && !held.is(Gt6Crops.FERTILIZER.source())) {
             return 0;
         }
-        int room = context.tankCapacity(FERTILIZER_TANK) - held.getAmount();
+        int room = context.fluids().capacity(FERTILIZER_TANK) - held.getAmount();
         int taken = Math.min(stack.getAmount(), room / ENRICHED_STRENGTH);
         if (taken <= 0) {
             return 0;
         }
-        int stored = context.fill(FERTILIZER_TANK,
+        int stored = context.fluids().fill(FERTILIZER_TANK,
                 new FluidStack(Gt6Crops.FERTILIZER.source(), taken * ENRICHED_STRENGTH), simulate);
         return stored > 0 ? taken : 0;
     }
@@ -172,21 +172,21 @@ public final class CropManagerBehavior implements MachineBehavior {
     /** CropsNH tends every crop stick in range, weeds and empty sticks too, before it harvests. */
     private void runCycle(MachineBehaviorContext context, MachineTier tier) {
         List<CropTile> crops = cropsInRange(context, tier);
-        if (context.toggle(WEED_EX)) {
+        if (context.panel().toggle(WEED_EX)) {
             refillWeedEx(context);
         }
         for (CropTile crop : crops) {
-            if (context.toggle(WATER)) {
+            if (context.panel().toggle(WATER)) {
                 topUp(context, WATER_TANK, crop.hydrationStorage(), crop::addWater);
             }
-            if (context.toggle(WEED_EX)) {
+            if (context.panel().toggle(WEED_EX)) {
                 sprayWeedEx(context, crop);
             }
-            if (context.toggle(FERTILIZER)) {
+            if (context.panel().toggle(FERTILIZER)) {
                 fertilize(context, crop);
             }
         }
-        if (context.toggle(HARVEST)) {
+        if (context.panel().toggle(HARVEST)) {
             harvest(context, tier, crops);
         }
     }
@@ -211,24 +211,24 @@ public final class CropManagerBehavior implements MachineBehavior {
         if (stored > TOP_UP_THRESHOLD) {
             return;
         }
-        int points = Math.min(CropTile.MAX_STORAGE - stored, context.fluid(tank).getAmount() / MB_PER_POINT);
+        int points = Math.min(CropTile.MAX_STORAGE - stored, context.fluids().snapshot(tank).getAmount() / MB_PER_POINT);
         if (points <= 0) {
             return;
         }
-        context.drain(tank, add.applyAsInt(points) * MB_PER_POINT, false);
+        context.fluids().drain(tank, add.applyAsInt(points) * MB_PER_POINT, false);
     }
 
     private void sprayWeedEx(MachineBehaviorContext context, CropTile crop) {
         if (crop.weedExStorage() > WEED_EX_THRESHOLD) {
             return;
         }
-        if (context.fluid(WEED_EX_TANK).getAmount() < WEED_EX_COST) {
+        if (context.fluids().snapshot(WEED_EX_TANK).getAmount() < WEED_EX_COST) {
             refillWeedEx(context);
         }
-        if (context.fluid(WEED_EX_TANK).getAmount() < WEED_EX_COST) {
+        if (context.fluids().snapshot(WEED_EX_TANK).getAmount() < WEED_EX_COST) {
             return;
         }
-        context.drain(WEED_EX_TANK, WEED_EX_COST, false);
+        context.fluids().drain(WEED_EX_TANK, WEED_EX_COST, false);
         crop.addWeedEx(Math.min(WEED_EX_DOSE, WEED_EX_CAP - crop.weedExStorage()));
     }
 
@@ -240,17 +240,17 @@ public final class CropManagerBehavior implements MachineBehavior {
         }
         FluidStack dose = new FluidStack(poison, WEED_EX_PER_ITEM);
         for (int slot = 0; slot < FERTILIZER_START; slot++) {
-            while (!context.liveItem(slot).isEmpty()
-                    && context.fill(WEED_EX_TANK, dose, true) == WEED_EX_PER_ITEM) {
+            while (!context.inventory().snapshot(slot).isEmpty()
+                    && context.fluids().fill(WEED_EX_TANK, dose, true) == WEED_EX_PER_ITEM) {
                 shrink(context, slot, 1);
-                context.fill(WEED_EX_TANK, dose, false);
+                context.fluids().fill(WEED_EX_TANK, dose, false);
             }
         }
     }
 
     /** CropsNH uses liquid fertilizer while it has any, and items only once it runs dry. */
     private static void fertilize(MachineBehaviorContext context, CropTile crop) {
-        if (context.fluid(FERTILIZER_TANK).getAmount() >= MB_PER_POINT) {
+        if (context.fluids().snapshot(FERTILIZER_TANK).getAmount() >= MB_PER_POINT) {
             topUp(context, FERTILIZER_TANK, crop.nutrientStorage(), crop::addFertilizer);
             return;
         }
@@ -258,7 +258,7 @@ public final class CropManagerBehavior implements MachineBehavior {
             return;
         }
         for (int slot = FERTILIZER_START; slot < OUTPUT_START; slot++) {
-            if (!context.liveItem(slot).isEmpty()) {
+            if (!context.inventory().snapshot(slot).isEmpty()) {
                 shrink(context, slot, 1);
                 crop.addFertilizer(FERTILIZER_DOSE);
                 return;
@@ -277,7 +277,7 @@ public final class CropManagerBehavior implements MachineBehavior {
         List<ItemStack> overflow = readOverflow(context);
         List<ItemStack> stillWaiting = new ArrayList<>();
         for (ItemStack stack : overflow) {
-            ItemStack left = context.insertOutput(stack);
+            ItemStack left = context.inventory().insertOutput(stack);
             if (!left.isEmpty()) {
                 stillWaiting.add(left);
             }
@@ -290,7 +290,7 @@ public final class CropManagerBehavior implements MachineBehavior {
         List<ItemStack> leftovers = new ArrayList<>();
         for (CropTile crop : crops) {
             for (ItemStack drop : crop.machineHarvest(multiplier)) {
-                ItemStack left = context.insertOutput(drop);
+                ItemStack left = context.inventory().insertOutput(drop);
                 if (!left.isEmpty()) {
                     leftovers.add(left);
                 }
@@ -301,7 +301,7 @@ public final class CropManagerBehavior implements MachineBehavior {
 
     private static boolean hasOutputRoom(MachineBehaviorContext context) {
         for (int slot = OUTPUT_START; slot < SLOTS; slot++) {
-            ItemStack stack = context.liveItem(slot);
+            ItemStack stack = context.inventory().snapshot(slot);
             if (stack.isEmpty() || stack.getCount() < stack.getMaxStackSize()) {
                 return true;
             }
@@ -337,9 +337,9 @@ public final class CropManagerBehavior implements MachineBehavior {
     }
 
     private static void shrink(MachineBehaviorContext context, int slot, int count) {
-        ItemStack stack = context.liveItem(slot);
+        ItemStack stack = context.inventory().snapshot(slot);
         int left = stack.getCount() - count;
-        context.setItem(slot, left <= 0 ? ItemStack.EMPTY : stack.copyWithCount(left));
+        context.inventory().set(slot, left <= 0 ? ItemStack.EMPTY : stack.copyWithCount(left));
     }
 
     private static Fluid strongPoison() {

@@ -137,8 +137,8 @@ configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
 
-def gtApi = files('libs/gt6ce/gt6ce-api-0.2.0.jar')
-def gtSdk = files('libs/gt6ce/gt6ce-addon-sdk-1.21.1-neoforge-0.2.0.jar')
+def gtApi = files('libs/gt6ce/gt6ce-api-1.0.0.jar')
+def gtSdk = files('libs/gt6ce/gt6ce-addon-sdk-1.21.1-neoforge-1.0.0.jar')
 def gtMod = files('libs/gt6ce/gt6ce-1.21.1-neoforge.jar')
 
 dependencies {
@@ -167,6 +167,8 @@ dependencies {
     compileOnly gtApi
     compileOnly gtSdk
     localRuntime gtMod
+    // The API jar precedes the mod jar so unit tests load the 1.0.0 API, not the embedded old copy.
+    testRuntimeOnly gtApi
     testRuntimeOnly gtMod
     testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'

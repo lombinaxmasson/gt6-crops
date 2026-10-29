@@ -1,6 +1,7 @@
 package com.lombinaxmasson.gt6crops.gametest;
 
 import gregtech.api.addon.platform.EnergyBlock;
+import gregtech.api.energy.EnergyType;
 import com.lombinaxmasson.gt6crops.Gt6Crops;
 import com.lombinaxmasson.gt6crops.block.CropTile;
 import com.lombinaxmasson.gt6crops.card.CropCard;
@@ -323,7 +324,7 @@ public final class CropMachineTests {
         BlockEntity entity = helper.getLevel().getBlockEntity(pos);
         BlockState state = helper.getLevel().getBlockState(pos);
         if (packet > 0) {
-            long accepted = ((EnergyBlock) entity).doEnergyInjection("EU", null, packet, 1, true);
+            long accepted = ((EnergyBlock) entity).doEnergyInjection(EnergyType.EU, null, packet, 1, true);
             helper.assertTrue(accepted == 1, "the machine accepts one " + packet + " EU packet");
         }
         @SuppressWarnings("unchecked")

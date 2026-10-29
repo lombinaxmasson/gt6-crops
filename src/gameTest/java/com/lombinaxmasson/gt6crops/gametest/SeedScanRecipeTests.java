@@ -43,7 +43,7 @@ public final class SeedScanRecipeTests {
         AddonRecipes.Line recipe = found(seed);
         helper.assertTrue(recipe != null, "the Plantalyzer accepts an unscanned seed");
         helper.assertTrue(recipe.duration() == SeedScanRecipes.SCAN_TICKS
-                        && recipe.euPerTick() == SeedScanRecipes.SCAN_EU,
+                        && recipe.energyPerTick() == SeedScanRecipes.SCAN_EU,
                 "an unscanned seed takes 64 ticks at 16 EU/t");
         helper.assertTrue(recipe.itemInputs()[0].getCount() == 1 && recipe.itemOutputs()[0].getCount() == 1,
                 "one seed is scanned out of the stack");
@@ -65,7 +65,7 @@ public final class SeedScanRecipeTests {
         AddonRecipes.Line recipe = found(seed);
         helper.assertTrue(recipe != null, "the Plantalyzer accepts a scanned seed");
         helper.assertTrue(recipe.duration() == SeedScanRecipes.PASS_TICKS
-                        && recipe.euPerTick() == SeedScanRecipes.PASS_EU,
+                        && recipe.energyPerTick() == SeedScanRecipes.PASS_EU,
                 "a scanned seed leaves in 1 tick");
         var output = CropSeedItem.data(recipe.itemOutputs()[0]).orElseThrow();
         helper.assertTrue(output.scanned() && output.cardId().equals(card.id())
