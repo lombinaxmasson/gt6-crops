@@ -115,7 +115,7 @@ final class FertilizerRecipes {
                 ENRICHING_TICKS, EU_PER_TICK, 0));
     }
 
-    private void add(AddonRecipes.Map map, String what, AddonRecipes.Line line) {
+    private void add(AddonRecipes.RecipeMap map, String what, AddonRecipes.Line line) {
         AddonRecipes.Line existing = map.collision(line);
         if (existing != null) {
             Gt6Crops.LOGGER.warn("gt6crops: skipped the {} {} recipe, its inputs already run {} + {}",

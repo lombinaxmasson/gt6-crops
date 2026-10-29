@@ -34,7 +34,7 @@ public final class SeedScanRecipes {
             return;
         }
         registered = true;
-        AddonRecipes.Map plantalyzer = AddonRecipes.map("gt.recipe.plantalyzer");
+        AddonRecipes.RecipeMap plantalyzer = AddonRecipes.map("gt.recipe.plantalyzer");
         plantalyzer.addDynamic(SeedScanRecipes::find);
         registerDisplay(plantalyzer);
     }
@@ -71,7 +71,7 @@ public final class SeedScanRecipes {
         return null;
     }
 
-    private static void registerDisplay(AddonRecipes.Map plantalyzer) {
+    private static void registerDisplay(AddonRecipes.RecipeMap plantalyzer) {
         for (CropCard card : CropCards.cards()) {
             if (card.isWeed()) {
                 continue;

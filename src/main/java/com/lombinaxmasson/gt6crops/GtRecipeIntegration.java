@@ -20,8 +20,8 @@ public final class GtRecipeIntegration {
 
     public static void register(GregTechAddon.Context context) {
         SeedScanRecipes.register();
-        AddonRecipes.Map mortar = AddonRecipes.map("gt.recipe.mortar");
-        AddonRecipes.Map shredder = AddonRecipes.map("gt.recipe.shredder");
+        AddonRecipes.RecipeMap mortar = AddonRecipes.map("gt.recipe.mortar");
+        AddonRecipes.RecipeMap shredder = AddonRecipes.map("gt.recipe.shredder");
         int added = 0;
         for (CropCard card : CropCards.cards()) {
             if (!card.drop().kind().equals("gt_form")
@@ -47,7 +47,7 @@ public final class GtRecipeIntegration {
                 added, context.platform(), context.minecraftVersion());
     }
 
-    static void requireAccepted(AddonRecipes.Map map, AddonRecipes.Line line, String what) {
+    static void requireAccepted(AddonRecipes.RecipeMap map, AddonRecipes.Line line, String what) {
         if (map.add(line) == null) {
             throw new IllegalStateException(
                     "gt6crops: rejected " + map.name() + " recipe for " + what);
