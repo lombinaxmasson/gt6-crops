@@ -103,9 +103,9 @@ public final class CropManagerBehavior implements MachineBehavior {
     @Override
     public void tick(MachineBehaviorContext context) {
         MachineTier tier = MachineTier.byIndex(context.tier());
-        if (context.energy() < tier.inputMin()) {
+        if (context.mainInputStored() < tier.inputMin()) {
             cycleTicks = 0;
-            context.progress(0);
+            context.setProgress(0);
             return;
         }
         context.working(true);
@@ -113,7 +113,7 @@ public final class CropManagerBehavior implements MachineBehavior {
             cycleTicks = 0;
             runCycle(context, tier);
         }
-        context.progress(cycleTicks / (float) CYCLE_TICKS);
+        context.setProgress(cycleTicks / (float) CYCLE_TICKS);
     }
 
     @Override
@@ -159,7 +159,7 @@ public final class CropManagerBehavior implements MachineBehavior {
         if (!held.isEmpty() && !held.is(Gt6Crops.FERTILIZER.source())) {
             return 0;
         }
-        int room = context.capacity(FERTILIZER_TANK) - held.getAmount();
+        int room = context.tankCapacity(FERTILIZER_TANK) - held.getAmount();
         int taken = Math.min(stack.getAmount(), room / ENRICHED_STRENGTH);
         if (taken <= 0) {
             return 0;
@@ -240,7 +240,7 @@ public final class CropManagerBehavior implements MachineBehavior {
         }
         FluidStack dose = new FluidStack(poison, WEED_EX_PER_ITEM);
         for (int slot = 0; slot < FERTILIZER_START; slot++) {
-            while (!context.item(slot).isEmpty()
+            while (!context.liveItem(slot).isEmpty()
                     && context.fill(WEED_EX_TANK, dose, true) == WEED_EX_PER_ITEM) {
                 shrink(context, slot, 1);
                 context.fill(WEED_EX_TANK, dose, false);
@@ -258,7 +258,7 @@ public final class CropManagerBehavior implements MachineBehavior {
             return;
         }
         for (int slot = FERTILIZER_START; slot < OUTPUT_START; slot++) {
-            if (!context.item(slot).isEmpty()) {
+            if (!context.liveItem(slot).isEmpty()) {
                 shrink(context, slot, 1);
                 crop.addFertilizer(FERTILIZER_DOSE);
                 return;
@@ -301,7 +301,7 @@ public final class CropManagerBehavior implements MachineBehavior {
 
     private static boolean hasOutputRoom(MachineBehaviorContext context) {
         for (int slot = OUTPUT_START; slot < SLOTS; slot++) {
-            ItemStack stack = context.item(slot);
+            ItemStack stack = context.liveItem(slot);
             if (stack.isEmpty() || stack.getCount() < stack.getMaxStackSize()) {
                 return true;
             }
@@ -337,7 +337,7 @@ public final class CropManagerBehavior implements MachineBehavior {
     }
 
     private static void shrink(MachineBehaviorContext context, int slot, int count) {
-        ItemStack stack = context.item(slot);
+        ItemStack stack = context.liveItem(slot);
         int left = stack.getCount() - count;
         context.setItem(slot, left <= 0 ? ItemStack.EMPTY : stack.copyWithCount(left));
     }

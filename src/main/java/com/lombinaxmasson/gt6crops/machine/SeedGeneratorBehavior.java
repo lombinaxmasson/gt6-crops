@@ -39,16 +39,16 @@ public final class SeedGeneratorBehavior implements MachineBehavior {
         long work = context.state().getLong("work");
         long totalWork = context.state().getLong("total");
         long minimumPower = context.state().getLong("minimum");
-        if (context.energy() < tier.inputMin()) {
+        if (context.mainInputStored() < tier.inputMin()) {
             if (!pending.isEmpty() && work < totalWork) {
                 context.state().setLong("work", 0);
-                context.progress(0);
+                context.setProgress(0);
             }
             return;
         }
         if (pending.isEmpty()) {
             if (!start(context, tier)) {
-                context.progress(0);
+                context.setProgress(0);
                 return;
             }
             pending = context.state().item("pending");
@@ -57,21 +57,21 @@ public final class SeedGeneratorBehavior implements MachineBehavior {
             minimumPower = context.state().getLong("minimum");
         }
         if (work < totalWork) {
-            if (context.energy() < minimumPower) {
+            if (context.mainInputStored() < minimumPower) {
                 context.state().setLong("work", 0);
-                context.progress(0);
+                context.setProgress(0);
                 return;
             }
-            work = MachineWork.advance(work, totalWork, Math.min(context.energy(), tier.inputMax()));
+            work = MachineWork.advance(work, totalWork, Math.min(context.mainInputStored(), tier.inputMax()));
             context.state().setLong("work", work);
-            context.progress(totalWork <= 0 ? 0 : work / (float) totalWork);
+            context.setProgress(totalWork <= 0 ? 0 : work / (float) totalWork);
             context.working(true);
             if (work < totalWork) {
                 return;
             }
         }
         if (!outputFits(context, pending)) {
-            context.progress(totalWork <= 0 ? 0 : work / (float) totalWork);
+            context.setProgress(totalWork <= 0 ? 0 : work / (float) totalWork);
             return;
         }
         context.insertOutput(pending);
@@ -79,7 +79,7 @@ public final class SeedGeneratorBehavior implements MachineBehavior {
         context.state().setLong("work", 0);
         context.state().setLong("total", 0);
         context.state().setLong("minimum", 0);
-        context.progress(0);
+        context.setProgress(0);
         context.working(true);
     }
 
@@ -96,7 +96,7 @@ public final class SeedGeneratorBehavior implements MachineBehavior {
     /** Spends what the copy needs and readies it, if any input seed can be copied now. */
     private static boolean start(MachineBehaviorContext context, MachineTier tier) {
         for (int slot = 0; slot < INPUT_SLOTS; slot++) {
-            ItemStack seed = context.item(slot);
+            ItemStack seed = context.liveItem(slot);
             Optional<CropSeedItem.SeedData> data = CropSeedItem.data(seed).filter(CropSeedItem.SeedData::scanned);
             Optional<CropCard> card = data.flatMap(value -> CropCards.find(value.cardId()))
                     .filter(value -> !value.isWeed() && value.canDuplicate());
@@ -134,7 +134,7 @@ public final class SeedGeneratorBehavior implements MachineBehavior {
             if (!simulate) {
                 int left = catalyst.getCount();
                 for (int slot = 0; slot < INPUT_SLOTS && left > 0; slot++) {
-                    ItemStack stack = context.item(slot);
+                    ItemStack stack = context.liveItem(slot);
                     if (ItemStack.isSameItem(stack, catalyst)) {
                         int taken = Math.min(left, stack.getCount());
                         shrink(context, slot, taken);
@@ -150,7 +150,7 @@ public final class SeedGeneratorBehavior implements MachineBehavior {
     private static int held(MachineBehaviorContext context, ItemStack catalyst) {
         int count = 0;
         for (int slot = 0; slot < INPUT_SLOTS; slot++) {
-            ItemStack stack = context.item(slot);
+            ItemStack stack = context.liveItem(slot);
             if (ItemStack.isSameItem(stack, catalyst)) {
                 count += stack.getCount();
             }
@@ -159,7 +159,7 @@ public final class SeedGeneratorBehavior implements MachineBehavior {
     }
 
     private static boolean outputFits(MachineBehaviorContext context, ItemStack copy) {
-        ItemStack slot = context.item(OUTPUT_SLOT);
+        ItemStack slot = context.liveItem(OUTPUT_SLOT);
         if (slot.isEmpty()) {
             return true;
         }
@@ -168,7 +168,7 @@ public final class SeedGeneratorBehavior implements MachineBehavior {
     }
 
     private static void shrink(MachineBehaviorContext context, int slot, int count) {
-        ItemStack stack = context.item(slot);
+        ItemStack stack = context.liveItem(slot);
         int left = stack.getCount() - count;
         context.setItem(slot, left <= 0 ? ItemStack.EMPTY : stack.copyWithCount(left));
     }
