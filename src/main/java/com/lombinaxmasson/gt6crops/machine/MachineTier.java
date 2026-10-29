@@ -30,7 +30,7 @@ public enum MachineTier {
     }
 
     public long voltage() {
-        return GTVoltageTiers.VOLTAGES[index];
+        return GTVoltageTiers.tierVoltage(index);
     }
 
     public long inputMin() {
@@ -42,7 +42,7 @@ public enum MachineTier {
     }
 
     public String displayName() {
-        return GTVoltageTiers.NAMES[index];
+        return GTVoltageTiers.tierName(index);
     }
 
     /** The material color GT6CE tints this tier's casing with. */
