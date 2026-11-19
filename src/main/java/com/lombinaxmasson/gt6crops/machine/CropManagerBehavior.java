@@ -11,11 +11,8 @@ import com.lombinaxmasson.gt6crops.Gt6CropsTags;
 import com.lombinaxmasson.gt6crops.block.CropTile;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 
@@ -24,7 +21,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
  * fertilizes the crop sticks around it, as its switches allow, then harvests every ripe crop.
  * The shell keeps no power: a tick needs a packet, and a tick without one starts the cycle over.
  *
- * <p>Like CropsNH's, it sprays GT's strong poison as Weed-EX, and its fertilizer tank
+ * <p>It sprays liquid Weed-EX, and its fertilizer tank
  * takes enriched fertilizer as ten times its volume of liquid fertilizer.</p>
  */
 public final class CropManagerBehavior implements MachineBehavior {
@@ -43,10 +40,6 @@ public final class CropManagerBehavior implements MachineBehavior {
     public static final int WATER_TANK = 0;
     public static final int FERTILIZER_TANK = 1;
     public static final int WEED_EX_TANK = 2;
-
-    /** GT6CE's strong poison, the fluid in CropsNH's Weed-EX cans. */
-    private static final ResourceLocation STRONG_POISON =
-            ResourceLocation.fromNamespaceAndPath("gt6ce", "potion_poison_strong");
 
     /** CropsNH's global update rate. */
     private static final int CYCLE_TICKS = 50;
@@ -74,7 +67,7 @@ public final class CropManagerBehavior implements MachineBehavior {
     private static final int WEED_EX_DOSE = 12;
     private static final int WEED_EX_CAP = 24;
     private static final int WEED_EX_COST = 10;
-    /** Provisional: the strong poison one Weed-EX item puts in the tank. */
+    /** The liquid Weed-EX one item puts in the tank. */
     private static final int WEED_EX_PER_ITEM = 100;
 
     /** Not saved. The old machine did not write its cycle, so a reload starts over. */
@@ -138,11 +131,7 @@ public final class CropManagerBehavior implements MachineBehavior {
         if (tank == FERTILIZER_TANK) {
             return stack.is(Gt6Crops.FERTILIZER.source()) || stack.is(Gt6Crops.ENRICHED_FERTILIZER.source());
         }
-        if (tank == WEED_EX_TANK) {
-            Fluid poison = strongPoison();
-            return poison != Fluids.EMPTY && stack.is(poison);
-        }
-        return false;
+        return tank == WEED_EX_TANK && stack.is(Gt6Crops.WEED_EX_FLUID.source());
     }
 
     @Override
@@ -234,11 +223,7 @@ public final class CropManagerBehavior implements MachineBehavior {
 
     /** Pours Weed-EX items into the tank, one whole item at a time. */
     private void refillWeedEx(MachineBehaviorContext context) {
-        Fluid poison = strongPoison();
-        if (poison == Fluids.EMPTY) {
-            return;
-        }
-        FluidStack dose = new FluidStack(poison, WEED_EX_PER_ITEM);
+        FluidStack dose = new FluidStack(Gt6Crops.WEED_EX_FLUID.source(), WEED_EX_PER_ITEM);
         for (int slot = 0; slot < FERTILIZER_START; slot++) {
             while (!context.inventory().snapshot(slot).isEmpty()
                     && context.fluids().fill(WEED_EX_TANK, dose, true) == WEED_EX_PER_ITEM) {
@@ -340,10 +325,5 @@ public final class CropManagerBehavior implements MachineBehavior {
         ItemStack stack = context.inventory().snapshot(slot);
         int left = stack.getCount() - count;
         context.inventory().set(slot, left <= 0 ? ItemStack.EMPTY : stack.copyWithCount(left));
-    }
-
-    private static Fluid strongPoison() {
-        Fluid fluid = BuiltInRegistries.FLUID.get(STRONG_POISON);
-        return fluid == null ? Fluids.EMPTY : fluid;
     }
 }

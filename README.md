@@ -2,11 +2,7 @@
 
 NeoForge 1.21.1 crop sticks and CropsNH-style crossbreeding for GT6CE.
 
-The addon compiles against GT6CE addon API 0.2.0. That is two compile-only
-jars: the common library `gt6ce-api-0.2.0.jar` and the NeoForge SDK
-`gt6ce-addon-sdk-1.21.1-neoforge-0.2.0.jar`. The full GT6CE mod jar is a
-development and test runtime only. None of these jars is bundled into the
-addon jar. The mod dependency is `gt6ce` with `versionRange="[0.1,)"`.
+The addon requires GT6CE 1.0.8 or later and compiles against Addon API 1.9.0.
 GT6CE registers its items, blocks and fluids in the `gt6ce` namespace.
 
 ## Current mechanics
@@ -77,8 +73,8 @@ GT6CE registers its items, blocks and fluids in the `gt6ce` namespace.
 - GT's crop scanner reads planted crops through GT6CE's `CropScanSource`, and
   right-clicking a crop stick with a GT magnifying glass prints the crop's
   stats, storage, environment, and anything that stops it from growing;
-- GT plant-form mortar and shredder integration where GT6CE has no conflicting
-  input row.
+- mortar and shredder recipes for metal crop products and supported GT plant
+  forms.
 
 The card compatibility notes are in
 [`docs/crop-compatibility.md`](docs/crop-compatibility.md). The proposed GT6CE
@@ -133,10 +129,11 @@ when it is placed:
   While the tank holds less than 6 mB, a stick with 28 or less of 32 fertilizer
   instead gets one item from its fertilizer slots (anything in
   `gt6crops:fertilizer`), worth 8 as by hand.
-- Weed-EX is GT6CE's strong poison potion, as in CropsNH, held in a 1,500 mB
-  tank. Weed-EX items in its two Weed-EX slots pour 100 mB each into it. A stick
-  with 12 or less Weed-EX gets 12 for 10 mB. As in CropsNH, this does not clear
-  a weed that is already growing.
+- The Crop Manager holds up to 1,500 mB of `gt6crops:weed_ex`. Weed-EX items in
+  its two Weed-EX slots add 100 mB each. A stick with 12 or less Weed-EX gets
+  12 for 10 mB. The fluid prevents future spread. Existing weeds can be cleared
+  by hand. On upgrade, the Crop Manager converts its stored strong poison
+  potion to an equal amount of Weed-EX.
 
 Watering, fertilizing, and Weed-EX reach every stick in range, including empty
 sticks and weeds. Liquid and enriched fertilizer are this addon's fluids. Like
@@ -330,7 +327,7 @@ New growth-stage sprites go in a resource pack, under
   "stats": [2, 0, 0, 0, 0],
   "attributes": ["Bush", "Metal", "Zinc"],
   "crossbreed_only": true,
-  "drop": {"kind": "gt_form", "prefix": "plantGtBlossom", "material": "zinc", "count": 1},
+  "drop": {"kind": "crop_product", "item": "gt6crops:zinc_leaf", "material": "zinc", "count": 1},
   "special_drops": [],
   "base_seed": {"kind": "none", "count": 1},
   "soil": ["#gt6crops:soil/stone"],
@@ -374,12 +371,15 @@ New growth-stage sprites go in a resource pack, under
 
 - `{"kind": "vanilla", "item": "minecraft:wheat_seeds"}` takes any registered
   item id. `item`, `gt_item`, and `foods_addon` work the same way.
+- `{"kind": "crop_product", "item": "gt6crops:zinc_leaf", "material": "zinc"}`
+  resolves the registered item directly. On a card's primary drop, the
+  material name also selects the tiny dust for GT processing.
 - `{"kind": "gt_form", "prefix": "plantGtBerry", "material": "tin"}` is a GT
   material form. The prefixes are `plantGtBerry`, `plantGtBlossom`,
   `plantGtFiber`, `plantGtTwig`, `plantGtWart`, `dust`, `dustTiny`, `gem`,
   `nugget`, `chunkGt`, `ingot`, and `stick`. Material names are GT6CE names with case,
-  `_`, `-`, and spaces ignored, so `live_root` finds `LiveRoot`. Any GT6CE
-  material works, and so does switching a crop from blossoms to berries.
+  `_`, `-`, and spaces ignored, so `live_root` finds `LiveRoot`. The selected
+  form must exist for the material in the installed GT6CE build.
 - `{"kind": "none"}` is nothing. `count` defaults to 1.
 
 A card that cannot load is skipped and logged as
@@ -388,6 +388,11 @@ resolve, when a card that is not `crossbreed_only` has no base seed that
 resolves, or when `blocked_without` names a missing mod. Mutations and pools
 ignore skipped cards. The startup line `loaded N crop cards; skipped M` gives
 the totals.
+
+With the pinned GT6CE build and no other content mods, 72 of the 90 built-in
+cards load. Four cards need external mods. Another 14 depend on the retired
+GT6CE plant forms or the retired barley, oats, rice and peanut items.
+[GT6CE content removals](https://github.com/GregTech6CE/GregTech6/blob/167e1d3bb13b2e3242e14bd0372c370ad893b952/docs/decisions/parity/README.md)
 
 ### Growth conditions
 
@@ -406,8 +411,8 @@ written as `#namespace:path`, and one matching entry is enough.
   at most two.
 
 A crop whose soil, sub-soil, or light is wrong keeps its size and can still be
-harvested, but does not grow. A cross also checks the child's conditions at
-its own position, and grows nothing when they fail.
+harvested, but does not grow. A cross checks the child's conditions at its own
+position before planting it.
 
 The soils and sub-soils are block tags under `data/gt6crops/tags/block/soil/`
 and `sub_soil/`, so a datapack can change what counts, and `/reload` picks the
@@ -419,20 +424,24 @@ biome tags.
 
 ### Breeding
 
-`mutations.json` has two lists. `mutations` are fixed recipes:
+`mutations.json` has two lists. `mutations` are fixed recipes such as this
+Galvania cross.
 
 ```json
-{"child": "galvania", "parents": ["tine", "ferru"], "machine_only": false}
+{"child": "galvania", "parents": ["tine", "ferru"], "requires_child_conditions": true}
 ```
 
 `parents` needs at least two cards and may hold more. Entries with
 `machine_only: true` are kept for a future crop breeder and never fire in the
-world.
+world. An entry with `requires_child_conditions: true` participates only
+when the center stick meets the child's soil, sub-soil, and light conditions.
+If the bed rules it out, other fixed recipes or pools can still match. This
+field defaults to `false`.
 
-`pools` are loose groups:
+`pools` are loose groups such as this abbreviated orange pool.
 
 ```json
-{"id": "metallic", "crops": ["ferru", "coppon", "galvania"]}
+{"id": "orange", "crops": ["carrot", "coppon", "orange_tulip", "pumpkin"]}
 ```
 
 When a cross tries to grow a crop, it looks at the four horizontal neighbors
@@ -455,6 +464,35 @@ that have reached 80% of their size:
 rules are the Crossbreeding, Planting, and Crossbreeding Pool tabs; see
 [Recipe viewer](#recipe-viewer).
 
+#### Copper, tin, iron, zinc, and nickel
+
+Set the center cross on stone with an ore or storage block from the child's
+sub-soil tag underneath it. Parent crops grow on their own soil. These
+built-in crosses use the standard chance to copy a parent and the standard
+inherited stat variation.
+
+| Child | Fixed parents | Alternate pool |
+|---|---|---|
+| Coppon (copper) | Carrot + Orange Tulip | Orange |
+| Tine (tin) | Pumpkin + Melon | Stem |
+| Ferru (iron) | Coppon + Tine | None |
+| Galvania (zinc) | Tine + Ferru | None |
+| Nickelback (nickel) | Ferru + Coppon | None |
+
+#### Aluminium, oil berries, lead, silver, and gold
+
+These crosses use fixed parent pairs and check the center bed when matching.
+The metal crops take stone over their matching mineral sample. Oil Berries
+take sand, gravel, or soul sand in the center.
+
+| Child | Fixed parents |
+|---|---|
+| Bauxia (aluminium) | Galvania + Nickelback |
+| Oil Berries | Withereed + Nether Wart |
+| Plumbilia (lead) | Coppon + Withereed |
+| Argentia (silver) | Plumbilia + Tine |
+| Aurelia (gold) | Plumbilia + Coppon |
+
 ### Seed colors and textures
 
 `seed_colors.json` maps a card id to `[body, highlight]` as hex RGB. A card
@@ -474,10 +512,13 @@ providing `block/crop/<texture>/<stage>.png`.
 
 ### Processing
 
-A card whose drop is a `plantGt*` form also gets a mortar row and a shredder
-row that turn the drop into tiny dust of its material. Neither row is added
-when GT6CE already has a mortar row for that input, and the shredder row is
-also left out when GT6CE already has a shredder row for it.
+A card whose primary drop is a `crop_product` or a GT `plantGt*` form can
+turn that drop into tiny dust of its material. The addon adds a mortar row
+and a shredder row when the input has no existing mortar recipe. An existing
+shredder row takes precedence over the addon's shredder recipe.
+
+The GT Squeezer turns one Oil Berries harvest item into 100 mB of GT6CE
+crude oil in 20 ticks at 16 energy per tick.
 
 ### Adding a crop
 
@@ -546,11 +587,15 @@ Op level 2 and above get `/gt6crops` debug commands. Look at a crop stick and us
 `/tick rate` also speeds the whole world, but the crop command is the one that
 skips the 256-tick gate.
 
-Set `JAVA_HOME` to the project JDK 21 before using Gradle. Do not commit the
-GT6CE jars; `libs/gt6ce/*.jar` is ignored. Compilation uses
-`gt6ce-api-0.2.0.jar` and `gt6ce-addon-sdk-1.21.1-neoforge-0.2.0.jar`.
-`runClient`, `runServer` and GameTest use `gt6ce-1.21.1-neoforge.jar`.
-`update-gt.ps1` downloads all three from the NeoForge CI artifact.
-`build-commit.txt` records that build. CI builds the pinned GT6CE commit,
-including its API submodule, so the pin has to be a commit that publishes
-the common API and the NeoForge SDK.
+Set `JAVA_HOME` to the project JDK 21 before using Gradle. Compilation uses the
+common API `gt6ce-api-1.9.0.jar` and the NeoForge SDK
+`gt6ce-addon-sdk-1.21.1-neoforge-1.9.0.jar`. `runClient`, `runServer` and GameTest
+use `gt6ce-1.21.1-neoforge.jar`. These dependencies are supplied separately
+from the addon jar and stored in `libs/gt6ce/`.
+
+`update-gt.ps1` downloads the three jars from the latest successful NeoForge
+build in `GregTech6CE/GregTech6` and checks the API and SDK versions against
+`gt6ce_api_version` in `gradle.properties`. It records the upstream commit in
+`libs/gt6ce/build-commit.txt` and the mod jar's SHA-256 alongside it. CI rebuilds
+that pinned commit with the upstream snapshot version, using Java 17 to launch
+Gradle and Java 21 for the NeoForge toolchain.

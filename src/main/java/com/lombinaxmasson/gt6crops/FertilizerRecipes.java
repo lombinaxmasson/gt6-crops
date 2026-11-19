@@ -92,27 +92,33 @@ final class FertilizerRecipes {
                 skipped++;
                 return;
             }
-            add(AddonRecipes.map("gt.recipe.mixer"), what, new AddonRecipes.Line(
-                    items.get(), null,
-                    new FluidStack[] {new FluidStack(water, WATER_MB)},
-                    new FluidStack[] {fertilizer(fertilizer * MB_PER_FERTILIZER)},
-                    ticks, EU_PER_TICK, 0));
+            add(AddonRecipes.map("gt.recipe.mixer"), what, AddonRecipes.Line.builder()
+                    .itemInputs(items.get())
+                    .fluidInputs(new FluidStack(water, WATER_MB))
+                    .fluidOutputs(fertilizer(fertilizer * MB_PER_FERTILIZER))
+                    .duration(ticks)
+                    .energyPerTick(EU_PER_TICK)
+                    .build());
         }
     }
 
     private void boneMeal() {
-        add(AddonRecipes.map("gt.recipe.squeezer"), "bone meal", new AddonRecipes.Line(
-                new ItemStack[] {boneMeal(1)}, null, null,
-                new FluidStack[] {fertilizer(CropManagerBehavior.FERTILIZER_ITEM_MB)},
-                SQUEEZE_TICKS, EU_PER_TICK, 0));
+        add(AddonRecipes.map("gt.recipe.squeezer"), "bone meal", AddonRecipes.Line.builder()
+                .itemInputs(boneMeal(1))
+                .fluidOutputs(fertilizer(CropManagerBehavior.FERTILIZER_ITEM_MB))
+                .duration(SQUEEZE_TICKS)
+                .energyPerTick(EU_PER_TICK)
+                .build());
     }
 
     private void enriched() {
-        add(AddonRecipes.map("gt.recipe.mixer"), "enriched fertilizer", new AddonRecipes.Line(
-                new ItemStack[] {boneMeal(ENRICHING_FERTILIZER_ITEMS)}, null,
-                new FluidStack[] {fertilizer(ENRICHED_MB)},
-                new FluidStack[] {new FluidStack(Gt6Crops.ENRICHED_FERTILIZER.source(), ENRICHED_MB)},
-                ENRICHING_TICKS, EU_PER_TICK, 0));
+        add(AddonRecipes.map("gt.recipe.mixer"), "enriched fertilizer", AddonRecipes.Line.builder()
+                .itemInputs(boneMeal(ENRICHING_FERTILIZER_ITEMS))
+                .fluidInputs(fertilizer(ENRICHED_MB))
+                .fluidOutputs(new FluidStack(Gt6Crops.ENRICHED_FERTILIZER.source(), ENRICHED_MB))
+                .duration(ENRICHING_TICKS)
+                .energyPerTick(EU_PER_TICK)
+                .build());
     }
 
     private void add(AddonRecipes.RecipeMap map, String what, AddonRecipes.Line line) {

@@ -70,7 +70,8 @@
                                           "plumbilia",
                                           "tine"
                                       ],
-                          "machine_only":  false
+                          "machine_only":  false,
+                          "requires_child_conditions":  true
                       },
                       {
                           "child":  "aurelia",
@@ -78,7 +79,8 @@
                                           "plumbilia",
                                           "coppon"
                                       ],
-                          "machine_only":  false
+                          "machine_only":  false,
+                          "requires_child_conditions":  true
                       },
                       {
                           "child":  "milkwart",
@@ -94,7 +96,8 @@
                                           "coppon",
                                           "withereed"
                                       ],
-                          "machine_only":  false
+                          "machine_only":  false,
+                          "requires_child_conditions":  true
                       },
                       {
                           "child":  "blaze_reed",
@@ -191,7 +194,35 @@
                                           "nether_wart"
                                       ],
                           "machine_only":  false,
+                          "requires_child_conditions":  true,
                           "stand_in":  true
+                      },
+                      {
+                          "child":  "coppon",
+                          "parents":  [
+                                          "carrot",
+                                          "orange_tulip"
+                                      ],
+                          "machine_only":  false,
+                          "requires_child_conditions":  true
+                      },
+                      {
+                          "child":  "tine",
+                          "parents":  [
+                                          "pumpkin",
+                                          "melon"
+                                      ],
+                          "machine_only":  false,
+                          "requires_child_conditions":  true
+                      },
+                      {
+                          "child":  "ferru",
+                          "parents":  [
+                                          "coppon",
+                                          "tine"
+                                      ],
+                          "machine_only":  false,
+                          "requires_child_conditions":  true
                       },
                       {
                           "child":  "galvania",
@@ -199,7 +230,8 @@
                                           "tine",
                                           "ferru"
                                       ],
-                          "machine_only":  false
+                          "machine_only":  false,
+                          "requires_child_conditions":  true
                       },
                       {
                           "child":  "nickelback",
@@ -207,7 +239,8 @@
                                           "ferru",
                                           "coppon"
                                       ],
-                          "machine_only":  false
+                          "machine_only":  false,
+                          "requires_child_conditions":  true
                       },
                       {
                           "child":  "bauxia",
@@ -216,6 +249,7 @@
                                           "nickelback"
                                       ],
                           "machine_only":  false,
+                          "requires_child_conditions":  true,
                           "stand_in":  true
                       },
                       {
@@ -316,9 +350,7 @@
                       "crops":  [
                                     "blackberries",
                                     "blueberry_bush",
-                                    "coppon",
                                     "corpse_plant",
-                                    "galvania",
                                     "pyrolusium",
                                     "raspberries",
                                     "strawberries"
@@ -352,13 +384,6 @@
                       "crops":  [
                                     "bobsyeruncle_ranks",
                                     "diareed"
-                                ]
-                  },
-                  {
-                      "id":  "dense",
-                      "crops":  [
-                                    "aurelia",
-                                    "plumbilia"
                                 ]
                   },
                   {
@@ -415,7 +440,6 @@
                                     "chili",
                                     "creeper_weed",
                                     "diareed",
-                                    "nickelback",
                                     "withereed"
                                 ]
                   },
@@ -440,10 +464,7 @@
                   {
                       "id":  "gray",
                       "crops":  [
-                                    "ferru",
-                                    "nickelback",
-                                    "shimmerleaf",
-                                    "tine"
+                                    "shimmerleaf"
                                 ]
                   },
                   {
@@ -472,7 +493,6 @@
                   {
                       "id":  "iron",
                       "crops":  [
-                                    "ferru",
                                     "steeleaf_ranks"
                                 ]
                   },
@@ -498,16 +518,8 @@
                   {
                       "id":  "metallic",
                       "crops":  [
-                                    "argentia",
-                                    "aurelia",
-                                    "coppon",
-                                    "ferru",
-                                    "galvania",
-                                    "nickelback",
-                                    "plumbilia",
                                     "pyrolusium",
-                                    "steeleaf_ranks",
-                                    "tine"
+                                    "steeleaf_ranks"
                                 ]
                   },
                   {
@@ -564,7 +576,6 @@
                       "id":  "purple",
                       "crops":  [
                                     "allium",
-                                    "plumbilia",
                                     "purple_grapes"
                                 ]
                   },
@@ -605,11 +616,8 @@
                   {
                       "id":  "shiny",
                       "crops":  [
-                                    "argentia",
                                     "bobsyeruncle_ranks",
-                                    "coppon",
-                                    "diareed",
-                                    "tine"
+                                    "diareed"
                                 ]
                   },
                   {
@@ -622,7 +630,6 @@
                   {
                       "id":  "silver",
                       "crops":  [
-                                    "argentia",
                                     "shimmerleaf"
                                 ]
                   },
@@ -646,14 +653,10 @@
                   {
                       "id":  "tendrilly",
                       "crops":  [
-                                    "argentia",
-                                    "aurelia",
                                     "bobsyeruncle_ranks",
                                     "creeper_weed",
                                     "cucumber",
-                                    "ferru",
                                     "liveroots",
-                                    "plumbilia",
                                     "purple_grapes",
                                     "steeleaf_ranks",
                                     "tomato_plant"
@@ -701,10 +704,8 @@
                   {
                       "id":  "white",
                       "crops":  [
-                                    "argentia",
                                     "azure_bluet",
                                     "eggplant",
-                                    "galvania",
                                     "milkwart",
                                     "oxeye_daisy",
                                     "spidernip",
@@ -715,14 +716,12 @@
                   {
                       "id":  "wooden",
                       "crops":  [
-                                    "liveroots",
-                                    "tine"
+                                    "liveroots"
                                 ]
                   },
                   {
                       "id":  "yellow",
                       "crops":  [
-                                    "aurelia",
                                     "dandelion",
                                     "lemon_plant",
                                     "potato",

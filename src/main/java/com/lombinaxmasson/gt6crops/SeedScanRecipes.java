@@ -89,9 +89,11 @@ public final class SeedScanRecipes {
     }
 
     private static AddonRecipes.Line row(ItemStack input, ItemStack output, long ticks, long eut) {
-        return new AddonRecipes.Line(
-                new ItemStack[] {input},
-                new ItemStack[] {output},
-                null, null, ticks, eut, 0);
+        return AddonRecipes.Line.builder()
+                .itemInputs(input)
+                .itemOutputs(output)
+                .duration(ticks)
+                .energyPerTick(eut)
+                .build();
     }
 }

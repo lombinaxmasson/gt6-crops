@@ -20,6 +20,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
@@ -34,7 +35,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -95,12 +95,7 @@ public final class CropMachineTests {
             power(helper, machine, 32);
         }
         helper.assertTrue(planted.hydrationStorage() == dry, "watering stays off until the switch is flipped");
-        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
-        BlockEntity entity = helper.getLevel().getBlockEntity(machine);
-        AbstractContainerMenu menu = ((MenuProvider) entity).createMenu(1, player.getInventory(), player);
-        helper.assertTrue(menu != null && menu.clickMenuButton(player, CropManagerBehavior.WATER),
-                "the menu button turns watering on");
-        menu.removed(player);
+        clickToggle(helper, machine, CropManagerBehavior.WATER, "watering");
         for (int tick = 0; tick < 50; tick++) {
             power(helper, machine, 32);
         }
@@ -120,12 +115,7 @@ public final class CropMachineTests {
         IFluidHandler fluids = fluids(helper, machine);
         helper.assertTrue(fluids.fill(new FluidStack(Gt6Crops.FERTILIZER.source(), 1000), IFluidHandler.FluidAction.EXECUTE) == 1000,
                 "the fertilizer tank takes fertilizer");
-        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
-        AbstractContainerMenu menu = ((MenuProvider) helper.getLevel().getBlockEntity(machine))
-                .createMenu(1, player.getInventory(), player);
-        helper.assertTrue(menu != null && menu.clickMenuButton(player, CropManagerBehavior.FERTILIZER),
-                "the menu button turns fertilizing on");
-        menu.removed(player);
+        clickToggle(helper, machine, CropManagerBehavior.FERTILIZER, "fertilizing");
         for (int tick = 0; tick < 50; tick++) {
             power(helper, machine, 32);
         }
@@ -142,24 +132,21 @@ public final class CropMachineTests {
         BlockPos machine = place(helper, "crop_manager_lv", new BlockPos(8, 0, 2));
         CropTile planted = plant(helper, machine.east(), card);
         int clean = planted.weedExStorage();
-        Fluid poison = BuiltInRegistries.FLUID.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "potion_poison_strong"));
-        helper.assertTrue(poison != null && poison != Fluids.EMPTY, "strong poison is registered");
         IFluidHandler fluids = fluids(helper, machine);
-        helper.assertTrue(fluids.fill(new FluidStack(poison, 100), IFluidHandler.FluidAction.EXECUTE) == 100,
-                "the weed-ex tank takes strong poison");
-        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
-        AbstractContainerMenu menu = ((MenuProvider) helper.getLevel().getBlockEntity(machine))
-                .createMenu(1, player.getInventory(), player);
-        helper.assertTrue(menu != null && menu.clickMenuButton(player, CropManagerBehavior.WEED_EX),
-                "the menu button turns weed-ex on");
-        menu.removed(player);
+        helper.assertTrue(fluids.fill(new FluidStack(Gt6Crops.WEED_EX_FLUID.source(), 1),
+                IFluidHandler.FluidAction.EXECUTE) == 1, "the tank takes liquid Weed-EX");
+        IItemHandler items = items(helper, machine);
+        helper.assertTrue(items.insertItem(0, new ItemStack(Gt6Crops.WEED_EX.get()), false).isEmpty(),
+                "the Weed-EX item goes into the input");
+        clickToggle(helper, machine, CropManagerBehavior.WEED_EX, "weed-ex");
         for (int tick = 0; tick < 50; tick++) {
             power(helper, machine, 32);
         }
         helper.assertTrue(stillPlanted(helper, machine.east(), planted), "the crop stick stays on its soil");
         helper.assertTrue(planted.weedExStorage() > clean, "weed-ex coats the crop");
-        helper.assertTrue(fluids.getFluidInTank(CropManagerBehavior.WEED_EX_TANK).getAmount() < 100,
-                "spraying spends strong poison");
+        int remaining = fluids.getFluidInTank(CropManagerBehavior.WEED_EX_TANK).getAmount();
+        helper.assertTrue(items.getStackInSlot(0).isEmpty() && remaining > 1 && remaining < 101,
+                "the machine turns the Weed-EX item into 100 mB and spends some of it spraying");
         helper.succeed();
     }
 
@@ -209,7 +196,12 @@ public final class CropMachineTests {
         ListTag tanks = new ListTag();
         tanks.add(water.writeToNBT(lookup, new CompoundTag()));
         tanks.add(new CompoundTag());
-        tanks.add(new CompoundTag());
+        CompoundTag oldWeedEx = new CompoundTag();
+        oldWeedEx.putString("id", "gregtech:potion_poison_strong");
+        oldWeedEx.putInt("amount", 350);
+        CompoundTag oldWeedExTank = new CompoundTag();
+        oldWeedExTank.put("Fluid", oldWeedEx);
+        tanks.add(oldWeedExTank);
         ListTag overflow = new ListTag();
         overflow.add(new ItemStack(Items.STICK).save(lookup));
         CompoundTag saved = new CompoundTag();
@@ -234,6 +226,9 @@ public final class CropMachineTests {
         helper.assertTrue(fluids.getFluidInTank(0).is(Fluids.WATER)
                         && fluids.getFluidInTank(0).getAmount() == 1000,
                 "water survives the old save");
+        FluidStack weedEx = fluids.getFluidInTank(CropManagerBehavior.WEED_EX_TANK);
+        helper.assertTrue(weedEx.is(Gt6Crops.WEED_EX_FLUID.source()) && weedEx.getAmount() == 350,
+                "old strong poison survives as liquid Weed-EX");
         power(helper, machine, 0);
         helper.assertTrue(flag(helper.getLevel().getBlockState(machine), "lit"),
                 "saved energy runs the first tick");
@@ -249,11 +244,18 @@ public final class CropMachineTests {
         helper.assertTrue(stillPlanted(helper, machine.east(), planted), "the crop stick stays on its soil");
         helper.assertTrue(planted.hydrationStorage() == hydration, "the old water switch stays off");
         helper.assertTrue(contains(items, Items.STICK), "overflow from the old save is dropped into the output");
-        CompoundTag roundTrip = entity.saveWithoutMetadata(lookup);
+        CompoundTag roundTrip = entity.saveWithFullMetadata(lookup);
+        roundTrip.getList("gt.fluids", Tag.TAG_COMPOUND).getCompound(CropManagerBehavior.WEED_EX_TANK)
+                .putString("Fluid", "gt6ce:potion_poison_strong");
+        helper.assertTrue(MachineSaveMigration.migrate(roundTrip), "a shell save migrates strong poison too");
+        helper.assertTrue(!MachineSaveMigration.migrate(roundTrip), "the migrated fluid needs no further rewrite");
         BlockPos other = place(helper, "crop_manager_lv", new BlockPos(4, 0, 6));
         helper.getLevel().getBlockEntity(other).loadWithComponents(roundTrip, lookup);
         helper.assertTrue(items(helper, other).getStackInSlot(CropManagerBehavior.FERTILIZER_START).is(Items.BONE_MEAL),
                 "a shell save loads back into another crop manager");
+        FluidStack reloaded = fluids(helper, other).getFluidInTank(CropManagerBehavior.WEED_EX_TANK);
+        helper.assertTrue(reloaded.is(Gt6Crops.WEED_EX_FLUID.source()) && reloaded.getAmount() == 350,
+                "the shell's migrated tank retains the same amount of liquid Weed-EX");
         helper.succeed();
     }
 
@@ -274,6 +276,16 @@ public final class CropMachineTests {
         helper.assertTrue(modern.result().isPresent() && flag(modern.result().orElseThrow(), "lit"),
                 "the shell properties parse");
         helper.succeed();
+    }
+
+    private static void clickToggle(GameTestHelper helper, BlockPos machine, int toggle, String action) {
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        player.setPos(machine.getX() + 0.5, machine.getY() + 1, machine.getZ() + 0.5);
+        MenuProvider provider = (MenuProvider) helper.getLevel().getBlockEntity(machine);
+        AbstractContainerMenu menu = provider.createMenu(1, player.getInventory(), player);
+        helper.assertTrue(menu != null && menu.clickMenuButton(player, toggle),
+                "the menu button turns " + action + " on");
+        menu.removed(player);
     }
 
     private static CropCard harvestable() {

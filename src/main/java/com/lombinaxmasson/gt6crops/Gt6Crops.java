@@ -1,5 +1,7 @@
 package com.lombinaxmasson.gt6crops;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 
 import gregtech.api.addon.GregTechAddon;
@@ -70,6 +72,8 @@ public final class Gt6Crops {
             new CropFluid(FLUID_TYPES, FLUIDS, "fertilizer", 0x2DAA2D);
     public static final CropFluid ENRICHED_FERTILIZER =
             new CropFluid(FLUID_TYPES, FLUIDS, "enriched_fertilizer", 0x28E515);
+    public static final CropFluid WEED_EX_FLUID =
+            new CropFluid(FLUID_TYPES, FLUIDS, "weed_ex", 0x4E9331);
 
     public static final DeferredBlock<Block> CROP_STICK =
             BLOCKS.register("crop_stick", CropStickBlock::new);
@@ -83,6 +87,17 @@ public final class Gt6Crops {
             ITEMS.register("weed_ex", () -> new WeedExItem(new Item.Properties().stacksTo(16)));
     public static final DeferredItem<PlantCureItem> PLANT_CURE =
             ITEMS.register("plant_cure", () -> new PlantCureItem(new Item.Properties().durability(100)));
+    public static final DeferredItem<Item> OIL_BERRIES = ITEMS.registerSimpleItem("oil_berries");
+    private static final List<DeferredItem<Item>> CROP_PRODUCTS = List.of(
+            ITEMS.registerSimpleItem("copper_fiber"),
+            ITEMS.registerSimpleItem("tin_twig"),
+            ITEMS.registerSimpleItem("iron_leaf"),
+            ITEMS.registerSimpleItem("zinc_leaf"),
+            ITEMS.registerSimpleItem("nickel_leaf"),
+            ITEMS.registerSimpleItem("aluminium_leaf"),
+            ITEMS.registerSimpleItem("lead_leaf"),
+            ITEMS.registerSimpleItem("silver_leaf"),
+            ITEMS.registerSimpleItem("gold_leaf"));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CropTile>> CROP_TILE =
             BLOCK_ENTITIES.register("crop_tile", () -> BlockEntityType.Builder
@@ -98,6 +113,8 @@ public final class Gt6Crops {
                         output.accept(CROP_STICK_ITEM.get());
                         output.accept(WEED_EX.get());
                         output.accept(PLANT_CURE.get());
+                        CROP_PRODUCTS.forEach(product -> output.accept(product.get()));
+                        output.accept(OIL_BERRIES.get());
                         acceptMachines(output, "crop_manager");
                         acceptMachines(output, "seed_generator");
                         if (!CropCards.initialized()) {

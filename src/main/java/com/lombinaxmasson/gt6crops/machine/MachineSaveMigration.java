@@ -13,12 +13,10 @@ import net.neoforged.neoforge.event.level.ChunkDataEvent;
 
 /**
  * Rewrites a Crop Manager or Seed Generator saved by the old block entity into the
- * behavior shell's keys. The shell only reads {@code gt.*}, and a behavior cannot see
- * {@code CompoundTag}, so the rewrite happens before the loaded block entity reads itself.
+ * behavior shell's keys and replaces the retired Weed-EX fluid in saved Crop Managers.
  *
- * <p>The chunk event runs on the thread that just created the block entity, before that
- * chunk is returned. It does not touch any other chunk. A block state that failed to parse
- * has already dropped the block entity, and this cannot bring it back.</p>
+ * <p>The chunk event reloads the affected block entity with the rewritten data before the
+ * chunk is returned.</p>
  */
 public final class MachineSaveMigration {
     private static final String CROP_MANAGER = "gt6crops:crop_manager";
@@ -43,14 +41,15 @@ public final class MachineSaveMigration {
             BlockEntity entity = chunk.getBlockEntity(new BlockPos(tag.getInt("x"), tag.getInt("y"), tag.getInt("z")));
             if (entity != null) {
                 entity.loadWithComponents(tag, chunk.getLevel().registryAccess());
+                chunk.setUnsaved(true);
             }
         }
     }
 
     /**
      * Turns {@code Energy}, {@code Items}, {@code Tanks}, {@code Toggles}, {@code Overflow}
-     * and the seed generator's pending job into {@code gt.*}. Returns whether the tag changed.
-     * A tag that already uses the shell keys is left alone.
+     * and the seed generator's pending job into {@code gt.*}. Crop Managers in either format
+     * can have a retired fluid ID. Returns whether the tag changed.
      */
     public static boolean migrate(CompoundTag tag) {
         String id = tag.getString("id");
@@ -60,7 +59,7 @@ public final class MachineSaveMigration {
             return false;
         }
         if (tag.contains("gt.items") || tag.contains("gt.energy") || tag.contains("gt.fluids")) {
-            return false;
+            return cropManager && migrateWeedEx(tag.getList("gt.fluids", Tag.TAG_COMPOUND));
         }
         if (!tag.contains("Energy") && !tag.contains("Items") && !tag.contains("Tanks")
                 && !tag.contains("Toggles") && !tag.contains("Overflow") && !tag.contains("Pending")) {
@@ -70,7 +69,11 @@ public final class MachineSaveMigration {
         if (tag.contains("Items", Tag.TAG_COMPOUND)) {
             tag.put("gt.items", tag.getCompound("Items").copy());
         }
-        tag.put("gt.fluids", fluids(tag.getList("Tanks", Tag.TAG_COMPOUND)));
+        ListTag tanks = fluids(tag.getList("Tanks", Tag.TAG_COMPOUND));
+        if (cropManager) {
+            migrateWeedEx(tanks);
+        }
+        tag.put("gt.fluids", tanks);
         int toggles = tag.contains("Toggles") ? tag.getInt("Toggles") : cropManager ? 1 : 0;
         tag.putInt("gt.toggles", toggles);
         tag.put("gt.behavior", behavior(tag, seedGenerator));
@@ -87,6 +90,19 @@ public final class MachineSaveMigration {
         tag.remove("TotalWork");
         tag.remove("MinimumPower");
         Gt6Crops.LOGGER.debug("gt6crops: migrated a saved {}", id);
+        return true;
+    }
+
+    private static boolean migrateWeedEx(ListTag tanks) {
+        if (tanks.size() <= CropManagerBehavior.WEED_EX_TANK) {
+            return false;
+        }
+        CompoundTag tank = tanks.getCompound(CropManagerBehavior.WEED_EX_TANK);
+        String fluid = tank.getString("Fluid");
+        if (!fluid.equals("gt6ce:potion_poison_strong") && !fluid.equals("gregtech:potion_poison_strong")) {
+            return false;
+        }
+        tank.putString("Fluid", Gt6Crops.MODID + ":weed_ex");
         return true;
     }
 

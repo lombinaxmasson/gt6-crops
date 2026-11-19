@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
@@ -48,7 +49,7 @@ public final class CropBreeding {
         }
     }
 
-    public record Mutation(String child, List<String> parents, boolean machineOnly) {}
+    public record Mutation(String child, List<String> parents, boolean machineOnly, boolean requiresChildConditions) {}
 
     /** One pool in file order, after cards that did not load were removed. */
     public record Pool(String id, List<String> crops) {}
@@ -85,6 +86,12 @@ public final class CropBreeding {
         }
 
         public Outcome resolve(List<Parent> neighbors, Variation variation, Random random) {
+            return resolve(neighbors, variation, random, child -> true);
+        }
+
+        /** Checks the center before an opted-in fixed mutation can take priority over pools. */
+        public Outcome resolve(
+                List<Parent> neighbors, Variation variation, Random random, Predicate<String> canPlantChild) {
             if (neighbors.isEmpty()) {
                 return null;
             }
@@ -119,7 +126,8 @@ public final class CropBreeding {
                         .toList();
                 if (required.size() >= 2
                         && required.size() <= distinct.size()
-                        && distinct.subList(0, required.size()).equals(required)) {
+                        && distinct.subList(0, required.size()).equals(required)
+                        && (!mutation.requiresChildConditions() || canPlantChild.test(mutation.child()))) {
                     matches.add(mutation);
                 }
             }
@@ -190,7 +198,7 @@ public final class CropBreeding {
                     continue;
                 }
                 mutations.add(new Mutation(
-                        dto.child, List.copyOf(dto.parents), dto.machineOnly));
+                        dto.child, List.copyOf(dto.parents), dto.machineOnly, dto.requiresChildConditions));
             }
         }
         Map<String, List<String>> pools = new LinkedHashMap<>();
@@ -241,6 +249,8 @@ public final class CropBreeding {
         List<String> parents;
         @SerializedName("machine_only")
         boolean machineOnly;
+        @SerializedName("requires_child_conditions")
+        boolean requiresChildConditions;
     }
 
     private static final class PoolDto {

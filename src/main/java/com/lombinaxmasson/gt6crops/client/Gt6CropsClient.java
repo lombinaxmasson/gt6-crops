@@ -84,7 +84,8 @@ public final class Gt6CropsClient {
 
     @SubscribeEvent
     public static void registerFluidTextures(RegisterClientExtensionsEvent event) {
-        for (CropFluid fluid : new CropFluid[] {Gt6Crops.FERTILIZER, Gt6Crops.ENRICHED_FERTILIZER}) {
+        for (CropFluid fluid : new CropFluid[] {
+                Gt6Crops.FERTILIZER, Gt6Crops.ENRICHED_FERTILIZER, Gt6Crops.WEED_EX_FLUID}) {
             int tint = 0xFF000000 | fluid.color();
             event.registerFluidType(new IClientFluidTypeExtensions() {
                 @Override

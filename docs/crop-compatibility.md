@@ -33,13 +33,21 @@ The four apple cards are deliberately handled separately:
 
 ## Metal cards from CropsNH
 
-`galvania` (zinc), `nickelback` (nickel), `bauxia` (aluminium),
+Coppon, Tine, Ferru, Galvania, and Nickelback use this addon's copper fiber,
+tin twig, iron leaf, zinc leaf, and nickel leaf. They keep their card ids and
+seeds. Their fixed crosses check the child's mineral bed when matching, and
+the orange and stem pools provide alternative routes for Coppon and Tine,
+respectively. [Breeding routes](../README.md#copper-tin-iron-zinc-and-nickel)
+
+Bauxia, Plumbilia, Argentia, and Aurelia drop the addon's aluminium, lead,
+silver, and gold leaves. The field crosses check their mineral beds and use
+fixed parent pairs. Oil Berries also uses a fixed field cross, on sand,
+gravel, or soul sand. Its harvest supplies GT oil.
+[Breeding routes](../README.md#aluminium-oil-berries-lead-silver-and-gold)
+
 `pyrolusium` (manganese), `titania` (titanium), and `scheelinium` (tungsten)
-follow the CropsNH cards of the same name: tier, seed colors, parents, and
-mutation-pool membership. They drop the metal's `plantGtBlossom`, which is
-the form GT6 already names "Leaf" for Ferru, Aurelia, Argentia, and
-Plumbilia. CropsNH has no chromium crop; `chromia` is this addon's own card,
-bred from Titania and Ferru.
+follow their CropsNH counterparts and depend on GT6CE's `plantGtBlossom`
+form. `chromia` is this addon's chromium card, bred from Titania and Ferru.
 
 CropsNH limits Bauxia, Titania, and Scheelinium to its crop breeder. Here
 they breed in the world instead, marked `stand_in` in `mutations.json`:
@@ -51,8 +59,8 @@ they breed in the world instead, marked `stand_in` in `mutations.json`:
   Pyrolusium, and Ender Bloom.
 
 The breeder-only cards and Chromia belong to no mutation pool, so only their
-listed parents produce them. The seven cards reuse the CC0 Argentia,
-Plumbilia, and Indigo stage textures until they get art of their own.
+listed parents produce them. The CropsNH metal additions and Chromia share
+the CC0 Argentia, Plumbilia, and Indigo stage textures.
 
 ## Growth conditions
 

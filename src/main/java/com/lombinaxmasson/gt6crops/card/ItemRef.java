@@ -4,6 +4,8 @@ import java.util.Locale;
 import java.util.Optional;
 
 import gregtech.api.addon.material.GregTechMaterials;
+import gregtech.api.addon.material.MaterialKey;
+import gregtech.api.addon.material.MaterialView;
 import gregtech.api.addon.platform.AddonItems;
 import com.google.gson.JsonObject;
 
@@ -11,10 +13,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-/**
- * A data-driven reference to either a vanilla item, a GT material form, or a
- * GT item whose name is known at data-authoring time.
- */
+/** A data-driven reference to a registered item or a GT material form. */
 public record ItemRef(
         String kind,
         String item,
@@ -47,34 +46,47 @@ public record ItemRef(
         return resolve().map(expected -> expected.getItem() == stack.getItem()).orElse(false);
     }
 
+    public boolean isCropProduct() {
+        return "crop_product".equals(kind)
+                || ("gt_form".equals(kind) && prefix != null && prefix.startsWith("plantGt"));
+    }
+
     public Optional<ItemStack> resolve() {
         if (isNone()) {
             return Optional.empty();
         }
-        if ("vanilla".equals(kind) || "item".equals(kind) || "gt_item".equals(kind)) {
-            return resolveItem(item);
-        }
-        if ("foods_addon".equals(kind)) {
+        if ("vanilla".equals(kind) || "item".equals(kind) || "gt_item".equals(kind)
+                || "foods_addon".equals(kind) || "crop_product".equals(kind)) {
             return resolveItem(item);
         }
         if ("gt_form".equals(kind) || "plant_form".equals(kind) || "material_form".equals(kind)) {
-            if (prefix == null || material == null) {
+            if (prefix == null) {
                 return Optional.empty();
             }
             String resolvedPrefix = prefixName(prefix);
-            GregTechMaterials.Material resolvedMaterial = gtMaterial();
-            if (resolvedPrefix == null || !resolvedMaterial.valid()) {
+            if (resolvedPrefix == null) {
                 return Optional.empty();
             }
-            ItemStack stack = AddonItems.stack(resolvedPrefix, resolvedMaterial.name(), count);
-            return stack.isEmpty() ? Optional.empty() : Optional.of(stack);
+            return gtMaterial()
+                    .map(key -> AddonItems.stack(resolvedPrefix, key.name(), count))
+                    .filter(stack -> !stack.isEmpty());
         }
         return Optional.empty();
     }
 
-    /** The named GT material, or the invalid sentinel. */
-    public GregTechMaterials.Material gtMaterial() {
-        return material == null ? GregTechMaterials.invalid() : material(material);
+    /** Resolve GT aliases first, then fold ledger names such as {@code live_root} to {@code LiveRoot}. */
+    public Optional<MaterialKey> gtMaterial() {
+        if (material == null) {
+            return Optional.empty();
+        }
+        var catalog = GregTechMaterials.catalog();
+        return catalog.resolve(material).or(() -> {
+            String folded = fold(material);
+            return catalog.materials().stream()
+                    .map(MaterialView::key)
+                    .filter(key -> fold(key.name()).equals(folded))
+                    .findFirst();
+        });
     }
 
     private Optional<ItemStack> resolveItem(String id) {
@@ -84,24 +96,6 @@ public record ItemRef(
         ResourceLocation location = ResourceLocation.parse(id);
         return BuiltInRegistries.ITEM.getOptional(location)
                 .map(itemValue -> new ItemStack(itemValue, count));
-    }
-
-    /**
-     * GT material names keep their original capitals. Ledger names are folded
-     * so {@code live_root} resolves to {@code LiveRoot}.
-     */
-    private static GregTechMaterials.Material material(String raw) {
-        GregTechMaterials.Material direct = GregTechMaterials.find(raw);
-        if (direct.valid()) {
-            return direct;
-        }
-        String folded = fold(raw);
-        for (GregTechMaterials.Material candidate : GregTechMaterials.all()) {
-            if (candidate.valid() && fold(candidate.name()).equals(folded)) {
-                return candidate;
-            }
-        }
-        return direct;
     }
 
     private static String fold(String value) {

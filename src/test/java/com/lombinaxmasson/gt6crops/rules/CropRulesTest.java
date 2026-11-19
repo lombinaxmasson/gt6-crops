@@ -6,16 +6,23 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import com.lombinaxmasson.gt6crops.card.CropCard;
 import com.lombinaxmasson.gt6crops.card.CropConditions;
 import com.lombinaxmasson.gt6crops.card.ItemRef;
 
 class CropRulesTest {
+    private static final Pattern CROP_ID = Pattern.compile("\"id\"\\s*:\\s*\"([a-z0-9_]+)\"");
+
     @Test
     void variedStatsStayWithinGeneticRange() {
         CropRules.Stats first = new CropRules.Stats(0, 10, 31);
@@ -74,6 +81,74 @@ class CropRulesTest {
             }
         }
         assertTrue(sawFlax);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "coppon, carrot, orange_tulip",
+            "tine, pumpkin, melon",
+            "ferru, coppon, tine",
+            "galvania, tine, ferru",
+            "nickelback, ferru, coppon",
+            "bauxia, galvania, nickelback",
+            "oil_berries, withereed, nether_wart",
+            "plumbilia, coppon, withereed",
+            "argentia, plumbilia, tine",
+            "aurelia, plumbilia, coppon"
+    })
+    void fixedMutationUsesItsParentsOnTheMatchingBed(String child, String first, String second)
+            throws Exception {
+        CropBreeding.Book book = builtInBook();
+        List<CropBreeding.Parent> parents = List.of(parent(first), parent(second));
+        CropBreeding.Outcome outcome = book.resolve(
+                parents, CropBreeding.Variation.DEFAULT, mutationRolls(), child::equals);
+
+        assertNotNull(outcome);
+        assertEquals(child, outcome.cardId());
+        assertTrue(book.mutations().stream().anyMatch(mutation ->
+                child.equals(mutation.child()) && mutation.requiresChildConditions()
+                        && !mutation.machineOnly() && mutation.parents().size() == 2
+                        && mutation.parents().containsAll(List.of(first, second))));
+    }
+
+    @Test
+    void unsuitableCopperBedLeavesTheOrangePoolAvailable() throws Exception {
+        CropBreeding.Book book = builtInBook();
+        List<CropBreeding.Parent> parents = List.of(parent("carrot"), parent("orange_tulip"));
+
+        assertTrue(canRollPoolChild(book, parents, "pumpkin"));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "coppon, pumpkin, orange_tulip",
+            "tine, pumpkin, tear_stalks"
+    })
+    void alternateParentsCanFindTheStarterMetalInAPool(String child, String first, String second)
+            throws Exception {
+        assertTrue(canRollPoolChild(builtInBook(), List.of(parent(first), parent(second)), child));
+    }
+
+    @Test
+    void existingFixedMutationsKeepTheirPriorityWithoutABedRequirement() throws Exception {
+        CropBreeding.Book book = builtInBook();
+        CropBreeding.Outcome outcome = book.resolve(List.of(parent("wheat"), parent("azure_bluet")),
+                CropBreeding.Variation.DEFAULT, mutationRolls(), child -> false);
+
+        assertNotNull(outcome);
+        assertEquals("flax", outcome.cardId());
+    }
+
+    @Test
+    void onlyCopperAndTinHavePoolEntriesInTheRestoredBranches() throws Exception {
+        CropBreeding.Book book = builtInBook();
+
+        assertEquals(List.of("orange"), poolsWith(book, "coppon"));
+        assertEquals(List.of("stem"), poolsWith(book, "tine"));
+        for (String child : List.of("ferru", "galvania", "nickelback", "bauxia", "oil_berries",
+                "plumbilia", "argentia", "aurelia")) {
+            assertTrue(poolsWith(book, child).isEmpty(), child + " is only available as a fixed mutation");
+        }
     }
 
     @Test
@@ -262,6 +337,39 @@ class CropRulesTest {
         } catch (Exception exception) {
             throw new IllegalStateException(exception);
         }
+    }
+
+    private static CropBreeding.Book builtInBook() throws Exception {
+        try (InputStream crops = CropRulesTest.class.getResourceAsStream("/data/gt6crops/crop_cards.json");
+                InputStream mutations = CropRulesTest.class.getResourceAsStream("/data/gt6crops/mutations.json")) {
+            assertNotNull(crops);
+            assertNotNull(mutations);
+            List<String> ids = CROP_ID.matcher(new String(crops.readAllBytes(), StandardCharsets.UTF_8)).results()
+                    .map(match -> match.group(1))
+                    .toList();
+            return CropBreeding.Book.load(mutations, ids);
+        }
+    }
+
+    private static List<String> poolsWith(CropBreeding.Book book, String child) {
+        return book.pools().stream().filter(pool -> pool.crops().contains(child))
+                .map(CropBreeding.Pool::id).toList();
+    }
+
+    private static boolean canRollPoolChild(CropBreeding.Book book, List<CropBreeding.Parent> parents, String child) {
+        Random random = mutationRolls();
+        return IntStream.range(0, 32)
+                .mapToObj(roll -> book.resolve(parents, CropBreeding.Variation.DEFAULT, random, candidate -> false))
+                .anyMatch(outcome -> outcome != null && child.equals(outcome.cardId()));
+    }
+
+    private static Random mutationRolls() {
+        return new Random(42) {
+            @Override
+            public boolean nextBoolean() {
+                return false;
+            }
+        };
     }
 
     private static CropBreeding.Parent parent(String id) {

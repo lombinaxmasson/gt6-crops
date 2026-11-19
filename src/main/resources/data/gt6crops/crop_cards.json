@@ -109,9 +109,8 @@
                                      ],
                       "crossbreed_only":  true,
                       "drop":  {
-                                   "kind":  "gt_form",
-                                   "prefix":  "plantGtBerry",
-                                   "material":  "oil",
+                                   "kind":  "item",
+                                   "item":  "gt6crops:oil_berries",
                                    "count":  1
                                },
                       "special_drops":  [
@@ -866,8 +865,8 @@
                                      ],
                       "crossbreed_only":  true,
                       "drop":  {
-                                   "kind":  "gt_form",
-                                   "prefix":  "plantGtTwig",
+                                   "kind":  "crop_product",
+                                   "item":  "gt6crops:tin_twig",
                                    "material":  "tin",
                                    "count":  1
                                },
@@ -909,8 +908,8 @@
                                      ],
                       "crossbreed_only":  true,
                       "drop":  {
-                                   "kind":  "gt_form",
-                                   "prefix":  "plantGtFiber",
+                                   "kind":  "crop_product",
+                                   "item":  "gt6crops:copper_fiber",
                                    "material":  "copper",
                                    "count":  1
                                },
@@ -951,8 +950,8 @@
                                      ],
                       "crossbreed_only":  true,
                       "drop":  {
-                                   "kind":  "gt_form",
-                                   "prefix":  "plantGtBlossom",
+                                   "kind":  "crop_product",
+                                   "item":  "gt6crops:silver_leaf",
                                    "material":  "silver",
                                    "count":  1
                                },
@@ -993,8 +992,8 @@
                                      ],
                       "crossbreed_only":  true,
                       "drop":  {
-                                   "kind":  "gt_form",
-                                   "prefix":  "plantGtBlossom",
+                                   "kind":  "crop_product",
+                                   "item":  "gt6crops:lead_leaf",
                                    "material":  "lead",
                                    "count":  1
                                },
@@ -2537,8 +2536,8 @@
                                      ],
                       "crossbreed_only":  true,
                       "drop":  {
-                                   "kind":  "gt_form",
-                                   "prefix":  "plantGtBlossom",
+                                   "kind":  "crop_product",
+                                   "item":  "gt6crops:iron_leaf",
                                    "material":  "iron",
                                    "count":  1
                                },
@@ -2578,8 +2577,8 @@
                                      ],
                       "crossbreed_only":  true,
                       "drop":  {
-                                   "kind":  "gt_form",
-                                   "prefix":  "plantGtBlossom",
+                                   "kind":  "crop_product",
+                                   "item":  "gt6crops:gold_leaf",
                                    "material":  "gold",
                                    "count":  1
                                },
@@ -2619,8 +2618,8 @@
                                      ],
                       "crossbreed_only":  true,
                       "drop":  {
-                                   "kind":  "gt_form",
-                                   "prefix":  "plantGtBlossom",
+                                   "kind":  "crop_product",
+                                   "item":  "gt6crops:zinc_leaf",
                                    "material":  "zinc",
                                    "count":  1
                                },
@@ -2660,8 +2659,8 @@
                                      ],
                       "crossbreed_only":  true,
                       "drop":  {
-                                   "kind":  "gt_form",
-                                   "prefix":  "plantGtBlossom",
+                                   "kind":  "crop_product",
+                                   "item":  "gt6crops:nickel_leaf",
                                    "material":  "nickel",
                                    "count":  1
                                },
@@ -2701,8 +2700,8 @@
                                      ],
                       "crossbreed_only":  true,
                       "drop":  {
-                                   "kind":  "gt_form",
-                                   "prefix":  "plantGtBlossom",
+                                   "kind":  "crop_product",
+                                   "item":  "gt6crops:aluminium_leaf",
                                    "material":  "aluminium",
                                    "count":  1
                                },

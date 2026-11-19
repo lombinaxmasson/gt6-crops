@@ -28,10 +28,9 @@ jobs:
         if: steps.gt6ce-cache.outputs.cache-hit != 'true'
         uses: actions/checkout@v4
         with:
-          repository: SaltNya/GregTech6
+          repository: GregTech6CE/GregTech6
           ref: ${{ env.GT6CE_COMMIT }}
           path: gt6ce-src
-          submodules: recursive
 
       - name: Setup JDK 17 for GT6CE
         if: steps.gt6ce-cache.outputs.cache-hit != 'true'
@@ -63,12 +62,17 @@ jobs:
         env:
           JAVA_HOME: ${{ env.JAVA17_HOME }}
         run: |
+          set -euo pipefail
+          base_version=$(sed -n 's/^mod_version=//p' gradle.properties | tr -d '\r')
+          test -n "$base_version"
+          snapshot_version="${base_version}-${GT6CE_COMMIT:0:8}"
           chmod +x gradlew
           ./gradlew --no-daemon --stacktrace \
             -Dorg.gradle.java.home="$JAVA17_HOME" \
             -Dorg.gradle.java.installations.fromEnv=JAVA17_HOME,JAVA21_HOME \
             -Dorg.gradle.java.installations.auto-download=false \
-            :minecraft:1.21.1-neoforge:build
+            :api:jar :minecraft:1.21.1-neoforge:assemble \
+            -Pmod_version="$snapshot_version"
           shopt -s nullglob
           copy_one() {
             local label="$1"
@@ -94,15 +98,10 @@ jobs:
           copy_one "GT6CE addon SDK" ../libs/gt6ce/ \
             minecraft/versions/1.21.1-neoforge/build/addon-sdk/gt6ce-addon-sdk-1.21.1-neoforge-*.jar
           jars=()
-          for jar in minecraft/versions/1.21.1-neoforge/build/libs/*.jar; do
-            case "$jar" in
-              *-sources.jar|*-javadoc.jar|*-dev.jar) ;;
-              *)
-                if unzip -p "$jar" META-INF/neoforge.mods.toml >/dev/null 2>&1; then
-                  jars+=("$jar")
-                fi
-                ;;
-            esac
+          for jar in minecraft/versions/1.21.1-neoforge/build/libs/*-"$snapshot_version".jar; do
+            if unzip -p "$jar" META-INF/neoforge.mods.toml >/dev/null 2>&1; then
+              jars+=("$jar")
+            fi
           done
           if [ "${#jars[@]}" -ne 1 ]; then
             echo "Expected one GT6CE NeoForge jar, found: ${jars[*]:-none}"

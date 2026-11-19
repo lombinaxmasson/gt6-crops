@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Predicate;
 
 import gregtech.api.crop.CropScanSource;
 import com.lombinaxmasson.gt6crops.Gt6Crops;
@@ -592,13 +593,15 @@ public final class CropTile extends BlockEntity implements CropScanSource {
                     card.canBreed(other.size),
                     other.nutrientStorage > 0));
         }
+        Predicate<CropCard> fitsBed = card -> GrowthCheck.problems(card.conditions(), level, pos).isEmpty();
         CropBreeding.Outcome outcome = CropMutations.book().resolve(
-                parents, Gt6CropsConfig.breedingVariation(), random);
+                parents, Gt6CropsConfig.breedingVariation(), random,
+                child -> CropCards.find(child).filter(fitsBed).isPresent());
         if (outcome == null) {
             return;
         }
         CropCards.find(outcome.cardId())
-                .filter(card -> GrowthCheck.problems(card.conditions(), level, pos).isEmpty())
+                .filter(fitsBed)
                 .ifPresent(card -> plant(card, outcome.stats(), false));
     }
 
